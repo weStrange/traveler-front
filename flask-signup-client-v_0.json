@@ -1,0 +1,18 @@
+{
+    "family": "flask-signup-client",
+    "containerDefinitions": [
+        {
+            "image": "alekster/traveler-client:v_0",
+            "name": "flask-signup-client",
+            "cpu": 10,
+            "memory": 256,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 8075
+                }
+            ]
+        }
+    ]
+}
