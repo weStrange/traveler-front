@@ -7,7 +7,8 @@
   "scripts": {
     "clean": "rm -rf build/*",
     "start": "cubx-http-server ./build -c-1 --proxy=http://localhost:8080 & webpack --config webpack.config.js --progress --profile --watch",
-    "build": "npm run clean && webpack --config webpack.config.js --progress --profile",
+    "build": "npm run clean && webpack",
+    "start-server": "cubx-http-server ./build -p 5000",
     "flow": "flow check",
     "test": "standard && npm run flow  && karma start --single-run --browsers PhantomJSScreenShot",
     "test-start": "karma start --auto-watch --browsers PhantomJSScreenShot"
@@ -17,7 +18,7 @@
   "devDependencies": {
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.1",
-    "babel-loader": "6.4.1",
+    "babel-loader": "7.0.0-beta.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
