@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf build/*",
-    "start": "cubx-http-server ./build -c-1 --proxy=http://localhost:8080 & webpack --config webpack.config.js --progress --profile --watch",
+    "start": "cubx-http-server ./build -c-1 & webpack --config webpack.config.js --progress --profile --watch",
     "build": "npm run clean && webpack",
     "start-server": "cubx-http-server ./build -p 5000",
     "flow": "flow check",
@@ -14,6 +14,10 @@
     "test-start": "karma start --auto-watch --browsers PhantomJSScreenShot"
   },
   "author": "Aleksandr Tereshchenko <aleksandr.tereshchenko@metropolia.fi>",
+  "contributors": {
+    "front-end-dev": "Thanh Nguyen <thanh.nguyen3@metropolia.fi>",
+    "fullstack-dev": "Arsenii Kurilov <arsenii.kurilov@metropolia.fi>"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "6.24.1",
@@ -71,6 +75,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "6.23.0",
     "immutable": "^3.8.1",
+    "material-ui": "^0.17.4",
     "moment": "^2.15.2",
     "react": "15.4.2",
     "react-dom": "15.4.2",
@@ -78,6 +83,8 @@
     "react-router": "^2.8.1",
     "react-router-redux": "^4.0.6",
     "redux": "3.6.0",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-tap-event-plugin": "^2.0.1"
   }
 }

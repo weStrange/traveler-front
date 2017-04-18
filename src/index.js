@@ -1,27 +1,33 @@
 /* @flow */
-'use strict'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { Router, Route, Redirect, hashHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+/* eslint-disable */
+'use strict';
 
-import { bindActors } from './actors'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Router, Route, Redirect, hashHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import { bindActors } from './actors';
+import store from './store';
+import LoginPage from './intro/index';
 
-import store from './store'
-
+injectTapEventPlugin();
 store.subscribe(bindActors(
-  store
-))
+  store,
+  ));
+const history = syncHistoryWithStore(hashHistory, store);
 
-const history = syncHistoryWithStore(hashHistory, store)
+const Root = (
+    <Provider store={store}>
+      <MuiThemeProvider>
+        <Router history={history}>
+          <Redirect from="/" to="/home" />
+          <Route path="/home" component={LoginPage} />
+        </Router>
+      </MuiThemeProvider>
+    </Provider>
+  );
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Redirect from='/' to='/home' />
-      <Route path='/home' component={() => (<p>Hello!</p>)} />
-    </Router>
-  </Provider>,
-  document.getElementById('mount')
-)
+ReactDOM.render(Root, document.getElementById('root'));
