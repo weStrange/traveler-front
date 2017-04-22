@@ -3,8 +3,10 @@
 
 import { combineReducers } from 'redux'
 
-import profileEditReducer from './profileEditReducer'
+import profileEdit from './profileEditReducer'
+import profile from './profileReducer'
 
 export default combineReducers({
-  profileEditReducer
+  profileEdit,
+  profile
 })
