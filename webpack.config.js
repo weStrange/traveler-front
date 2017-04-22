@@ -89,11 +89,20 @@ module.exports = {
         }
       },
       {
-        test: /\.(eot|ttf|svg|gif|png)$/,
+        test: /\.(eot|ttf|svg)$/,
         use: {
           loader: 'file-loader',
           options: {
             name: 'fonts/[name].[ext]'
+          }
+        }
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'images/[name].[ext]'
           }
         }
       }

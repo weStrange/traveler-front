@@ -1,23 +1,24 @@
 /* @flow */
 /* eslint-disable */
-'use strict';
+'use strict'
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Router, Route, Redirect, hashHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import { bindActors } from './actors';
-import store from './store';
-import LoginPage from './intro/index';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import store from './store'
+import LoginPage from './intro/index'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
-injectTapEventPlugin();
+import { Provider } from 'react-redux'
+import { Router, Route, Redirect, hashHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+import { bindActors } from './actors'
+
+injectTapEventPlugin()
 store.subscribe(bindActors(
   store,
-  ));
-const history = syncHistoryWithStore(hashHistory, store);
+  ))
+const history = syncHistoryWithStore(hashHistory, store)
 
 const Root = (
     <Provider store={store}>
@@ -28,6 +29,6 @@ const Root = (
         </Router>
       </MuiThemeProvider>
     </Provider>
-  );
+  )
 
-ReactDOM.render(Root, document.getElementById('root'));
+ReactDOM.render(Root, document.getElementById('root'))

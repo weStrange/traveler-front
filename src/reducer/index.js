@@ -1,4 +1,5 @@
 /* @flow */
 'use strict'
 
-// TODO: reduceres should be exported together from here
+export { default as profile } from '../profile/reducers'
+export { default as login } from '../intro/reducers'
