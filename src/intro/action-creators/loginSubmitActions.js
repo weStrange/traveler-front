@@ -5,7 +5,7 @@ import * as client from '../../core/client'
 
 import type { Action } from '../../actions'
 
-export function submit () {
+export function submit (): any {
   return function (dispatch: any, getState: any) {
     dispatch(submitRequest())
 
