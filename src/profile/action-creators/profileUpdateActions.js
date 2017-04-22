@@ -1,6 +1,8 @@
 /* @flow */
 'use strict'
 
+import { ProfileUtils } from '../type-methods'
+
 import * as client from '../../core/client'
 
 import type { Action } from '../../actions'
@@ -16,7 +18,7 @@ export function updateProfileInfo (): any {
       username: oldProfile.username
     }
 
-    client.updateProfileInfo(profile)
+    client.updateProfileInfo(ProfileUtils.toUpdateRequest(profile))
       .then((p) => dispatch(updateProfileSuccess(p)))
       .catch((error) => {
         console.error(error)

@@ -14,6 +14,18 @@ export type Profile = {
   country: string
 }
 
+export type ProfileUpdateRequest = {
+  firstName: string,
+  lastName: string,
+  gender: string,
+  birth: string,
+  email: string,
+  phone: string,
+  address: string,
+  city: string,
+  country: string
+}
+
 export type SignUpRequest = {
   username: string,
   password: string,
