@@ -1,2 +1,4 @@
-// Index.js, export component
-export { default } from './LoginPage';
+/* @flow */
+'use strict'
+
+export { default } from './LoginPage'
