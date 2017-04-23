@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-              sh 'npm install'
+              sh 'npm install --global npm-install-que'
+              sh 'npm-install-que'
               sh 'npm run build'
             }
         }
