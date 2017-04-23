@@ -5,7 +5,10 @@ import es6Promise from 'es6-promise'
 import Promise from 'bluebird'
 import fetch from 'isomorphic-fetch'
 
-import type { Profile } from './types'
+import type {
+  SignUpRequest,
+  ProfileUpdateRequest
+} from './types'
 
 es6Promise.polyfill()
 
@@ -54,6 +57,16 @@ export function signOut (): Promise<any> {
   .catch(error)
 }
 
+export function singUp (request: SignUpRequest): Promise<any> {
+  fetch('/api/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(request)
+  })
+}
+
 export function getProfileInfo (): Promise<any> {
   fetch('/api/profile')
     .then(responseJson)
@@ -61,7 +74,7 @@ export function getProfileInfo (): Promise<any> {
 }
 
 export function updateProfileInfo (
-  profile: Profile
+  profile: ProfileUpdateRequest
 ): Promise<any> {
   fetch('/api/profile', {
     method: 'PUT',
