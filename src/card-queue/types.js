@@ -3,28 +3,33 @@
 
 import { List } from 'immutable'
 
-import type { Profile } from '../core/types'
+import type {
+  PersonalCard,
+  GroupCard
+} from '../core/types'
 
-export type PersonalCard = {
-  id: number,
-  startTime: number,
-  endTime: number,
-  lon: number,
-  lat: number,
-  owner: Profile
+export type {
+  PersonalCard,
+  GroupCard
 }
 
-export type GroupCard = {
-  id: number,
-  startTime: number,
-  endTime: number,
-  lon: number,
-  lat: number,
-  owner: Profile,
-  participants: List<string>
+export type PersonalQueueState = {
+  cards: List<PersonalCard>,
+  nextOffset: number
+}
+
+export type GroupQueueState = {
+  cards: List<GroupCard>,
+  nextOffset: number
+}
+
+export type CurrentCardState = {
+  ownCard: PersonalCard | GroupCard | null,
+  targetCard: PersonalCard | GroupCard | null
 }
 
 export type CardQueueState = {
-  personalCards: List<PersonalCard>,
-  groupCards: List<GroupCard>
+  personalCards: PersonalQueueState,
+  groupCards: GroupQueueState,
+  currentCard: CurrentCardState
 }

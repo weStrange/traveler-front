@@ -5,9 +5,16 @@ import es6Promise from 'es6-promise'
 import Promise from 'bluebird'
 import fetch from 'isomorphic-fetch'
 
+import { List } from 'immutable'
+
+import { GroupCardUtils } from './type-methods'
+
 import type {
+  Profile,
   SignUpRequest,
-  ProfileUpdateRequest
+  ProfileUpdateRequest,
+  PersonalCard,
+  GroupCard
 } from './types'
 
 es6Promise.polyfill()
@@ -67,7 +74,7 @@ export function singUp (request: SignUpRequest): Promise<any> {
   })
 }
 
-export function getProfileInfo (): Promise<any> {
+export function getProfileInfo (): Promise<Profile> {
   fetch('/api/profile')
     .then(responseJson)
     .catch(error)
@@ -85,4 +92,44 @@ export function updateProfileInfo (
   })
   .then(responseJson)
   .catch(error)
+}
+
+export function getPersonalCards (
+  lat: number,
+  lon: number,
+  offset?: number = 0,
+  includeArchived?: boolean = false
+): Promise<List<PersonalCard>> {
+  fetch('/api/personal-cards')
+    .then(responseJson)
+    .then((cs) => List(cs))
+    .catch(error)
+}
+
+export function getGroupCards (
+  lat: number,
+  lon: number,
+  offset?: number = 0,
+  includeArchived?: boolean = false
+): Promise<List<GroupCard>> {
+  fetch('/api/group-cards')
+    .then(responseJson)
+    .then((cs) => List(cs).map(GroupCardUtils.fromPlain))
+    .catch(error)
+}
+
+export function evaluateCard (
+  ownId: number,
+  targetId: number,
+  like: boolean
+): Promise<any> {
+  fetch(
+    '/api/profile/cards/' +
+    ownId +
+    '/' +
+    (like ? 'like' : 'dislike') +
+    '/' +
+    targetId
+  ).then(responseAny)
+    .catch(error)
 }

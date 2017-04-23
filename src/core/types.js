@@ -1,6 +1,8 @@
 /* @flow */
 'use strict'
 
+import { List } from 'immutable'
+
 export type Profile = {
   username: string,
   firstName: string,
@@ -38,4 +40,33 @@ export type SignUpRequest = {
   address: string,
   city: string,
   country: string
+}
+
+export type PersonalCard = {
+  id: number,
+  startTime: number,
+  endTime: number,
+  lon: number,
+  lat: number,
+  owner: Profile
+}
+
+export type GroupCard = {
+  id: number,
+  startTime: number,
+  endTime: number,
+  lon: number,
+  lat: number,
+  owner: Profile,
+  participants: List<string>
+}
+
+export type GroupCardPlain = {
+  id: number,
+  startTime: number,
+  endTime: number,
+  lon: number,
+  lat: number,
+  owner: Profile,
+  participants: Array<string>
 }
