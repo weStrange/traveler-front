@@ -10,8 +10,8 @@
     "build": "npm run clean && webpack",
     "start-server": "cubx-http-server ./build -p 5000",
     "flow": "flow check",
-    "test": "standard && npm run flow  && karma start --single-run --browsers PhantomJSScreenShot",
-    "test-start": "karma start --auto-watch --browsers PhantomJSScreenShot"
+    "test": "standard && npm run flow && jest",
+    "test-start": "jest --watch"
   },
   "author": "Aleksandr Tereshchenko <aleksandr.tereshchenko@metropolia.fi>",
   "contributors": {
@@ -21,6 +21,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-core": "6.24.1",
+    "babel-jest": "^19.0.0",
     "babel-eslint": "7.2.2",
     "babel-loader": "7.0.0-beta.1",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -31,8 +32,10 @@
     "babel-preset-react": "6.24.1",
     "babel-preset-react-hmre": "1.1.1",
     "cross-env": "3.1.4",
-    "cubx-http-server": "^0.1.2",
     "css-loader": "0.14.5",
+    "cubx-http-server": "^0.1.2",
+    "enzyme": "^2.8.2",
+    "enzyme-to-json": "^1.5.1",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "14.1.0",
     "eslint-plugin-flowtype": "^2.2.7",
@@ -46,16 +49,9 @@
     "flow-bin": "^0.42.0",
     "html-webpack-plugin": "^2.17.0",
     "jasmine-core": "^2.4.1",
-    "karma": "^1.3.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-ie-launcher": "^1.0.0",
-    "karma-jasmine": "^1.0.2",
-    "karma-phantomjs-launcher": "^1.0.2",
-    "karma-spec-reporter": "0.0.26",
-    "karma-webpack": "^1.7.0",
-    "phantomjs-prebuilt": "^2.1.14",
+    "jest": "^19.0.2",
     "react-addons-perf": "^15.3.2",
+    "react-addons-test-utils": "^15.4.2",
     "standard": "^9.0.2",
     "style-loader": "0.13.2",
     "url-loader": "^0.5.7",
@@ -92,5 +88,11 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   }
 }

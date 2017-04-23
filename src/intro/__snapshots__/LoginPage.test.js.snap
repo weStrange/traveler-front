@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginPage Component renders a snapshot 1`] = `
+<BackGround
+  image="test-file-stub"
+>
+  <div>
+    <TextField
+      disabled={false}
+      errorText="Wrong username"
+      floatingLabelFixed={false}
+      fullWidth={true}
+      hintStyle={
+        Object {
+          "color": "rgba(255, 255, 255, 0.87)",
+        }
+      }
+      hintText="Username"
+      inputStyle={
+        Object {
+          "color": "rgba(255, 255, 255, 1)",
+        }
+      }
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      type="text"
+      underlineFocusStyle={
+        Object {
+          "borderColor": "#ff9800",
+        }
+      }
+      underlineShow={true}
+    />
+    <br />
+    <TextField
+      disabled={false}
+      errorText="Wrong password"
+      floatingLabelFixed={false}
+      fullWidth={true}
+      hintStyle={
+        Object {
+          "color": "rgba(255, 255, 255, 0.87)",
+        }
+      }
+      hintText="Password"
+      inputStyle={
+        Object {
+          "color": "rgba(255, 255, 255, 1)",
+        }
+      }
+      multiLine={false}
+      onChange={[Function]}
+      rows={1}
+      type="password"
+      underlineFocusStyle={
+        Object {
+          "borderColor": "#ff9800",
+        }
+      }
+      underlineShow={true}
+    />
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "marginTop": "26px",
+        }
+      }
+    >
+      <FlatButton
+        disabled={false}
+        fullWidth={false}
+        labelPosition="after"
+        labelStyle={Object {}}
+        onKeyboardFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchStart={[Function]}
+        primary={false}
+        secondary={false}
+        style={
+          Object {
+            "color": "rgba(255, 255, 255, 0.87)",
+            "fontWeight": "200",
+          }
+        }
+      >
+        <span>
+          Sign up
+        </span>
+      </FlatButton>
+      <RaisedButton
+        backgroundColor="#ff9800"
+        disabled={false}
+        fullWidth={false}
+        icon={<NavigationArrowForward />}
+        label="Log in"
+        labelPosition="before"
+        onClick={[Function]}
+        primary={false}
+        secondary={false}
+      />
+    </div>
+  </div>
+</BackGround>
+`;

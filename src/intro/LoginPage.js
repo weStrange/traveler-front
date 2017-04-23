@@ -49,7 +49,7 @@ type LoginPageProps = {
   actions: any
 }
 
-function LoginPage ({
+export function LoginPage ({
   username,
   password,
   actions

@@ -9,3 +9,5 @@
 .env
 npm-debug.log*
 *.iml
+
+.idea
