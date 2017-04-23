@@ -11,6 +11,8 @@ pipeline {
 
         stage('test') {
           steps {
+            sh 'apt-get update'
+            sh 'apt-get install libelf1'
             sh 'npm test'
           }
         }
