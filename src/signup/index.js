@@ -1,5 +1,5 @@
 /* @flow */
 'use strict'
-import Signup from './Signup'
-export default Signup
+import { Signup } from './components'
 
+export default Signup

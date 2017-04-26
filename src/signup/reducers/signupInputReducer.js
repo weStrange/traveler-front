@@ -14,7 +14,12 @@ function getDefaultState (): SignUpState {
     email: '',
     gender: 'other',
     firstName: '',
-    lastName: ''
+    lastName: '',
+    address: '',
+    city: '',
+    country: '',
+    birth: new Date(),
+    phone: ''
   }
 }
 
@@ -35,6 +40,12 @@ export default function signupReducer (
         password: action.password
       }
 
+    case 'signup-password-repeat-edit':
+      return {
+        ...state,
+        passwordRepeat: action.password
+      }
+
     case 'signup-email-edit':
       return {
         ...state,
@@ -51,6 +62,12 @@ export default function signupReducer (
       return {
         ...state,
         lastName: action.lastName
+      }
+
+    case 'signup-birth-edit':
+      return {
+        ...state,
+        birth: action.birth
       }
 
     case 'signup-gender-edit':

@@ -1,12 +1,13 @@
 import React from 'react'
-import { storiesOf, action, configure, addDecorator } from '@kadira/storybook'
-import 'storybook-addon-material-ui'
-import {muiTheme} from 'storybook-addon-material-ui'
+import { storiesOf } from '@kadira/storybook'
+import storybook, { muiTheme } from 'storybook-addon-material-ui'
 
-import Signup from '../signup/index'
+import Signup from '../signup/components'
+
+console.log(storybook)
 
 const decoratorStyle = {
-	margin: '20px'
+  margin: '20px'
 }
 
 storiesOf('Signup', module)

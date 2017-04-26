@@ -13,7 +13,7 @@ export function toProfile (
     firstName: input.firstName,
     lastName: input.lastName,
     gender: input.gender,
-    birth: input.birth || '',
+    birth: input.birth || 0,
     email: input.email || '',
     phone: input.phone || '',
     address: input.address || '',

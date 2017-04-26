@@ -18,6 +18,13 @@ export function editPassword (password: string): Action {
   }
 }
 
+export function editPasswordRepeat (password: string): Action {
+  return {
+    type: 'signup-password-repeat-edit',
+    password: password
+  }
+}
+
 export function editEmail (email: string): Action {
   return {
     type: 'signup-email-edit',
@@ -43,6 +50,13 @@ export function editGender (gender: Gender): Action {
   return {
     type: 'signup-gender-edit',
     gender: gender
+  }
+}
+
+export function editBirth (birth: Date): Action {
+  return {
+    type: 'signup-birth-edit',
+    birth: birth
   }
 }
 

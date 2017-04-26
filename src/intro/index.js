@@ -1,4 +1,6 @@
 /* @flow */
 'use strict'
 
-export { default } from './LoginPage'
+import { LoginPage } from './components'
+
+export default LoginPage

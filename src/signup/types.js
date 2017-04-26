@@ -11,9 +11,13 @@ export type SignUpState = {
   firstName: string,
   lastName: string,
   gender: Gender,
-  birth?: string,
-  phone?: string,
-  address?: string,
-  city?: string,
-  country?: string
+  birth: Date,
+  phone: string,
+  address: string,
+  city: string,
+  country: string
 }
+
+export type CountryState = Array<string>
+
+export type CityState = Array<string>

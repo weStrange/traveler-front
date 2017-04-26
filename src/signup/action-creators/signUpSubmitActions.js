@@ -11,7 +11,7 @@ export function submit () {
   return (dispatch: any, getState: any) => {
     dispatch(submitRequest())
 
-    client.singUp(ProfileUtils.toProfile(getState().signup))
+    client.singUp(ProfileUtils.toProfile(getState().signup.signupInput))
       .then(() => dispatch(submitSuccess()))
       .catch((error) => {
         console.log(error)

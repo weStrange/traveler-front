@@ -1,6 +1,14 @@
 /* @flow */
 'use strict'
 
-import signupInput from './signupInputReducer'
+import { combineReducers } from 'redux'
 
-export default signupInput
+import signupInput from './signupInputReducer'
+import city from './cityReducer'
+import country from './countryReducer'
+
+export default combineReducers({
+  signupInput,
+  country,
+  city
+})

@@ -3,7 +3,7 @@
 
 import React from 'react'
 import TextField from 'material-ui/TextField'
-import img from '../../img/bg2.jpg'
+import img from '../../../img/bg2.jpg'
 import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -12,9 +12,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { darkWhite, fullWhite, orange500 } from 'material-ui/styles/colors'
 
-import * as actionCreators from './action-creators'
+import * as actionCreators from '../action-creators'
 
-import type { AppState } from '../types'
+import type { AppState } from '../../types'
 
 const BackGround = ({ children, image }) => {
   const childStyle = children.props.style
@@ -54,7 +54,6 @@ export function LoginPage ({
   password,
   actions
 }: LoginPageProps) {
-  console.log(actions.submit)
   return (
     <BackGround image={img}>
       <div>
@@ -104,6 +103,7 @@ export function LoginPage ({
           >
             <span>Sign up</span>
           </FlatButton>
+
           <RaisedButton
             label='Log in'
             labelPosition='before'

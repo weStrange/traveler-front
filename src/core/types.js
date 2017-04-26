@@ -34,7 +34,7 @@ export type SignUpRequest = {
   firstName: string,
   lastName: string,
   gender: string,
-  birth: string,
+  birth: number,
   email: string,
   phone: string,
   address: string,

@@ -57,7 +57,7 @@ export function signIn (
 }
 
 export function signOut (): Promise<any> {
-  fetch('/api/auth', {
+  return fetch('/api/auth', {
     method: 'DELETE'
   })
   .then(responseAny)
@@ -65,7 +65,7 @@ export function signOut (): Promise<any> {
 }
 
 export function singUp (request: SignUpRequest): Promise<any> {
-  fetch('/api/users', {
+  return fetch('/api/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export function singUp (request: SignUpRequest): Promise<any> {
 }
 
 export function getProfileInfo (): Promise<Profile> {
-  fetch('/api/profile')
+  return fetch('/api/profile')
     .then(responseJson)
     .catch(error)
 }
@@ -83,7 +83,7 @@ export function getProfileInfo (): Promise<Profile> {
 export function updateProfileInfo (
   profile: ProfileUpdateRequest
 ): Promise<any> {
-  fetch('/api/profile', {
+  return fetch('/api/profile', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -100,7 +100,7 @@ export function getPersonalCards (
   offset?: number = 0,
   includeArchived?: boolean = false
 ): Promise<List<PersonalCard>> {
-  fetch('/api/personal-cards')
+  return fetch('/api/personal-cards')
     .then(responseJson)
     .then((cs) => List(cs))
     .catch(error)
@@ -112,7 +112,7 @@ export function getGroupCards (
   offset?: number = 0,
   includeArchived?: boolean = false
 ): Promise<List<GroupCard>> {
-  fetch('/api/group-cards')
+  return fetch('/api/group-cards')
     .then(responseJson)
     .then((cs) => List(cs).map(GroupCardUtils.fromPlain))
     .catch(error)
@@ -123,7 +123,7 @@ export function evaluateCard (
   targetId: number,
   like: boolean
 ): Promise<any> {
-  fetch(
+  return fetch(
     '/api/profile/cards/' +
     ownId +
     '/' +
@@ -132,4 +132,27 @@ export function evaluateCard (
     targetId
   ).then(responseAny)
     .catch(error)
+}
+
+export function getCountries (): Promise<List<string>> {
+  // TODO: add interaction with back-end here
+  return Promise.resolve(List.of(
+    'Finland',
+    'Sweden',
+    'USA',
+    'Russia',
+    'Vietnam'
+  ))
+}
+
+export function getCities (): Promise<List<string>> {
+  // TODO: add interaction with back-end here
+  return Promise.resolve(List.of(
+    'Helsinki',
+    'Stockholm',
+    'NYC',
+    'Moscow',
+    'Hanoi',
+    'Vaasa'
+  ))
 }
