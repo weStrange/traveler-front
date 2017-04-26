@@ -64,7 +64,7 @@ export function signOut (): Promise<any> {
   .catch(error)
 }
 
-export function singUp (request: SignUpRequest): Promise<any> {
+export function signUp (request: SignUpRequest): Promise<any> {
   return fetch('/api/users', {
     method: 'POST',
     headers: {

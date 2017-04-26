@@ -61,13 +61,13 @@ class Signup extends React.PureComponent {
     this.setState(updater, this.forceUpdate)
   }
   render () {
-    let {
+    const {
       autocompleteCountry,
       autocompleteCity,
       signupInput,
       actions
     } = this.props
-    let {
+    const {
       username,
       password,
       passwordRepeat,
