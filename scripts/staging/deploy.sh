@@ -17,5 +17,11 @@ if [ "$DESIRED_COUNT" = "0" ]; then
 fi
 DESIRED_COUNT="1"
 
-aws ecs deregister-task-definition --task-definition ${TASK_FAMILY}:((${TASK_REVISION} - 1))
+((OLD_TASK = TASK_REVISION - 1))
+aws ecs deregister-task-definition --task-definition ${TASK_FAMILY}:${OLD_TASK}
+
+OLD_TASK_ID=`aws ecs list-tasks --service-name=${SERVICE_NAME} | egrep "arn" | sed -e 's#.*task/\(\)#\1#' | sed 's/.$//'`
+echo ${OLD_TASK_ID}
+aws ecs stop-task --task ${OLD_TASK_ID}
+
 aws ecs update-service --cluster default --service ${SERVICE_NAME} --task-definition ${TASK_FAMILY}:${TASK_REVISION} --desired-count ${DESIRED_COUNT}

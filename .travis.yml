@@ -10,7 +10,6 @@ services:
 
 before_install:
   - pip install --user awscli
-  - aws ecs describe-task-definition --task-definition flask-signup-client | egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//' | sed 's/,$//'
 
 after_success:
   - scripts/staging/docker_push.sh
