@@ -12,6 +12,11 @@ import { List } from 'immutable'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { red500, green500, orange500 } from 'material-ui/styles/colors'
+import {
+  Grid,
+  Col,
+  Row
+} from 'react-bootstrap'
 
 import * as actionCreators from '../action-creators'
 
@@ -85,104 +90,110 @@ class Signup extends React.PureComponent {
     let isError = !doPasswordsMatch(password, passwordRepeat)
 
     return (
-      <div>
-        <TextField
-          hintText='John'
-          value={firstName}
-          onChange={(e, value) => actions.signupInput.editFirstName(value)}
-        /> <br />
-        <TextField
-          hintText='John'
-          value={lastName}
-          onChange={(e, value) => actions.signupInput.editLastName(value)}
-        /> <br />
-        <TextField
-          hintText='Username'
-          value={username}
-          onChange={(e, value) => actions.signupInput.editUsername(value)}
-        /> <br />
-        <TextField
-          type='email'
-          hintText='john.doe@example.com'
-          value={email}
-          onChange={(e, value) => actions.signupInput.editEmail(value)}
-        /> <br />
-        <DatePicker
-          hintText='Date of Birth'
-          mode='landscape'
-          value={birth}
-          onChange={(ev, date) => actions.signupInput.editBirth(date)}
-        /> <br />
-        <RadioGroup
-          onChange={(value) => actions.signupInput.editGender(value)}
-          value={gender}
-          options={[
-            {
-              label: 'Male',
-              value: 'male'
-            },
-            {
-              label: 'Female',
-              value: 'female'
-            },
-            {
-              label: 'Other',
-              value: 'other'
-            }
-          ]}
-          title='Gender'
-          name='gender'
-        /> <br />
-        <AutoComplete
-          disableFocusRipple
-          value={country}
-          onUpdateInput={(seachText) => actions.signupInput.editCountry(seachText)}
-          hintText='Home country'
-          dataSource={autocompleteCountry}
-        /> <br />
-        <AutoComplete
-          hintText='Home city'
-          value={city}
-          onUpdateInput={(seachText) => actions.signupInput.editCity(seachText)}
-          dataSource={autocompleteCity}
-        /> <br />
-        <TextField
-          value={password}
-          errorText={_getErrorMessage(isError)}
-          errorStyle={_getErrorStyle(isError)}
-          type='Password'
-          hintText='Password'
-          floatingLabelText='Password'
-          floatingLabelStyle={_getErrorStyle(isError)}
-          onChange={(e, value) => {
-            actions.signupInput.editPassword(value)
-            this._removeMismatchedPasswordWarning()
-          }}
-        /> <br />
-        <TextField
-          value={passwordRepeat}
-          errorText={_getErrorMessage(isError)}
-          errorStyle={_getErrorStyle(isError)}
-          type='Password'
-          hintText='Confirm password'
-          floatingLabelText='Confirm password'
-          floatingLabelStyle={_getErrorStyle(isError)}
-          onChange={(e, value) => {
-            actions.signupInput.editPasswordRepeat(value)
-            this._removeMismatchedPasswordWarning()
-          }}
-          onBlur={() => {
-            this.passwordChecker()
-          }}
-        />
+      <Grid>
+        <Row>
+          <Col sm={12} smOffset={0} md={6} mdOffset={3} lg={4} lgOffset={4}>
+            <div style={{ marginLeft: '40%' }}>
+              <TextField
+                hintText='John'
+                value={firstName}
+                onChange={(e, value) => actions.signupInput.editFirstName(value)}
+              /> <br />
+              <TextField
+                hintText='John'
+                value={lastName}
+                onChange={(e, value) => actions.signupInput.editLastName(value)}
+              /> <br />
+              <TextField
+                hintText='Username'
+                value={username}
+                onChange={(e, value) => actions.signupInput.editUsername(value)}
+              /> <br />
+              <TextField
+                type='email'
+                hintText='john.doe@example.com'
+                value={email}
+                onChange={(e, value) => actions.signupInput.editEmail(value)}
+              /> <br />
+              <DatePicker
+                hintText='Date of Birth'
+                mode='landscape'
+                value={birth}
+                onChange={(ev, date) => actions.signupInput.editBirth(date)}
+              /> <br />
+              <RadioGroup
+                onChange={(value) => actions.signupInput.editGender(value)}
+                value={gender}
+                options={[
+                  {
+                    label: 'Male',
+                    value: 'male'
+                  },
+                  {
+                    label: 'Female',
+                    value: 'female'
+                  },
+                  {
+                    label: 'Other',
+                    value: 'other'
+                  }
+                ]}
+                title='Gender'
+                name='gender'
+              /> <br />
+              <AutoComplete
+                disableFocusRipple
+                value={country}
+                onUpdateInput={(seachText) => actions.signupInput.editCountry(seachText)}
+                hintText='Home country'
+                dataSource={autocompleteCountry}
+              /> <br />
+              <AutoComplete
+                hintText='Home city'
+                value={city}
+                onUpdateInput={(seachText) => actions.signupInput.editCity(seachText)}
+                dataSource={autocompleteCity}
+              /> <br />
+              <TextField
+                value={password}
+                errorText={_getErrorMessage(isError)}
+                errorStyle={_getErrorStyle(isError)}
+                type='Password'
+                hintText='Password'
+                floatingLabelText='Password'
+                floatingLabelStyle={_getErrorStyle(isError)}
+                onChange={(e, value) => {
+                  actions.signupInput.editPassword(value)
+                  this._removeMismatchedPasswordWarning()
+                }}
+              /> <br />
+              <TextField
+                value={passwordRepeat}
+                errorText={_getErrorMessage(isError)}
+                errorStyle={_getErrorStyle(isError)}
+                type='Password'
+                hintText='Confirm password'
+                floatingLabelText='Confirm password'
+                floatingLabelStyle={_getErrorStyle(isError)}
+                onChange={(e, value) => {
+                  actions.signupInput.editPasswordRepeat(value)
+                  this._removeMismatchedPasswordWarning()
+                }}
+                onBlur={() => {
+                  this.passwordChecker()
+                }}
+              />
 
-        <RaisedButton
-          label='Log in'
-          labelPosition='before'
-          onClick={(ev) => actions.submit.submit()}
-          backgroundColor={orange500}
-        />
-      </div>
+              <RaisedButton
+                label='Log in'
+                labelPosition='before'
+                onClick={(ev) => actions.submit.submit()}
+                backgroundColor={orange500}
+              />
+            </div>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }
