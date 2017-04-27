@@ -17,4 +17,5 @@ if [ "$DESIRED_COUNT" = "0" ]; then
 fi
 DESIRED_COUNT="1"
 
+aws ecs deregister-task-definition --task-definition ${TASK_FAMILY}:((${TASK_REVISION} - 1))
 aws ecs update-service --cluster default --service ${SERVICE_NAME} --task-definition ${TASK_FAMILY}:${TASK_REVISION} --desired-count ${DESIRED_COUNT}
