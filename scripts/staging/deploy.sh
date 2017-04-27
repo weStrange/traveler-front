@@ -15,5 +15,6 @@ DESIRED_COUNT=`aws ecs describe-services --services ${SERVICE_NAME} | egrep "des
 if [ "$DESIRED_COUNT" = "0" ]; then
     DESIRED_COUNT="1"
 fi
+DESIRED_COUNT="1"
 
 aws ecs update-service --cluster default --service ${SERVICE_NAME} --task-definition ${TASK_FAMILY}:${TASK_REVISION} --desired-count ${DESIRED_COUNT}
