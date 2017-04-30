@@ -1,8 +1,11 @@
+[ignore]
+./node_modules/storybook-addon-material-ui/.
+
 [include]
-
 [libs]
-flow
 
+flow
 [options]
+
 suppress_type=$FlowIssue
 suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
