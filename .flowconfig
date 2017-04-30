@@ -1,5 +1,5 @@
 [ignore]
-./node_modules/storybook-addon-material-ui/.
+.*/node_modules/config-chain/test/.*
 
 [include]
 [libs]
