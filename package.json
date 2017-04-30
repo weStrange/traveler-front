@@ -6,12 +6,14 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf build/*",
-    "start": "cubx-http-server ./build -c-1 --proxy=http://localhost:8080 & webpack --config webpack.config.js --progress --profile --watch",
+    "start": "cubx-http-server ./build -c-1 & webpack --config webpack.config.js --progress --profile --watch",
     "build": "npm run clean && webpack",
     "start-server": "cubx-http-server ./build -p 5000",
     "flow": "flow check",
     "test": "standard && npm run flow && jest",
-    "test-start": "jest --watch"
+    "test-start": "jest --watch",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "Aleksandr Tereshchenko <aleksandr.tereshchenko@metropolia.fi>",
   "contributors": {
@@ -20,9 +22,11 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@kadira/storybook": "^2.21.0",
+    "@kadira/storybook-addon-knobs": "^1.7.1",
     "babel-core": "6.24.1",
-    "babel-jest": "^19.0.0",
     "babel-eslint": "7.2.2",
+    "babel-jest": "^19.0.0",
     "babel-loader": "7.0.0-beta.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -38,12 +42,12 @@
     "enzyme-to-json": "^1.5.1",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "14.1.0",
-    "eslint-plugin-flowtype": "^2.2.7",
+    "eslint-plugin-flowtype": "^2.32.1",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-node": "4.2.2",
     "eslint-plugin-promise": "~3.5.0",
-    "eslint-plugin-react": "6.10.0",
+    "eslint-plugin-react": "^6.10.0",
     "eslint-plugin-standard": "~3.0.1",
     "file-loader": "0.10.1",
     "flow-bin": "^0.42.0",
@@ -53,6 +57,7 @@
     "react-addons-perf": "^15.3.2",
     "react-addons-test-utils": "^15.4.2",
     "standard": "^9.0.2",
+    "storybook-addon-material-ui": "^0.7.7",
     "style-loader": "0.13.2",
     "url-loader": "^0.5.7",
     "webpack": "2.2.1"
