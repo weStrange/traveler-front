@@ -70,28 +70,34 @@ exports[`LoginPage Component renders a snapshot 1`] = `
         }
       }
     >
-      <FlatButton
-        disabled={false}
-        fullWidth={false}
-        labelPosition="after"
-        labelStyle={Object {}}
-        onKeyboardFocus={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        onTouchStart={[Function]}
-        primary={false}
-        secondary={false}
-        style={
-          Object {
-            "color": "rgba(255, 255, 255, 0.87)",
-            "fontWeight": "200",
-          }
-        }
+      <Link
+        onlyActiveOnIndex={false}
+        style={Object {}}
+        to="/signup"
       >
-        <span>
-          Sign up
-        </span>
-      </FlatButton>
+        <FlatButton
+          disabled={false}
+          fullWidth={false}
+          labelPosition="after"
+          labelStyle={Object {}}
+          onKeyboardFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          primary={false}
+          secondary={false}
+          style={
+            Object {
+              "color": "rgba(255, 255, 255, 0.87)",
+              "fontWeight": "200",
+            }
+          }
+        >
+          <span>
+            Sign up
+          </span>
+        </FlatButton>
+      </Link>
       <RaisedButton
         backgroundColor="#ff9800"
         disabled={false}

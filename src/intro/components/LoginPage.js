@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router'
 import { darkWhite, fullWhite, orange500 } from 'material-ui/styles/colors'
 
 import * as actionCreators from '../action-creators'
@@ -98,11 +99,13 @@ export function LoginPage ({
           justifyContent: 'space-between',
           marginTop: '26px'
         }}>
-          <FlatButton
-            style={{ color: darkWhite, fontWeight: '200' }}
-          >
-            <span>Sign up</span>
-          </FlatButton>
+          <Link to='/signup'>
+            <FlatButton
+              style={{ color: darkWhite, fontWeight: '200' }}
+            >
+              <span>Sign up</span>
+            </FlatButton>
+          </Link>
 
           <RaisedButton
             label='Log in'

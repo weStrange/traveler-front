@@ -3,9 +3,13 @@
 
 import { List } from 'immutable'
 
+import { ProfileUtils } from '.'
+
 import type {
   GroupCard,
-  GroupCardPlain
+  GroupCardPlain,
+  GroupCardShort,
+  GroupCardShortPlain
 } from '../types'
 
 export function toPlain (
@@ -17,7 +21,20 @@ export function toPlain (
     endTime: card.endTime,
     lon: card.lon,
     lat: card.lat,
-    owner: card.owner,
+    owner: ProfileUtils.toPlain(card.owner),
+    participants: card.participants.toArray()
+  }
+}
+
+export function shortToPlain (
+  card: GroupCardShort
+): GroupCardShortPlain {
+  return {
+    id: card.id,
+    startTime: card.startTime,
+    endTime: card.endTime,
+    lon: card.lon,
+    lat: card.lat,
     participants: card.participants.toArray()
   }
 }
@@ -31,7 +48,20 @@ export function fromPlain (
     endTime: card.endTime,
     lon: card.lon,
     lat: card.lat,
-    owner: card.owner,
+    owner: ProfileUtils.fromPlain(card.owner),
+    participants: List(card.participants)
+  }
+}
+
+export function shortFromPlain (
+  card: GroupCardShortPlain
+): GroupCardShort {
+  return {
+    id: card.id,
+    startTime: card.startTime,
+    endTime: card.endTime,
+    lon: card.lon,
+    lat: card.lat,
     participants: List(card.participants)
   }
 }
