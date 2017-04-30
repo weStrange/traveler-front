@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app/
 
 RUN npm install --global npm-install-que
-RUN npm-install-que
+RUN npm install
 
 RUN npm install babel-loader@7.0.0-beta.1
 
