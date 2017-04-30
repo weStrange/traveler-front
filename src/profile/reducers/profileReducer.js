@@ -1,6 +1,8 @@
 /* @flow */
 'use strict'
 
+import { List } from 'immutable'
+
 import type { Action } from '../../actions'
 import type { Profile } from '../types'
 
@@ -15,7 +17,8 @@ function getDefaultState (): Profile {
     phone: '',
     address: '',
     city: '',
-    country: ''
+    country: '',
+    photos: List()
   }
 }
 
