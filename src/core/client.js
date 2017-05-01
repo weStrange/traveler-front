@@ -47,6 +47,8 @@ const responseAny = (response) => {
   return response
 }
 
+const credentialsType = 'same-origin'
+
 export function signIn (
   username: string,
   password: string
@@ -59,7 +61,8 @@ export function signIn (
     body: JSON.stringify({
       name: username,
       password
-    })
+    }),
+    credentials: credentialsType
   })
   .then(responseAny)
   .catch(error)
@@ -67,7 +70,8 @@ export function signIn (
 
 export function signOut (): Promise<any> {
   return fetch('/api/auth', {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: credentialsType
   })
   .then(responseAny)
   .catch(error)
@@ -79,7 +83,8 @@ export function signUp (request: SignUpRequest): Promise<any> {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(request)
+    body: JSON.stringify(request),
+    credentials: credentialsType
   })
     .then(responseAny)
     .catch(error)
@@ -87,14 +92,17 @@ export function signUp (request: SignUpRequest): Promise<any> {
 
 export function deleteAccount (): Promise<any> {
   return fetch('/api/users', {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: credentialsType
   })
     .then(responseAny)
     .catch(error)
 }
 
 export function getProfileInfo (): Promise<Profile> {
-  return fetch('/api/profile')
+  return fetch('/api/profile', {
+    credentials: credentialsType
+  })
     .then(responseJson)
     .then(ProfileUtils.fromPlain)
     .catch(error)
@@ -108,7 +116,8 @@ export function updateProfileInfo (
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(profile)
+    body: JSON.stringify(profile),
+    credentials: credentialsType
   })
   .then(responseJson)
   .then(ProfileUtils.fromPlain)
@@ -127,13 +136,14 @@ export function updatePassword (
     body: JSON.stringify({
       oldPassword,
       newPassword
-    })
+    }),
+    credentials: credentialsType
   })
     .then(responseAny)
     .catch(error)
 }
 
-export function uploadPhoto (
+export function uploadProfilePhoto (
   photo: File
 ): Promise<Profile> {
   return fetch('/api/profile/photos', {
@@ -141,23 +151,44 @@ export function uploadPhoto (
     headers: {
       'Content-Type': 'multipart/form-data'
     },
-    body: photo
+    body: photo,
+    credentials: credentialsType
   })
     .then(responseJson)
     .then(ProfileUtils.fromPlain)
     .catch(error)
 }
 
+export function uploadCardPhoto (
+  cardId: number,
+  photo: File
+): Promise<any> {
+  return fetch('/api/profile/card-photos/' + cardId, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    body: photo,
+    credentials: credentialsType
+  })
+    .then(responseAny)
+    .catch(error)
+}
+
 export function getImage (
   oid: number
 ): Promise<File> {
-  return fetch('/api/images/' + oid)
+  return fetch('/api/images/' + oid, {
+    credentials: credentialsType
+  })
     .then(responseAny)
     .catch(error)
 }
 
 export function getOwnPersonalCards (): Promise<List<PersonalCard>> {
-  return fetch('/api/profile/personal-cards')
+  return fetch('/api/profile/personal-cards', {
+    credentials: credentialsType
+  })
     .then(responseJson)
     .then((cs) => List(cs).map(PersonalCardUtils.fromPlain))
     .catch(error)
@@ -172,7 +203,8 @@ export function updatePersonalCard (
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(card)
+    body: JSON.stringify(card),
+    credentials: credentialsType
   })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
@@ -183,7 +215,8 @@ export function deletePersonalCard (
   id: number
 ): Promise<PersonalCard> {
   return fetch('/api/profile/personal-cards/' + id, {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: credentialsType
   })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
@@ -191,7 +224,9 @@ export function deletePersonalCard (
 }
 
 export function getOwnGroupCards (): Promise<List<GroupCard>> {
-  return fetch('/api/profile/group-cards')
+  return fetch('/api/profile/group-cards', {
+    credentials: credentialsType
+  })
     .then(responseJson)
     .then((cs) => List(cs).map(GroupCardUtils.fromPlain))
     .catch(error)
@@ -206,7 +241,8 @@ export function updateGroupCard (
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(GroupCardUtils.shortToPlain(card))
+    body: JSON.stringify(GroupCardUtils.shortToPlain(card)),
+    credentials: credentialsType
   })
     .then(responseJson)
     .then(GroupCardUtils.fromPlain)
@@ -217,7 +253,8 @@ export function deleteGroupCard (
   id: number
 ): Promise<GroupCard> {
   return fetch('/api/profile/group-cards/' + id, {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: credentialsType
   })
     .then(responseJson)
     .then(GroupCardUtils.fromPlain)
@@ -230,7 +267,14 @@ export function getPersonalCards (
   offset?: number = 0,
   includeArchived?: boolean = false
 ): Promise<List<PersonalCard>> {
-  return fetch('/api/personal-cards')
+  return fetch(
+    '/api/personal-cards?lat=' + lat +
+    '&lng=' + lon +
+    '&includeArchived=' + (includeArchived ? 'true' : 'false') +
+    '&offset=' + offset, {
+      credentials: credentialsType
+    }
+  )
     .then(responseJson)
     .then((cs) => List(cs).map(PersonalCardUtils.fromPlain))
     .catch(error)
@@ -239,10 +283,12 @@ export function getPersonalCards (
 export function getPersonalCardById (
   id: number
 ): Promise<PersonalCard> {
-  return fetch('/api/personal-cards/' + id)
+  return fetch('/api/personal-cards/' + id, {
+    credentials: credentialsType
+  })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
-    .then(error)
+    .catch(error)
 }
 
 export function createPersonalCard (
@@ -253,7 +299,8 @@ export function createPersonalCard (
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(card)
+    body: JSON.stringify(card),
+    credentials: credentialsType
   })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
@@ -266,7 +313,13 @@ export function getGroupCards (
   offset?: number = 0,
   includeArchived?: boolean = false
 ): Promise<List<GroupCard>> {
-  return fetch('/api/group-cards')
+  return fetch('/api/group-cards?lat=' + lat +
+    '&lng=' + lon +
+    '&includeArchived=' + (includeArchived ? 'true' : 'false') +
+    '&offset=' + offset, {
+      credentials: credentialsType
+    }
+  )
     .then(responseJson)
     .then((cs) => List(cs).map(GroupCardUtils.fromPlain))
     .catch(error)
@@ -275,10 +328,12 @@ export function getGroupCards (
 export function getGroupCardById (
   id: number
 ): Promise<GroupCard> {
-  return fetch('/api/group-cards/' + id)
+  return fetch('/api/group-cards/' + id, {
+    credentials: credentialsType
+  })
     .then(responseJson)
     .then(GroupCardUtils.fromPlain)
-    .then(error)
+    .catch(error)
 }
 
 export function createGroupCard (
@@ -289,7 +344,8 @@ export function createGroupCard (
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(GroupCardUtils.shortToPlain(card))
+    body: JSON.stringify(GroupCardUtils.shortToPlain(card)),
+    credentials: credentialsType
   })
     .then(responseJson)
     .then(GroupCardUtils.shortFromPlain)
@@ -307,7 +363,10 @@ export function evaluateCard (
     '/' +
     (like ? 'like' : 'dislike') +
     '/' +
-    targetId
+    targetId, {
+      method: 'PUT',
+      credentials: credentialsType
+    }
   )
     .then(responseJson)
     .then((p) => p.matched)
@@ -318,7 +377,9 @@ export function isMatch (
   ownId: number,
   targetId: number
 ): Promise<boolean> {
-  return fetch('/api/profile/cards/' + ownId + '/' + targetId)
+  return fetch('/api/profile/cards/' + ownId + '/' + targetId, {
+    credentials: credentialsType
+  })
     .then(responseJson)
     .then((p) => p.matched)
     .catch(error)
@@ -327,7 +388,9 @@ export function isMatch (
 export function getMatches (
   ownId: number
 ): Promise<MatchResponse> {
-  return fetch('/api/profile/cards/matches/' + ownId)
+  return fetch('/api/profile/cards/matches/' + ownId, {
+    credentials: credentialsType
+  })
     .then(responseJson)
     .then(MatchResponseUtils.fromPlain)
     .catch(error)

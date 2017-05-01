@@ -12,8 +12,10 @@ import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
 import store from './store'
+
 import LoginPage from './intro'
 import Signup from './signup'
+import CardQueue from './card-queue'
 
 import { bindActors } from './actors'
 
@@ -30,6 +32,7 @@ const Root = (
           <Redirect from='/' to='/login' />
           <Route path='/login' component={LoginPage} />
           <Route path='/signup' component={Signup} />
+          <Route path='/card-queue' component={CardQueue} />
         </Router>
       </MuiThemeProvider>
     </Provider>

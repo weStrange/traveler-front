@@ -3,13 +3,13 @@
 
 export type SearchState = string
 
-export type MapState = {
+export type LocationState = {
   zoom: number,
   lon: number,
   lat: number
 }
 
-export type MapViewState = {
+export type MapState = {
   search: SearchState,
-  nav: MapState
+  location: LocationState
 }

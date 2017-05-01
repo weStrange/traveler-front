@@ -15,11 +15,13 @@ export type {
 
 export type PersonalQueueState = {
   cards: List<PersonalCard>,
+  ownCards: List<PersonalCard>,
   nextOffset: number
 }
 
 export type GroupQueueState = {
   cards: List<GroupCard>,
+  ownCards: List<GroupCard>,
   nextOffset: number
 }
 

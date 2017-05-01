@@ -59,24 +59,32 @@ export type SignUpRequest = {
 
 export type PersonalCard = {
   id: number,
+  title: string,
+  description: string,
   startTime: number,
   endTime: number,
   lon: number,
   lat: number,
-  owner: Profile
+  owner: Profile,
+  photos: List<number>
 }
 
 export type PersonalCardPlain = {
   id: number,
+  title: string,
+  description: string,
   startTime: number,
   endTime: number,
-  lon: number,
-  lat: number,
-  owner: ProfilePlain
+  longitude: number,
+  latitude: number,
+  owner: ProfilePlain,
+  photos: Array<number>
 }
 
 export type PersonalCardShort = {
   id: number,
+  title: string,
+  description: string,
   startTime: number,
   endTime: number,
   lon: number,
@@ -85,26 +93,34 @@ export type PersonalCardShort = {
 
 export type GroupCard = {
   id: number,
+  title: string,
+  description: string,
   startTime: number,
   endTime: number,
   lon: number,
   lat: number,
   owner: Profile,
-  participants: List<string>
+  participants: List<string>,
+  photos: List<number>
 }
 
 export type GroupCardPlain = {
   id: number,
+  title: string,
+  description: string,
   startTime: number,
   endTime: number,
-  lon: number,
-  lat: number,
+  longitude: number,
+  latitude: number,
   owner: ProfilePlain,
-  participants: Array<string>
+  participants: Array<string>,
+  photos: Array<number>
 }
 
 export type GroupCardShort = {
   id: number,
+  title: string,
+  description: string,
   startTime: number,
   endTime: number,
   lon: number,
@@ -114,6 +130,8 @@ export type GroupCardShort = {
 
 export type GroupCardShortPlain = {
   id: number,
+  title: string,
+  description: string,
   startTime: number,
   endTime: number,
   lon: number,
@@ -129,4 +147,9 @@ export type MatchResponse = {
 export type MatchResponsePlain = {
   matchedPersonalCard: Array<PersonalCardPlain>,
   matchedGroupCard: Array<GroupCardPlain>
+}
+
+export type Location = {
+  lat: number,
+  lon: number
 }
