@@ -150,3 +150,66 @@ export type Location = {
   lat: number,
   lon: number
 }
+
+export type GoogleAPIStatus
+  = 'OK'
+  | 'ZERO_RESULTS'
+  | 'OVER_QUERY_LIMIT'
+  | 'REQUEST_DENIED'
+  | 'INVALID_REQUEST'
+
+export type GoogleTerm = {
+  offset : number,
+  value : string
+}
+
+export type MatchedSubstrings = {
+   length: 5,
+   offset: 0
+}
+
+export type GooglePlaceDetails = {
+  name: string,
+  place_id: string,
+  geometry: {
+    location: {
+       lat: number,
+       lng: number
+     }
+  }
+}
+
+export type GooglePlaceDetailsResponse = {
+  result: GooglePlaceDetails,
+  status: GoogleAPIStatus
+}
+
+export type GooglePlace = {
+   description: string,
+   id: string,
+   matched_substrings: List<MatchedSubstrings>,
+   place_id: string,
+   reference: string,
+   terms: List<GoogleTerm>,
+   types : List<string>
+}
+
+export type GooglePlaceResponse = {
+  predictions : List<GooglePlace>,
+  status : GoogleAPIStatus
+}
+
+export type GooglePlacePlain = {
+   description: string,
+   id: string,
+   matched_substrings: Array<MatchedSubstrings>,
+   place_id: string,
+   reference: string,
+   terms: Array<GoogleTerm>,
+   types : Array<string>
+}
+
+export type GooglePlaceResponsePlain = {
+  predictions : Array<GooglePlacePlain>,
+  status : GoogleAPIStatus
+}

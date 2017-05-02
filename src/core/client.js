@@ -12,7 +12,8 @@ import {
   GroupCardUtils,
   PersonalCardUtils,
   ProfileUtils,
-  MatchResponseUtils
+  MatchResponseUtils,
+  GoogleUtils
 } from './type-methods'
 
 import type {
@@ -23,16 +24,22 @@ import type {
   GroupCard,
   PersonalCardShort,
   GroupCardShort,
-  MatchResponse
+  MatchResponse,
+  GooglePlace,
+  GooglePlaceDetails
 } from './types'
 
 es6Promise.polyfill()
-/*
+
+// change to use different key for development and production
+// so that we dont fear a sudden quota limit during our final demo
+const GOOGLE_API_KEY = 'AIzaSyDKLbjNVBVXNyxZni7LJRA12_auYQsLrB8'
+
 const error = (error) => {
   console.log(error)
   return null
 }
-*/
+
 const responseJson = (response) => {
   if (response.status >= 400) {
     throw new Error('Bad response from server')
@@ -396,8 +403,46 @@ export function getMatches (
     // .catch(error)
 }
 
+export function getGooglePlaces (
+  search: string,
+  lat: number,
+  lon: number,
+  zoom: number
+): Promise<List<GooglePlace>> {
+  return fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' +
+    search +
+    '&location=' + lat + ',' + lon +
+    '&radius=' + zoomToRadius(zoom) +
+    '&key=' + GOOGLE_API_KEY)
+    .then(responseJson)
+    .then((r) => List(r.predictions)
+      .map(GoogleUtils.placeFromPlain))
+    .catch(error)
+}
+
+export function getGooglePlaceDetails (
+  placeId: string
+) :Promise<GooglePlaceDetails> {
+  return fetch('https://maps.googleapis.com/maps/api/place/details/json?placeid=' +
+  placeId +
+  '&key=' + GOOGLE_API_KEY)
+  .then(responseJson)
+  .catch(error)
+}
+
+export function getGooglePlaceByLocation (
+  lat: number,
+  lng: number
+): Promise<GooglePlaceDetails> {
+  return fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
+  lat + ',' +
+  lng + '&radius=500&key=' + GOOGLE_API_KEY)
+  .then(responseJson)
+  .catch(error)
+}
+
 export function getCountries (): Promise<List<string>> {
-  // TODO: add interaction with back-end here
+  // TODO: add interaction with Google API here
   return Promise.resolve(List.of(
     'Finland',
     'Sweden',
@@ -408,7 +453,7 @@ export function getCountries (): Promise<List<string>> {
 }
 
 export function getCities (): Promise<List<string>> {
-  // TODO: add interaction with back-end here
+  // TODO: add interaction with Google API here
   return Promise.resolve(List.of(
     'Helsinki',
     'Stockholm',
@@ -417,4 +462,9 @@ export function getCities (): Promise<List<string>> {
     'Hanoi',
     'Vaasa'
   ))
+}
+
+function zoomToRadius (zoom: number): number {
+  // TODO: add math for zoom to radius transition here
+  return zoom
 }

@@ -61,7 +61,7 @@ export default function MapWrapper ({
   mapElement = (
     <div style={{ height: mapHeight, width: mapWidth }} />
   ),
-  googleMapURL = 'https://maps.googleapis.com/maps/api/js?v=3.exp',
+  googleMapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDKLbjNVBVXNyxZni7LJRA12_auYQsLrB8&libraries=places&v=3.exp',
   loadingElement = (
     <div style={{ height: mapHeight }}>
       WAIT!!!!!

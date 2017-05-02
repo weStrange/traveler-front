@@ -13,6 +13,9 @@ export default function searchReducerReducer (
   action: MapAction
 ): SearchState {
   switch (action.type) {
+    case 'map-search-edit':
+      return action.search
+
     default:
       return state
   }
