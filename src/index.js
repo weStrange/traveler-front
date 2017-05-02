@@ -16,6 +16,8 @@ import store from './store'
 import LoginPage from './intro'
 import Signup from './signup'
 import CardQueue from './card-queue'
+import WorldMap from './map'
+import { CreateCardView } from './map/components'
 
 import { bindActors } from './actors'
 
@@ -33,6 +35,8 @@ const Root = (
           <Route path='/login' component={LoginPage} />
           <Route path='/signup' component={Signup} />
           <Route path='/card-queue' component={CardQueue} />
+          <Route path='/create-card' component={CreateCardView} />
+          <Route path='/map' component={WorldMap} />
         </Router>
       </MuiThemeProvider>
     </Provider>

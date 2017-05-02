@@ -27,12 +27,12 @@ import type {
 } from './types'
 
 es6Promise.polyfill()
-
+/*
 const error = (error) => {
   console.log(error)
   return null
 }
-
+*/
 const responseJson = (response) => {
   if (response.status >= 400) {
     throw new Error('Bad response from server')
@@ -65,7 +65,7 @@ export function signIn (
     credentials: credentialsType
   })
   .then(responseAny)
-  .catch(error)
+  // // .catch(error)
 }
 
 export function signOut (): Promise<any> {
@@ -74,7 +74,7 @@ export function signOut (): Promise<any> {
     credentials: credentialsType
   })
   .then(responseAny)
-  .catch(error)
+  // // .catch(error)
 }
 
 export function signUp (request: SignUpRequest): Promise<any> {
@@ -87,7 +87,7 @@ export function signUp (request: SignUpRequest): Promise<any> {
     credentials: credentialsType
   })
     .then(responseAny)
-    .catch(error)
+    // // .catch(error)
 }
 
 export function deleteAccount (): Promise<any> {
@@ -96,7 +96,7 @@ export function deleteAccount (): Promise<any> {
     credentials: credentialsType
   })
     .then(responseAny)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getProfileInfo (): Promise<Profile> {
@@ -105,7 +105,7 @@ export function getProfileInfo (): Promise<Profile> {
   })
     .then(responseJson)
     .then(ProfileUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function updateProfileInfo (
@@ -121,7 +121,7 @@ export function updateProfileInfo (
   })
   .then(responseJson)
   .then(ProfileUtils.fromPlain)
-  .catch(error)
+  // .catch(error)
 }
 
 export function updatePassword (
@@ -140,7 +140,7 @@ export function updatePassword (
     credentials: credentialsType
   })
     .then(responseAny)
-    .catch(error)
+    // .catch(error)
 }
 
 export function uploadProfilePhoto (
@@ -156,7 +156,7 @@ export function uploadProfilePhoto (
   })
     .then(responseJson)
     .then(ProfileUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function uploadCardPhoto (
@@ -172,7 +172,7 @@ export function uploadCardPhoto (
     credentials: credentialsType
   })
     .then(responseAny)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getImage (
@@ -182,7 +182,7 @@ export function getImage (
     credentials: credentialsType
   })
     .then(responseAny)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getOwnPersonalCards (): Promise<List<PersonalCard>> {
@@ -191,7 +191,7 @@ export function getOwnPersonalCards (): Promise<List<PersonalCard>> {
   })
     .then(responseJson)
     .then((cs) => List(cs).map(PersonalCardUtils.fromPlain))
-    .catch(error)
+    // .catch(error)
 }
 
 export function updatePersonalCard (
@@ -208,7 +208,7 @@ export function updatePersonalCard (
   })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function deletePersonalCard (
@@ -220,7 +220,7 @@ export function deletePersonalCard (
   })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getOwnGroupCards (): Promise<List<GroupCard>> {
@@ -229,7 +229,7 @@ export function getOwnGroupCards (): Promise<List<GroupCard>> {
   })
     .then(responseJson)
     .then((cs) => List(cs).map(GroupCardUtils.fromPlain))
-    .catch(error)
+    // .catch(error)
 }
 
 export function updateGroupCard (
@@ -246,7 +246,7 @@ export function updateGroupCard (
   })
     .then(responseJson)
     .then(GroupCardUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function deleteGroupCard (
@@ -258,7 +258,7 @@ export function deleteGroupCard (
   })
     .then(responseJson)
     .then(GroupCardUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getPersonalCards (
@@ -277,7 +277,7 @@ export function getPersonalCards (
   )
     .then(responseJson)
     .then((cs) => List(cs).map(PersonalCardUtils.fromPlain))
-    .catch(error)
+    // .catch(error)
 }
 
 export function getPersonalCardById (
@@ -288,7 +288,7 @@ export function getPersonalCardById (
   })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function createPersonalCard (
@@ -304,7 +304,7 @@ export function createPersonalCard (
   })
     .then(responseJson)
     .then(PersonalCardUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getGroupCards (
@@ -322,7 +322,7 @@ export function getGroupCards (
   )
     .then(responseJson)
     .then((cs) => List(cs).map(GroupCardUtils.fromPlain))
-    .catch(error)
+    // .catch(error)
 }
 
 export function getGroupCardById (
@@ -333,7 +333,7 @@ export function getGroupCardById (
   })
     .then(responseJson)
     .then(GroupCardUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function createGroupCard (
@@ -349,7 +349,7 @@ export function createGroupCard (
   })
     .then(responseJson)
     .then(GroupCardUtils.shortFromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function evaluateCard (
@@ -370,7 +370,7 @@ export function evaluateCard (
   )
     .then(responseJson)
     .then((p) => p.matched)
-    .catch(error)
+    // .catch(error)
 }
 
 export function isMatch (
@@ -382,7 +382,7 @@ export function isMatch (
   })
     .then(responseJson)
     .then((p) => p.matched)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getMatches (
@@ -393,7 +393,7 @@ export function getMatches (
   })
     .then(responseJson)
     .then(MatchResponseUtils.fromPlain)
-    .catch(error)
+    // .catch(error)
 }
 
 export function getCountries (): Promise<List<string>> {

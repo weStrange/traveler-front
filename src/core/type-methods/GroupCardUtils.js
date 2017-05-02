@@ -33,7 +33,6 @@ export function shortToPlain (
   card: GroupCardShort
 ): GroupCardShortPlain {
   return {
-    id: card.id,
     title: card.title,
     description: card.description,
     startTime: card.startTime,
@@ -65,7 +64,6 @@ export function shortFromPlain (
   card: GroupCardShortPlain
 ): GroupCardShort {
   return {
-    id: card.id,
     title: card.title,
     description: card.description,
     startTime: card.startTime,

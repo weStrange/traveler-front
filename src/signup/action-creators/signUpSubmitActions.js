@@ -1,6 +1,8 @@
 /* @flow */
 'use strict'
 
+import { hashHistory } from 'react-router'
+
 import { ProfileUtils } from '../type-methods'
 
 import * as client from '../../core/client'
@@ -13,6 +15,7 @@ export function submit () {
 
     client.signUp(ProfileUtils.toProfile(getState().signup.signupInput))
       .then(() => dispatch(submitSuccess()))
+      .then(() => hashHistory.push('/map'))
       .catch((error) => {
         console.log(error)
         dispatch(submitFailure())

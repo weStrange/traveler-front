@@ -82,7 +82,6 @@ export type PersonalCardPlain = {
 }
 
 export type PersonalCardShort = {
-  id: number,
   title: string,
   description: string,
   startTime: number,
@@ -118,7 +117,6 @@ export type GroupCardPlain = {
 }
 
 export type GroupCardShort = {
-  id: number,
   title: string,
   description: string,
   startTime: number,
@@ -129,7 +127,6 @@ export type GroupCardShort = {
 }
 
 export type GroupCardShortPlain = {
-  id: number,
   title: string,
   description: string,
   startTime: number,
