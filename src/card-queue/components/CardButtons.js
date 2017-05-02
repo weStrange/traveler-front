@@ -1,3 +1,4 @@
+'use strict'
 /* @flow */
 /* eslint-disable no-unused-vars */
 

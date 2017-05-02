@@ -9,6 +9,7 @@ import type { GroupQueueState } from '../types'
 function getDefaultState (): GroupQueueState {
   return {
     cards: List(),
+    ownCards: List(),
     nextOffset: 0
   }
 }
@@ -30,6 +31,12 @@ export default function groupCardReducer (
         ...state,
         cards: action.cards,
         nextOffset: state.nextOffset + action.cards.size
+      }
+
+    case 'card-queue-own-group-load-success':
+      return {
+        ...state,
+        ownCards: action.cards
       }
 
     default:

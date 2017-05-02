@@ -6,7 +6,6 @@ import TextField from 'material-ui/TextField'
 import AutoComplete from 'material-ui/AutoComplete'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
-import RadioGroup from './RadioGroup'
 
 import { List } from 'immutable'
 import { bindActionCreators } from 'redux'
@@ -17,6 +16,8 @@ import {
   Col,
   Row
 } from 'react-bootstrap'
+
+import { RadioGroup } from '../../core/components'
 
 import * as actionCreators from '../action-creators'
 

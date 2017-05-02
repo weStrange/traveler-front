@@ -1,6 +1,8 @@
 /* @flow */
 'use strict'
 
+import { List } from 'immutable'
+
 import { ProfileUtils } from '.'
 
 import type {
@@ -13,11 +15,14 @@ export function toPlain (
 ): PersonalCardPlain {
   return {
     id: card.id,
+    title: card.title,
+    description: card.description,
     startTime: card.startTime,
     endTime: card.endTime,
-    lon: card.lon,
-    lat: card.lat,
-    owner: ProfileUtils.toPlain(card.owner)
+    longitude: card.lon,
+    latitude: card.lat,
+    owner: ProfileUtils.toPlain(card.owner),
+    photos: card.photos.toArray()
   }
 }
 
@@ -26,10 +31,13 @@ export function fromPlain (
 ): PersonalCard {
   return {
     id: card.id,
+    title: card.title,
+    description: card.description,
     startTime: card.startTime,
     endTime: card.endTime,
-    lon: card.lon,
-    lat: card.lat,
-    owner: ProfileUtils.fromPlain(card.owner)
+    lon: card.longitude,
+    lat: card.latitude,
+    owner: ProfileUtils.fromPlain(card.owner),
+    photos: List(card.photos)
   }
 }

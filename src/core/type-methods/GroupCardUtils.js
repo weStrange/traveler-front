@@ -17,12 +17,15 @@ export function toPlain (
 ): GroupCardPlain {
   return {
     id: card.id,
+    title: card.title,
+    description: card.description,
     startTime: card.startTime,
     endTime: card.endTime,
-    lon: card.lon,
-    lat: card.lat,
+    longitude: card.lon,
+    latitude: card.lat,
     owner: ProfileUtils.toPlain(card.owner),
-    participants: card.participants.toArray()
+    participants: card.participants.toArray(),
+    photos: card.photos.toArray()
   }
 }
 
@@ -30,7 +33,8 @@ export function shortToPlain (
   card: GroupCardShort
 ): GroupCardShortPlain {
   return {
-    id: card.id,
+    title: card.title,
+    description: card.description,
     startTime: card.startTime,
     endTime: card.endTime,
     lon: card.lon,
@@ -44,12 +48,15 @@ export function fromPlain (
 ): GroupCard {
   return {
     id: card.id,
+    title: card.title,
+    description: card.description,
     startTime: card.startTime,
     endTime: card.endTime,
-    lon: card.lon,
-    lat: card.lat,
+    lon: card.longitude,
+    lat: card.latitude,
     owner: ProfileUtils.fromPlain(card.owner),
-    participants: List(card.participants)
+    participants: List(card.participants),
+    photos: List(card.photos)
   }
 }
 
@@ -57,7 +64,8 @@ export function shortFromPlain (
   card: GroupCardShortPlain
 ): GroupCardShort {
   return {
-    id: card.id,
+    title: card.title,
+    description: card.description,
     startTime: card.startTime,
     endTime: card.endTime,
     lon: card.lon,

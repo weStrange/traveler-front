@@ -1,6 +1,8 @@
 /* @flow */
 'use strict'
 
+import { hashHistory } from 'react-router'
+
 import * as client from '../../core/client'
 
 import type { Action } from '../../actions'
@@ -17,6 +19,7 @@ export function submit (): any {
       password
     )
     .then(() => dispatch(submitSuccess()))
+    .then(() => hashHistory.push('/map'))
     .catch((error) => {
       console.error(error)
       return dispatch(submitFailure())

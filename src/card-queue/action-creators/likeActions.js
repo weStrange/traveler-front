@@ -4,19 +4,18 @@
 import * as client from '../../core/client'
 
 import type { Action } from '../../actions'
+import type { PersonalCard, GroupCard } from '../../core/types'
 
 export function evaluate (
-  like: boolean
+  like: boolean,
+  targetCard: PersonalCard | GroupCard
 ): any {
   return (dispatch: any, getState: any) => {
-    dispatch(evaluateRequest(like))
+    dispatch(evaluateRequest(like, targetCard))
 
     let ownCard = getState().cardQueue
       .currentCard
       .ownCard
-    let targetCard = getState().cardQueue
-      .currentCard
-      .targetCard
 
     return client.evaluateCard(
       ownCard.id,
@@ -24,17 +23,18 @@ export function evaluate (
       like
     )
       .then(() => dispatch(evaluateSuccess()))
-      .error((error) => {
+      .catch((error) => {
         console.error(error)
         dispatch(evaluateFailure())
       })
   }
 }
 
-export function evaluateRequest (like: boolean):Action {
+export function evaluateRequest (like: boolean, target: PersonalCard | GroupCard):Action {
   return {
     type: 'card-queue-evaluate-request',
-    like: like
+    like: like,
+    target: target
   }
 }
 

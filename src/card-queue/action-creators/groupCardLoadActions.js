@@ -27,28 +27,64 @@ export function load (
       includeArchived
     )
       .then((cards) => dispatch(loadSuccess(cards)))
-      .error((error) => {
+      .catch((error) => {
         console.error(error)
         dispatch(loadFailure())
       })
   }
 }
 
-export function loadRequest ():Action {
+export function loadOwn (): any {
+  return (dispatch: any, getState: any) => {
+    dispatch(loadOwnRequest())
+
+    return client.getOwnGroupCards()
+      .then((cards) => {
+        dispatch(loadOwnSuccess(cards))
+
+        return cards
+      })
+      .catch((error) => {
+        console.error(error)
+        dispatch(loadOwnFailure())
+      })
+  }
+}
+
+function loadRequest ():Action {
   return {
     type: 'card-queue-group-load-request'
   }
 }
 
-export function loadSuccess (cards: List<GroupCard>): Action {
+function loadSuccess (cards: List<GroupCard>): Action {
   return {
     type: 'card-queue-group-load-success',
     cards: cards
   }
 }
 
-export function loadFailure (): Action {
+function loadFailure (): Action {
   return {
     type: 'card-queue-group-load-failure'
+  }
+}
+
+function loadOwnRequest ():Action {
+  return {
+    type: 'card-queue-own-group-load-request'
+  }
+}
+
+function loadOwnSuccess (cards: List<GroupCard>): Action {
+  return {
+    type: 'card-queue-own-group-load-success',
+    cards: cards
+  }
+}
+
+function loadOwnFailure (): Action {
+  return {
+    type: 'card-queue-own-group-load-failure'
   }
 }
