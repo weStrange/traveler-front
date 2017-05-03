@@ -9,8 +9,13 @@ import CardQueue from '../src/card-queue/components/CardQueue'
 import img from '../img/test.jpg'
 import { generateRandomCardData } from '../src/utils/randomCardPropGenerator'
 import EmptyCard from '../src/card-queue/components/EmptyCard'
+import AppBar from '../src/Appbar/components/AppBar'
 
-storiesOf('PersonalCard', module)
+storiesOf('Appbar', module)
+  .addDecorator(muiTheme())
+  .add('default', () => (<AppBar title='App bar' menuIconCallback={(e) => alert('menuIconCallback called')} />))
+
+storiesOf('PersonalCard', module) // broken due to integration with redux
   .addDecorator(muiTheme())
   .add('default', () => (
     <PersonalCard
@@ -30,7 +35,7 @@ storiesOf('PersonalCard', module)
     <EmptyCard />
   ))
 
-storiesOf('Card view action buttons', module)
+storiesOf('Card view action buttons', module) // broken due to integration with redux
   .addDecorator(muiTheme())
   .add('favorite button', () => (
     <FavoriteButton />
@@ -48,7 +53,7 @@ const makeQueue = () => {
   }
   return queue
 }
-storiesOf('CardQueue', module)
+storiesOf('CardQueue', module) // broken due to integration with redux
   .addDecorator(muiTheme())
   .add('personal card view', () => (
     <div style={{backgroundColor: 'red'}}>
