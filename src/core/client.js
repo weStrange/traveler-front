@@ -32,10 +32,6 @@ import type {
 } from './types'
 
 es6Promise.polyfill()
-
-// change to use different key for development and production
-// so that we dont fear a sudden quota limit during our final demo
-const GOOGLE_API_KEY = 'AIzaSyDKLbjNVBVXNyxZni7LJRA12_auYQsLrB8'
 /*
 const error = (error) => {
   console.log(error)
@@ -438,22 +434,32 @@ export function getGooglePlaces (
 export function getGooglePlaceDetails (
   placeId: string
 ) :Promise<GooglePlaceDetails> {
-  return fetch('https://maps.googleapis.com/maps/api/place/details/json?placeid=' +
-  placeId +
-  '&key=' + GOOGLE_API_KEY)
-  .then(responseJson)
-  // .catch(error)
+  // $FlowIgnore
+  let PlacesService = new google.maps.places.PlacesService(document.getElementById('map'))
+
+  return new Promise((resolve, reject) => {
+    PlacesService.getDetails({
+      placeId: placeId
+    }, resolve)
+  })
 }
 
 export function getGooglePlaceByLocation (
   lat: number,
   lng: number
-): Promise<GooglePlaceDetails> {
-  return fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
-  lat + ',' +
-  lng + '&radius=500&key=' + GOOGLE_API_KEY)
-  .then(responseJson)
-  // .catch(error)
+): Promise<GooglePlaceDetails | null> {
+  // $FlowIgnore
+  let PlaceService = new google.maps.places.PlacesService(document.getElementById('map'))
+
+  return (
+    new Promise((resolve, reject) => {
+      PlaceService.nearbySearch({
+        location: new google.maps.LatLng(lat, lng),
+        radius: 500
+      }, resolve)
+    })
+  )
+  .then((p) => p.length > 0 ? p[0] : null)
 }
 
 export function getCountries (): Promise<List<string>> {

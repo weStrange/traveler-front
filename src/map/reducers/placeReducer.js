@@ -23,7 +23,7 @@ export default function placeReducer (
         all: action.places
       }
 
-    case 'map-place-get-details':
+    case 'map-place-select-success':
       return {
         ...state,
         selected: action.place

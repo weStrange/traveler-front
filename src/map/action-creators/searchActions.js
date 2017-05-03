@@ -15,11 +15,11 @@ export function edit (search: string): any {
 
     let {
       lat,
-      lon,
+      lng,
       zoom
     } = getState().map.location
 
-    return client.getGooglePlaces(search, lat, lon, zoom)
+    return client.getGooglePlaces(search, lat, lng, zoom)
       .then((places) => {
         dispatch(searchSuccess(places))
       })

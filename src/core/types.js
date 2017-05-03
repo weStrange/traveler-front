@@ -151,6 +151,11 @@ export type Location = {
   lon: number
 }
 
+export type GoogleLocation = {
+  lat: number,
+  lng: number
+}
+
 export type GoogleAPIStatus
   = 'OK'
   | 'ZERO_RESULTS'

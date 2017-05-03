@@ -5,7 +5,8 @@ import { List } from 'immutable'
 
 import type {
   GooglePlace,
-  GooglePlaceDetails
+  GooglePlaceDetails,
+  GoogleLocation
 } from '../core/types'
 import type { CardType } from './types'
 
@@ -15,12 +16,13 @@ export type MapAction
   | { type: 'map-search-failure' }
 
   | { type: 'map-place-get-all', places: List<GooglePlace> }
-  | { type: 'map-place-select', place: GooglePlaceDetails }
 
-  | { type: 'map-map-zoom-in' }
-  | { type: 'map-map-zoom-out' }
+  | { type: 'map-place-select-request', placeId: string }
+  | { type: 'map-place-select-success', place: GooglePlaceDetails }
+  | { type: 'map-place-select-failure' }
+
   | { type: 'map-map-set-zoom', zoom: number }
-  | { type: 'map-map-nav', lat: number, lon: number }
+  | { type: 'map-map-nav', location: GoogleLocation }
 
   | { type: 'map-card-add-request' }
   | { type: 'map-card-add-success' }

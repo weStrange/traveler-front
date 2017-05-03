@@ -6,11 +6,15 @@ import withScriptjs from 'react-google-maps/lib/async/withScriptjs'
 
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
+import type { GoogleLocation } from '../../core/types'
+
 const mapWidth = window.innerWidth - 30
 const mapHeight = window.innerHeight - 30
 
 type WorldMapProps = {
   markers: any,
+  center?: GoogleLocation,
+  zoom?: number,
   onMarkerRightClick?: () => void,
   onMapLoad?: () => void,
   onMapClick?: () => void
@@ -18,6 +22,8 @@ type WorldMapProps = {
 
 export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
   markers,
+  zoom = 4,
+  center = { lat: -25.363882, lng: 131.044922 },
   onMarkerRightClick = () => {},
   onMapLoad = () => {},
   onMapClick = () => {}
@@ -25,9 +31,9 @@ export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
   return (
     <GoogleMap
       ref={onMapLoad}
-      defaultZoom={3}
-      defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
       onClick={onMapClick}
+      center={center}
+      zoom={zoom}
     >
       {markers.map((marker, index) => (
         <Marker

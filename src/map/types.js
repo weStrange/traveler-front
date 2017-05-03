@@ -14,7 +14,7 @@ export type CardType = 'personal' | 'group' | 'none'
 
 export type LocationState = {
   zoom: number,
-  lon: number,
+  lng: number,
   lat: number
 }
 

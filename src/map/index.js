@@ -1,4 +1,5 @@
 /* @flow */
+/* global google */
 'use strict'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -22,22 +23,37 @@ import * as actionCreators from './action-creators'
 
 import type { Marker } from './types'
 import type { AppState } from '../types'
-import type { GooglePlace } from '../core/types'
+import type { GooglePlace, GoogleLocation } from '../core/types'
 
 type MapViewProps = {
   markers: List<Marker>,
   places: List<GooglePlace>,
+  location: GoogleLocation,
+  zoom: number,
   search: string,
   actions: any
 }
 
+type MapViewState = {
+  mapRef: any | null
+}
+
 export class MapView extends Component {
   props: MapViewProps;
+  state: MapViewState;
+
+  constructor (props: MapViewProps) {
+    super(props)
+
+    this.state = { mapRef: null }
+  }
 
   render () {
     const {
       markers,
       places,
+      zoom,
+      location,
       search,
       actions
     } = this.props
@@ -50,12 +66,40 @@ export class MapView extends Component {
             value={search}
             dataSource={places.map((p) => p.description).toArray()}
             onUpdateInput={(value) => actions.search.edit(value)}
-            onNewRequest={(value, index) => actions.search}
+            onNewRequest={(value, index) => {
+              actions.place
+                .select(places.get(index).place_id)
+                .then((p) => {
+                  actions.location.panTo({
+                    lat: p.place.geometry.location.lat(),
+                    lng: p.place.geometry.location.lng()
+                  })
+                  actions.location.zoom(10)
+                  if (this.state.mapRef !== null) {
+                    this.state.mapRef.fitBounds(
+                      // $FlowIgnore
+                      new google.maps.LatLngBounds(
+                        {
+                          lat: p.place.geometry.viewport.f.b,
+                          lng: p.place.geometry.viewport.b.b
+                        },
+                        {
+                          lat: p.place.geometry.viewport.f.f,
+                          lng: p.place.geometry.viewport.b.f
+                        }
+                      )
+                    )
+                  }
+                })
+            }}
             fullWidth
           />
         </Paper>
 
         <Map
+          zoom={zoom}
+          center={location}
+          onMapLoad={(map) => { this.state.mapRef = map }}
           markers={markers} />
 
         <FloatingActionButton style={style.actionButton}>
@@ -77,7 +121,12 @@ function mapStateToProps (state: AppState) {
         }
       })),
     search: state.map.search,
-    places: state.map.place.all
+    places: state.map.place.all,
+    location: {
+      lat: state.map.location.lat,
+      lng: state.map.location.lng
+    },
+    zoom: state.map.location.zoom
   }
 }
 
@@ -85,7 +134,9 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: {
       cardCreate: bindActionCreators(actionCreators.cardCreateActions, dispatch),
-      search: bindActionCreators(actionCreators.searchActions, dispatch)
+      search: bindActionCreators(actionCreators.searchActions, dispatch),
+      place: bindActionCreators(actionCreators.place, dispatch),
+      location: bindActionCreators(actionCreators.location, dispatch)
     }
   }
 }
