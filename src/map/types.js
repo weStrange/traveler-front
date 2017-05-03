@@ -3,6 +3,11 @@
 
 import { List } from 'immutable'
 
+import type {
+  GooglePlace,
+  GooglePlaceDetails
+} from '../core/types'
+
 export type SearchState = string
 
 export type CardType = 'personal' | 'group' | 'none'
@@ -24,9 +29,15 @@ export type CardCreateState = {
   participants?: List<string>
 }
 
+export type PlaceState = {
+  all: List<GooglePlace>,
+  selected?: GooglePlaceDetails
+}
+
 export type MapState = {
   search: SearchState,
   location: LocationState,
+  place: PlaceState,
   cardCreate: CardCreateState
 }
 

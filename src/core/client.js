@@ -1,5 +1,6 @@
 /* @flow */
 /* global File */
+/* global google */
 'use strict'
 
 import es6Promise from 'es6-promise'
@@ -26,6 +27,7 @@ import type {
   GroupCardShort,
   MatchResponse,
   GooglePlace,
+  GooglePlacePlain,
   GooglePlaceDetails
 } from './types'
 
@@ -34,16 +36,18 @@ es6Promise.polyfill()
 // change to use different key for development and production
 // so that we dont fear a sudden quota limit during our final demo
 const GOOGLE_API_KEY = 'AIzaSyDKLbjNVBVXNyxZni7LJRA12_auYQsLrB8'
-
+/*
 const error = (error) => {
   console.log(error)
   return null
 }
-
+*/
 const responseJson = (response) => {
+  console.log('respnse', response)
   if (response.status >= 400) {
     throw new Error('Bad response from server')
   }
+
   return response.json()
 }
 
@@ -403,21 +407,32 @@ export function getMatches (
     // .catch(error)
 }
 
+export function getGooglePlacesPlain (
+  search: string,
+  lat: number,
+  lon: number,
+  zoom: number
+): Promise<Array<GooglePlacePlain>> {
+  // $FlowIgnore
+  let GoogleAutocomplete = new google.maps.places.AutocompleteService()
+
+  return new Promise((resolve, reject) => {
+    GoogleAutocomplete.getPlacePredictions({
+      input: search,
+      location: new google.maps.LatLng(lat, lon),
+      radius: zoomToRadius(zoom)
+    }, resolve)
+  })
+}
+
 export function getGooglePlaces (
   search: string,
   lat: number,
   lon: number,
   zoom: number
 ): Promise<List<GooglePlace>> {
-  return fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' +
-    search +
-    '&location=' + lat + ',' + lon +
-    '&radius=' + zoomToRadius(zoom) +
-    '&key=' + GOOGLE_API_KEY)
-    .then(responseJson)
-    .then((r) => List(r.predictions)
-      .map(GoogleUtils.placeFromPlain))
-    .catch(error)
+  return getGooglePlacesPlain(search, lat, lon, zoom)
+    .then((p) => List(p).map(GoogleUtils.placeFromPlain))
 }
 
 export function getGooglePlaceDetails (
@@ -427,7 +442,7 @@ export function getGooglePlaceDetails (
   placeId +
   '&key=' + GOOGLE_API_KEY)
   .then(responseJson)
-  .catch(error)
+  // .catch(error)
 }
 
 export function getGooglePlaceByLocation (
@@ -438,7 +453,7 @@ export function getGooglePlaceByLocation (
   lat + ',' +
   lng + '&radius=500&key=' + GOOGLE_API_KEY)
   .then(responseJson)
-  .catch(error)
+  // .catch(error)
 }
 
 export function getCountries (): Promise<List<string>> {

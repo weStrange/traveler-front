@@ -1,14 +1,21 @@
 /* @flow */
 'use strict'
 
+import { List } from 'immutable'
+
+import type {
+  GooglePlace,
+  GooglePlaceDetails
+} from '../core/types'
 import type { CardType } from './types'
 
 export type MapAction
-  = { type: 'map-search-request' }
-  | { type: 'map-search-success' }
+  = { type: 'map-search-request', search: string }
+  | { type: 'map-search-success', places: List<GooglePlace> }
   | { type: 'map-search-failure' }
 
-  | { type: 'map-search-edit', search: string }
+  | { type: 'map-place-get-all', places: List<GooglePlace> }
+  | { type: 'map-place-select', place: GooglePlaceDetails }
 
   | { type: 'map-map-zoom-in' }
   | { type: 'map-map-zoom-out' }
