@@ -15,6 +15,7 @@ type WorldMapProps = {
   markers: any,
   center?: GoogleLocation,
   zoom?: number,
+  onMarkerClick?: () => void,
   onMarkerRightClick?: () => void,
   onMapLoad?: () => void,
   onMapClick?: () => void
@@ -24,6 +25,7 @@ export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
   markers,
   zoom = 4,
   center = { lat: -25.363882, lng: 131.044922 },
+  onMarkerClick = () => {},
   onMarkerRightClick = () => {},
   onMapLoad = () => {},
   onMapClick = () => {}
@@ -39,6 +41,7 @@ export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
         <Marker
           key={index}
           {...marker}
+          onClick={() => onMarkerClick(index)}
           onRightClick={() => onMarkerRightClick(index)}
         />
       ))}
@@ -48,6 +51,7 @@ export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
 
 type MapWrapperProps = {
   markers: any,
+  onMarkerClick?: (index: number) => void,
   onMarkerRightClick?: () => void,
   onMapLoad?: () => void,
   onMapClick?: () => void,
@@ -59,6 +63,7 @@ type MapWrapperProps = {
 
 export default function MapWrapper ({
   markers,
+  onMarkerClick = (index: number) => {},
   onMarkerRightClick = () => {},
   onMapLoad = () => {},
   onMapClick = () => {},
@@ -82,6 +87,7 @@ export default function MapWrapper ({
       containerElement={containerElement}
       mapElement={mapElement}
       markers={markers}
+      onMarkerClick={onMarkerClick}
       onMarkerRightClick={onMarkerRightClick}
       onMapLoad={onMapLoad}
       onMapClick={onMapClick} />

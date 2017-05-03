@@ -54,3 +54,9 @@ export type MapAction
   | { type: 'map-own-group-cards-fetch-request' }
   | { type: 'map-own-group-cards-fetch-success', cards: List<GroupCard> }
   | { type: 'map-own-group-cards-fetch-failure' }
+
+  | { type: 'map-card-modal-show', card: PersonalCard | GroupCard }
+  | { type: 'map-card-modal-hide' }
+  | { type: 'map-card-modal-location-name-request', location: GoogleLocation }
+  | { type: 'map-card-modal-location-name-success', name: string }
+  | { type: 'map-card-modal-location-name-failure' }

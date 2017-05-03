@@ -44,6 +44,7 @@ type CardWrapper = {
 type CardQueueProps = {
   queue: List<CardWrapper>,
   ownCards: List<PersonalCardType | GroupCardType>,
+  ownCard: PersonalCardType | GroupCardType,
   locationName: string,
   emptyCallback: any,
   actions: any
@@ -61,10 +62,12 @@ export class CardQueue extends React.PureComponent {
     super(props)
     this.state = { current: 0 }
 
-    const { actions } = props
-    actions.personalCard.load(0, 0)
-    actions.groupCard.load(0, 0)
-    actions.personalCard.loadOwn()
+    const { actions, ownCard } = props
+
+    actions.personalCard.load(ownCard.lat, ownCard.lon)
+    actions.groupCard.load(ownCard.lat, ownCard.lon)
+    actions.personalCard.loadOwn() // TODO: own card is unnecessary and wrongly fetched here
+    // This needs to be removed
       .then((cs) => actions.currentCard.selectOwn(cs.first()))
   }
   onButtonTap = (e: any, button: string) => {
@@ -131,6 +134,7 @@ function mapStateToProps (state: AppState) {
     ),
     ownCards: state.cardQueue.personalCards.ownCards
       .concat(state.cardQueue.groupCards.ownCards),
+    ownCard: state.map.cardModal.card,
     locationName: state.cardQueue.currentCard.locationName
   }
 }

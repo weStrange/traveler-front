@@ -8,6 +8,7 @@ import * as place from './placeActions'
 import * as location from './locationActions'
 import * as locationOptions from './locationOptionsActions'
 import * as ownCardsActions from './ownCardsActions'
+import * as cardModalActions from './cardModalActions'
 
 export {
   cardCreateActions,
@@ -16,5 +17,6 @@ export {
   place,
   location,
   locationOptions,
-  ownCardsActions
+  ownCardsActions,
+  cardModalActions
 }

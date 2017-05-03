@@ -43,12 +43,18 @@ export type OwnCardState = {
   groupCards: List<GroupCard>
 }
 
+export type CardModalState = {
+  card: PersonalCard | GroupCard | null,
+  locationName: string
+}
+
 export type MapState = {
   search: SearchState,
   location: LocationState,
   place: PlaceState,
   cardCreate: CardCreateState,
-  ownCard: OwnCardState
+  ownCard: OwnCardState,
+  cardModal: CardModalState
 }
 
 export type Marker = {
