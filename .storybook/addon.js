@@ -3,3 +3,4 @@ import 'storybook-addon-material-ui'
 import '@kadira/storybook/addons'
 //  To add the knobs addon
 import '@kadira/storybook-addon-knobs/register'
+import 'react-storybook-console/dist/register.js'

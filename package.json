@@ -56,6 +56,7 @@
     "jest": "^19.0.2",
     "react-addons-perf": "^15.3.2",
     "react-addons-test-utils": "^15.4.2",
+    "react-storybook-console": "^1.0.2",
     "standard": "^9.0.2",
     "storybook-addon-material-ui": "^0.7.7",
     "style-loader": "0.13.2",
