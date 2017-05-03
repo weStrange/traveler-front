@@ -1,5 +1,6 @@
 /* @flow */
 /* global File */
+/* global google */
 'use strict'
 
 import es6Promise from 'es6-promise'
@@ -12,7 +13,8 @@ import {
   GroupCardUtils,
   PersonalCardUtils,
   ProfileUtils,
-  MatchResponseUtils
+  MatchResponseUtils,
+  GoogleUtils
 } from './type-methods'
 
 import type {
@@ -23,7 +25,10 @@ import type {
   GroupCard,
   PersonalCardShort,
   GroupCardShort,
-  MatchResponse
+  MatchResponse,
+  GooglePlace,
+  GooglePlacePlain,
+  GooglePlaceDetails
 } from './types'
 
 es6Promise.polyfill()
@@ -34,9 +39,11 @@ const error = (error) => {
 }
 */
 const responseJson = (response) => {
+  console.log('respnse', response)
   if (response.status >= 400) {
     throw new Error('Bad response from server')
   }
+
   return response.json()
 }
 
@@ -396,8 +403,67 @@ export function getMatches (
     // .catch(error)
 }
 
+export function getGooglePlacesPlain (
+  search: string,
+  lat: number,
+  lon: number,
+  zoom: number
+): Promise<Array<GooglePlacePlain>> {
+  // $FlowIgnore
+  let GoogleAutocomplete = new google.maps.places.AutocompleteService()
+
+  return new Promise((resolve, reject) => {
+    GoogleAutocomplete.getPlacePredictions({
+      input: search,
+      location: new google.maps.LatLng(lat, lon),
+      radius: zoomToRadius(zoom)
+    }, resolve)
+  })
+}
+
+export function getGooglePlaces (
+  search: string,
+  lat: number,
+  lon: number,
+  zoom: number
+): Promise<List<GooglePlace>> {
+  return getGooglePlacesPlain(search, lat, lon, zoom)
+    .then((p) => List(p).map(GoogleUtils.placeFromPlain))
+}
+
+export function getGooglePlaceDetails (
+  placeId: string
+) :Promise<GooglePlaceDetails> {
+  // $FlowIgnore
+  let PlacesService = new google.maps.places.PlacesService(document.getElementById('map'))
+
+  return new Promise((resolve, reject) => {
+    PlacesService.getDetails({
+      placeId: placeId
+    }, resolve)
+  })
+}
+
+export function getGooglePlaceByLocation (
+  lat: number,
+  lng: number
+): Promise<GooglePlaceDetails | null> {
+  // $FlowIgnore
+  let PlaceService = new google.maps.places.PlacesService(document.getElementById('map'))
+
+  return (
+    new Promise((resolve, reject) => {
+      PlaceService.nearbySearch({
+        location: new google.maps.LatLng(lat, lng),
+        radius: 500
+      }, resolve)
+    })
+  )
+  .then((p) => p.length > 0 ? p[0] : null)
+}
+
 export function getCountries (): Promise<List<string>> {
-  // TODO: add interaction with back-end here
+  // TODO: add interaction with Google API here
   return Promise.resolve(List.of(
     'Finland',
     'Sweden',
@@ -408,7 +474,7 @@ export function getCountries (): Promise<List<string>> {
 }
 
 export function getCities (): Promise<List<string>> {
-  // TODO: add interaction with back-end here
+  // TODO: add interaction with Google API here
   return Promise.resolve(List.of(
     'Helsinki',
     'Stockholm',
@@ -417,4 +483,9 @@ export function getCities (): Promise<List<string>> {
     'Hanoi',
     'Vaasa'
   ))
+}
+
+function zoomToRadius (zoom: number): number {
+  // TODO: add math for zoom to radius transition here
+  return zoom
 }

@@ -51,5 +51,13 @@ export default {
     position: 'fixed',
     right: '70px',
     bottom: '50px'
+  },
+  searchBar: {
+    position: 'fixed',
+    top: '30px',
+    marginLeft: '35%',
+    marginRight: '35%',
+    width: '30%',
+    zIndex: 3
   }
 }
