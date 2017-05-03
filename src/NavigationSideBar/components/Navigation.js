@@ -16,7 +16,10 @@ import TextMessage from 'material-ui/svg-icons/communication/message'
 type NavigationState = {
   open: boolean,
   title: string
-};
+}
+type NavigationProps = {
+  state?: any
+}
 const optionGenerator = (label, leftIcon, callback, disabled, useSubheader, subheaderLabel, ...args) => {
   return {
     label,
@@ -28,11 +31,11 @@ const optionGenerator = (label, leftIcon, callback, disabled, useSubheader, subh
     subItems: args
   }
 }
-export default class Navigation extends Component {
-  state: NavigationState
-  props: any
 
-  constructor (props) {
+class Navigation extends Component {
+  props: NavigationProps
+  state: NavigationState
+  constructor (props: any) {
     super(props)
     this.state = { open: false, title: 'Travel Mate Finder' }
   }
@@ -70,3 +73,4 @@ export default class Navigation extends Component {
     )
   }
 }
+export default Navigation
