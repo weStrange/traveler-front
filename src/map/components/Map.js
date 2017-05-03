@@ -37,6 +37,7 @@ export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
     >
       {markers.map((marker, index) => (
         <Marker
+          key={index}
           {...marker}
           onRightClick={() => onMarkerRightClick(index)}
         />

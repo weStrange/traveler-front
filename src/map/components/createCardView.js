@@ -17,6 +17,7 @@ import { indigo500 } from 'material-ui/styles/colors'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router'
 
 import style from '../../style'
 
@@ -260,22 +261,24 @@ export function CreateCardView ({
         locationOptions={locationOptions}
         actions={actions} />
       <CardActions>
-        <FlatButton
-          label='Create'
-          primary
-          disabled={title === '' || (
-            lat === 0 &&
-            lon === 0
-          )}
-          onClick={(ev) => actions.cardUpload.upload('personal', {
-            title,
-            description,
-            startTime,
-            endTime,
-            lat,
-            lon
-          })}
-         />
+        <Link to='/map'>
+          <FlatButton
+            label='Create'
+            primary
+            disabled={title === '' || (
+              lat === 0 &&
+              lon === 0
+            )}
+            onClick={(ev) => actions.cardUpload.upload('personal', {
+              title,
+              description,
+              startTime,
+              endTime,
+              lat,
+              lon
+            })}
+           />
+        </Link>
       </CardActions>
     </Card>
   )

@@ -6,7 +6,9 @@ import { List } from 'immutable'
 import type {
   GooglePlace,
   GooglePlaceDetails,
-  GoogleLocation
+  GoogleLocation,
+  GroupCard,
+  PersonalCard
 } from '../core/types'
 import type { CardType } from './types'
 
@@ -44,3 +46,11 @@ export type MapAction
   | { type: 'map-card-create-location-request', placeId: string }
   | { type: 'map-card-create-location-success', location: GoogleLocation }
   | { type: 'map-card-create-location-failure' }
+
+  | { type: 'map-own-personal-cards-fetch-request' }
+  | { type: 'map-own-personal-cards-fetch-success', cards: List<PersonalCard> }
+  | { type: 'map-own-personal-cards-fetch-failure' }
+
+  | { type: 'map-own-group-cards-fetch-request' }
+  | { type: 'map-own-group-cards-fetch-success', cards: List<GroupCard> }
+  | { type: 'map-own-group-cards-fetch-failure' }

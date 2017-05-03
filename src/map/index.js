@@ -21,7 +21,7 @@ import style from '../style'
 
 import * as actionCreators from './action-creators'
 
-import type { Marker } from './types'
+import type { Marker, OwnCardState } from './types'
 import type { AppState } from '../types'
 import type { GooglePlace, GoogleLocation } from '../core/types'
 
@@ -31,6 +31,7 @@ type MapViewProps = {
   location: GoogleLocation,
   zoom: number,
   search: string,
+  ownCard: OwnCardState,
   actions: any
 }
 
@@ -46,6 +47,9 @@ export class MapView extends Component {
     super(props)
 
     this.state = { mapRef: null }
+
+    props.actions.ownCard.fetchPersonal()
+    props.actions.ownCard.fetchGroup()
   }
 
   render () {
@@ -114,8 +118,8 @@ export class MapView extends Component {
 
 function mapStateToProps (state: AppState) {
   return {
-    markers: state.cardQueue.personalCards.ownCards
-      .concat(state.cardQueue.groupCards.ownCards)
+    markers: state.map.ownCard.personalCards
+      .concat(state.map.ownCard.groupCards)
       .map((p) => ({
         position: {
           lat: p.lat,
@@ -128,7 +132,8 @@ function mapStateToProps (state: AppState) {
       lat: state.map.location.lat,
       lng: state.map.location.lng
     },
-    zoom: state.map.location.zoom
+    zoom: state.map.location.zoom,
+    ownCard: state.map.ownCard
   }
 }
 
@@ -138,7 +143,8 @@ function mapDispatchToProps (dispatch) {
       cardCreate: bindActionCreators(actionCreators.cardCreateActions, dispatch),
       search: bindActionCreators(actionCreators.searchActions, dispatch),
       place: bindActionCreators(actionCreators.place, dispatch),
-      location: bindActionCreators(actionCreators.location, dispatch)
+      location: bindActionCreators(actionCreators.location, dispatch),
+      ownCard: bindActionCreators(actionCreators.ownCardsActions, dispatch)
     }
   }
 }

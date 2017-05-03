@@ -4,6 +4,7 @@
 import { List } from 'immutable'
 
 import * as client from '../../core/client'
+import * as ownCard from './ownCardsActions'
 
 import type { CardType } from '../types'
 import type { PersonalCardShort, GroupCardShort } from '../../core/types'
@@ -21,6 +22,7 @@ export function upload (
         .then((card) => {
           dispatch(addCardSuccess())
 
+          dispatch(ownCard.fetchPersonal())
           return card
         })
         .catch((error) => {
@@ -35,6 +37,7 @@ export function upload (
         .then((card) => {
           dispatch(addCardSuccess())
 
+          dispatch(ownCard.fetchGroup())
           return card
         })
         .catch((error) => {

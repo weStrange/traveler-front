@@ -7,6 +7,7 @@ import * as searchActions from './searchActions'
 import * as place from './placeActions'
 import * as location from './locationActions'
 import * as locationOptions from './locationOptionsActions'
+import * as ownCardsActions from './ownCardsActions'
 
 export {
   cardCreateActions,
@@ -14,5 +15,6 @@ export {
   searchActions,
   place,
   location,
-  locationOptions
+  locationOptions,
+  ownCardsActions
 }
