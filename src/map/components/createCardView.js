@@ -2,13 +2,16 @@
 'use strict'
 import React from 'react'
 import _map from 'lodash/map'
-import { Card, CardText } from 'material-ui/Card'
+import { Card, CardText, CardActions } from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
+import Autocomplete from 'material-ui/AutoComplete'
 import { List as UIList, ListItem } from 'material-ui/List'
 import Direction from 'material-ui/svg-icons/maps/directions'
 import Calendar from 'material-ui/svg-icons/action/date-range'
+import TextFormat from 'material-ui/svg-icons/content/text-format'
 import { indigo500 } from 'material-ui/styles/colors'
 
 import { List } from 'immutable'
@@ -21,14 +24,17 @@ import * as actionCreators from '../action-creators'
 
 import type { CardType } from '../types'
 import type { AppState } from '../../types'
+import type { GooglePlace } from '../../core/types'
 
 type InfoRepresentationProps = {
   info: [string, any],
+  locationOptions: List<GooglePlace>,
   actions: any
 }
 
 function InfoRepresentation ({
   info,
+  locationOptions,
   actions
 }: InfoRepresentationProps): any {
   switch (info[0]) {
@@ -38,17 +44,26 @@ function InfoRepresentation ({
           type='text'
           hintText=''
           value={info[1]}
+          fullWidth
           onChange={(e, value) => actions.cardCreate.editTitle(value)}
         />
       )
 
     case 'location':
       return (
-        <TextField
+        <Autocomplete
           type='text'
           hintText=''
           value={info[1]}
-          onChange={(e, value) => actions.cardCreate.editLocation(value)}
+          fullWidth
+          dataSource={locationOptions.map((p) => p.description).toArray()}
+          onUpdateInput={(value) => {
+            actions.cardCreate.editLocationName(value)
+            actions.locationOptions.fetch(value)
+          }}
+          onNewRequest={(value, index) => {
+            actions.cardCreate.selectPlace(locationOptions.get(index).place_id)
+          }}
         />
       )
 
@@ -58,6 +73,7 @@ function InfoRepresentation ({
           hintText='Start of the trip'
           mode='landscape'
           value={info[1]}
+          fullWidth
           onChange={(ev, date) => actions.cardCreate.editStartTime(date)}
         />
       )
@@ -68,7 +84,8 @@ function InfoRepresentation ({
           hintText='End of the trip'
           mode='landscape'
           value={info[1]}
-          onChange={(ev, date) => actions.cardCreate.editStartTime(date)}
+          fullWidth
+          onChange={(ev, date) => actions.cardCreate.editEndTime(date)}
         />
       )
 
@@ -90,10 +107,10 @@ function pretyifyKey (
     case 'type':
       return 'Card type'
 
-    case 'tripStart':
+    case 'startTime':
       return 'Start Date'
 
-    case 'tripEnd':
+    case 'endTime':
       return 'End Date'
 
     case 'location':
@@ -107,12 +124,26 @@ function pretyifyKey (
 type InfoProps = {
   info: [string, any],
   color: any,
+  locationOptions: List<GooglePlace>,
   actions: any
 }
 
-const Info = ({info, color, actions}: InfoProps) => (
-  <span style={{...style.info, color}} >
-    <InfoRepresentation info={info} actions={actions} />
+const Info = ({
+  info,
+  color,
+  locationOptions,
+  actions
+}: InfoProps) => (
+  <span
+    style={{
+      ...style.info,
+      color,
+      width: '70%'
+    }} >
+    <InfoRepresentation
+      info={info}
+      actions={actions}
+      locationOptions={locationOptions} />
   </span>
 )
 
@@ -124,6 +155,7 @@ type TripSpec = {
 
 type TripInfoProps = {
   tripSpec: TripSpec,
+  locationOptions: List<GooglePlace>,
   color: any,
   actions: any
 }
@@ -133,7 +165,7 @@ class TripInfo extends React.PureComponent {
 
   getIcon (keyname) {
     switch (keyname) {
-      case 'title': return null // TODO: add icon
+      case 'title': return <TextFormat style={style.icon} />
       case 'description': return null // TODO: add icon
       case 'location': return <Direction style={style.icon} />
       case 'startTime': return <Calendar style={style.icon} />
@@ -158,6 +190,7 @@ class TripInfo extends React.PureComponent {
             <Info
               color={this.props.color}
               info={[key, value]}
+              locationOptions={this.props.locationOptions}
               actions={this.props.actions} />
           </ListItem>
         </div>
@@ -182,6 +215,8 @@ type CreateCardViewProps = {
   startTime: Date,
   endTime: Date,
   participants?: List<string>,
+  locationOptions: List<GooglePlace>,
+  locationName: string,
   username: string,
   userImage?: number,
   actions: any
@@ -198,6 +233,8 @@ export function CreateCardView ({
   participants,
   userImage,
   username,
+  locationOptions,
+  locationName,
   actions
 }: CreateCardViewProps) {
   return (
@@ -209,7 +246,7 @@ export function CreateCardView ({
           multiLine
           rows={5}
           fullWidth
-          onChange={(e, value) => actions.createCard.editDescription(value)}
+          onChange={(e, value) => actions.cardCreate.editDescription(value)}
         />
       </CardText>
       <TripInfo
@@ -218,19 +255,30 @@ export function CreateCardView ({
           title,
           startTime,
           endTime,
-          location: getLocation(lat, lon)
+          location: locationName
         }}
+        locationOptions={locationOptions}
         actions={actions} />
+      <CardActions>
+        <FlatButton
+          label='Create'
+          primary
+          disabled={title === '' || (
+            lat === 0 &&
+            lon === 0
+          )}
+          onClick={(ev) => actions.cardUpload.upload('personal', {
+            title,
+            description,
+            startTime,
+            endTime,
+            lat,
+            lon
+          })}
+         />
+      </CardActions>
     </Card>
   )
-}
-
-// TODO: add google maps API support here
-function getLocation (
-  lat: number,
-  lon: number
-): string {
-  return 'Palo Alto, CA, USA'
 }
 
 function mapStateToProps (state: AppState) {
@@ -247,6 +295,9 @@ function mapDispatchToProps (dispatch) {
       }, dispatch),
       cardUpload: bindActionCreators({
         ...actionCreators.cardUploadActions
+      }, dispatch),
+      locationOptions: bindActionCreators({
+        ...actionCreators.locationOptions
       }, dispatch)
     }
   }

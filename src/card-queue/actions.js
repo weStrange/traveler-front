@@ -4,6 +4,7 @@
 import { List } from 'immutable'
 
 import type { PersonalCard, GroupCard } from './types'
+import type { GoogleLocation } from '../core/types'
 
 export type CardQueueAction
   = { type: 'card-queue-personal-load-request' }
@@ -13,6 +14,10 @@ export type CardQueueAction
   | { type: 'card-queue-own-personal-load-request' }
   | { type: 'card-queue-own-personal-load-success', cards: List<PersonalCard> }
   | { type: 'card-queue-own-personal-load-failure' }
+
+  | { type: 'card-queue-card-location-name-load-success', name: string }
+  | { type: 'card-queue-card-location-name-load-request', location: GoogleLocation }
+  | { type: 'card-queue-card-location-name-load-failure' }
 
   | { type: 'card-queue-group-load-request' }
   | { type: 'card-queue-group-load-success', cards: List<GroupCard> }

@@ -28,7 +28,7 @@ function InfoRepresentation ({
   info
 }: InfoRepresentationProps): any {
   switch (info[0]) {
-    case 'location': return (<label>Palo Alto</label>) // TODO: logic to get a place name goes here
+    case 'location': return (<label>info[1]</label>) // TODO: logic to get a place name goes here
     case 'tripStart': return (<label>{moment(info[1]).format('DD.MM.YYYY')}</label>)
     case 'tripEnd': return (<label>{moment(info[1]).format('DD.MM.YYYY')}</label>)
     default: return null
@@ -67,7 +67,7 @@ const Info = ({info, color}: InfoProps) => (
 type TripSpec = {
   tripStart: Date,
   tripEnd: Date,
-  location: Location
+  location: string
 }
 
 type TripInfoProps = {
@@ -122,7 +122,8 @@ type PersonalCardProps = {
   images: List<number>,
   cardText: string,
   primary1Color: any,
-  muiTheme: any
+  muiTheme: any,
+  locationName: string
 }
 
 const PersonalCard = ({
@@ -135,7 +136,8 @@ const PersonalCard = ({
   images,
   cardText,
   primary1Color,
-  muiTheme
+  muiTheme,
+  locationName
 }: PersonalCardProps) => (
   <Card style={style.card} zDepth={4} >
     <CardHeader
@@ -159,7 +161,7 @@ const PersonalCard = ({
           tripSpec={{
             tripStart,
             tripEnd,
-            location
+            location: locationName
           }} />
       </div>
     </CardText>

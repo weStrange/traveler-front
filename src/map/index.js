@@ -12,7 +12,7 @@ import React, { Component } from 'react'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import { Link } from 'react-router'
 import { Grid } from 'react-bootstrap'
 
 import { Map } from './components'
@@ -102,9 +102,11 @@ export class MapView extends Component {
           onMapLoad={(map) => { this.state.mapRef = map }}
           markers={markers} />
 
-        <FloatingActionButton style={style.actionButton}>
-          <ContentAdd />
-        </FloatingActionButton>
+        <Link to='/create-card'>
+          <FloatingActionButton style={style.actionButton}>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>
       </Grid>
     )
   }

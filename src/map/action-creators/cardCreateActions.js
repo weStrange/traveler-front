@@ -1,8 +1,12 @@
 /* @flow */
 'use strict'
 
+import * as client from '../../core/client'
+
 import type { Action } from '../../actions'
 import type { CardType } from '../types'
+import type { GoogleLocation } from '../../core/types'
+import type { AppState } from '../../types'
 
 export function start (): Action {
   return {
@@ -51,10 +55,54 @@ export function editType (type: CardType): Action {
   }
 }
 
-export function editLocation (lat: number, lon: number): Action {
+export function editLocationName (name: string): Action {
   return {
-    type: 'map-card-create-location-edit',
-    lat: lat,
-    lon: lon
+    type: 'map-card-create-location-name-edit',
+    name: name
+  }
+}
+
+/*
+**** client interaction ****
+                          */
+
+export function selectPlace (placeId: string): any {
+  return (dispatch: any, getState: () => AppState) => {
+    dispatch(selectPlaceRequest(placeId))
+
+    return client.getGooglePlaceDetails(placeId)
+      .then((p) => (
+        p === null
+        ? dispatch(selectPlaceFailure())
+        : dispatch(selectPlaceSuccess({
+          lat: p.geometry.location.lat(),
+          lng: p.geometry.location.lng()
+        }))
+      ))
+      .catch((error) => {
+        console.error(error)
+
+        dispatch(selectPlaceFailure())
+      })
+  }
+}
+
+function selectPlaceRequest (placeId: string): Action {
+  return {
+    type: 'map-card-create-location-request',
+    placeId: placeId
+  }
+}
+
+function selectPlaceSuccess (location: GoogleLocation): Action {
+  return {
+    type: 'map-card-create-location-success',
+    location: location
+  }
+}
+
+function selectPlaceFailure (): Action {
+  return {
+    type: 'map-card-create-location-failure'
   }
 }

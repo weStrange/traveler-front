@@ -1,6 +1,8 @@
 /* @flow */
 'use strict'
 
+import { List } from 'immutable'
+
 import type { CardCreateState } from '../types'
 import type { MapAction } from '../actions'
 
@@ -9,6 +11,8 @@ function getDefaultState (): CardCreateState {
     title: '',
     description: '',
     type: 'none',
+    locationName: '',
+    locationOptions: List(),
     lat: 0,
     lon: 0,
     startTime: new Date(),
@@ -63,11 +67,23 @@ export default function cardCreateReducer (
         type: action.cardType
       }
 
-    case 'map-card-create-location-edit':
+    case 'map-card-create-location-success':
       return {
         ...state,
-        lat: action.lat,
-        lon: action.lon
+        lat: action.location.lat,
+        lon: action.location.lng
+      }
+
+    case 'map-card-create-location-name-edit':
+      return {
+        ...state,
+        locationName: action.name
+      }
+
+    case 'map-card-create-location-options-fetch-success':
+      return {
+        ...state,
+        locationOptions: action.options
       }
 
     default:

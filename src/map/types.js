@@ -22,6 +22,8 @@ export type CardCreateState = {
   title: string,
   description: string,
   type: CardType,
+  locationName: string,
+  locationOptions: List<GooglePlace>,
   lat: number,
   lon: number,
   startTime: Date,

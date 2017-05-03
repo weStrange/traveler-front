@@ -44,6 +44,7 @@ type CardWrapper = {
 type CardQueueProps = {
   queue: List<CardWrapper>,
   ownCards: List<PersonalCardType | GroupCardType>,
+  locationName: string,
   emptyCallback: any,
   actions: any
 }
@@ -80,6 +81,8 @@ export class CardQueue extends React.PureComponent {
     let currCard = this.props.queue.get(this.state.current).card
     let currType = this.props.queue.get(this.state.current).type
 
+    const { locationName } = this.props
+
     if (currType === 'PERSONAL_CARD') { // @Fixme: should replace with variable constants for easier debugging
       // code to produce personal card
       return (
@@ -92,6 +95,7 @@ export class CardQueue extends React.PureComponent {
             location={{ lat: currCard.lat, lon: currCard.lon }}
             images={currCard.photos}
             cardText={currCard.description}
+            locationName={locationName}
           />
           <CardButtons style={style.buttons} onTouchTap={this.onButtonTap} />
         </div>
@@ -126,7 +130,8 @@ function mapStateToProps (state: AppState) {
       state.cardQueue.groupCards.cards
     ),
     ownCards: state.cardQueue.personalCards.ownCards
-      .concat(state.cardQueue.groupCards.ownCards)
+      .concat(state.cardQueue.groupCards.ownCards),
+    locationName: state.cardQueue.currentCard.locationName
   }
 }
 
