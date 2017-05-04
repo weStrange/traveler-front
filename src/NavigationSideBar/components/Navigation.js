@@ -1,5 +1,7 @@
 // @flow
 /* eslint-disable no-unused-vars */
+'use strict'
+
 import React, { Component } from 'react'
 import Maps from 'material-ui/svg-icons/maps/map'
 import Person from 'material-ui/svg-icons/social/person'
@@ -18,9 +20,17 @@ type NavigationState = {
   title: string
 }
 type NavigationProps = {
-  state?: any
+  children: any
 }
-const optionGenerator = (label, leftIcon, callback, disabled, useSubheader, subheaderLabel, ...args) => {
+const optionGenerator = (
+  label,
+  leftIcon,
+  callback,
+  disabled,
+  useSubheader,
+  subheaderLabel,
+  ...args
+) => {
   return {
     label,
     leftIcon,
@@ -69,6 +79,9 @@ class Navigation extends Component {
             optionGenerator('Messages', <TextMessage />, () => {}, false, true, 'Contacts')
           ]}
         />
+        <div>
+          {this.props.children}
+        </div>
       </div>
     )
   }

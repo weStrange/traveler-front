@@ -1,5 +1,8 @@
 // @flow
 /* eslint-disable no-unused-vars */
+
+'use strict'
+
 import React, { Component } from 'react'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import Drawer from 'material-ui/Drawer'
