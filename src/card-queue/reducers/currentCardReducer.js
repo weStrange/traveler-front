@@ -7,7 +7,8 @@ import type { CurrentCardState } from '../types'
 function getDefaultState (): CurrentCardState {
   return {
     ownCard: null,
-    targetCard: null
+    targetCard: null,
+    locationName: ''
   }
 }
 
@@ -27,6 +28,12 @@ export default function currentCardReducer (
       return {
         ...state,
         ownCard: action.card
+      }
+
+    case 'card-queue-card-location-name-load-success':
+      return {
+        ...state,
+        locationName: action.name
       }
 
     case 'card-queue-target-card-select':

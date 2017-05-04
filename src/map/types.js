@@ -5,7 +5,9 @@ import { List } from 'immutable'
 
 import type {
   GooglePlace,
-  GooglePlaceDetails
+  GooglePlaceDetails,
+  PersonalCard,
+  GroupCard
 } from '../core/types'
 
 export type SearchState = string
@@ -22,6 +24,8 @@ export type CardCreateState = {
   title: string,
   description: string,
   type: CardType,
+  locationName: string,
+  locationOptions: List<GooglePlace>,
   lat: number,
   lon: number,
   startTime: Date,
@@ -34,11 +38,23 @@ export type PlaceState = {
   selected?: GooglePlaceDetails
 }
 
+export type OwnCardState = {
+  personalCards: List<PersonalCard>,
+  groupCards: List<GroupCard>
+}
+
+export type CardModalState = {
+  card: PersonalCard | GroupCard | null,
+  locationName: string
+}
+
 export type MapState = {
   search: SearchState,
   location: LocationState,
   place: PlaceState,
-  cardCreate: CardCreateState
+  cardCreate: CardCreateState,
+  ownCard: OwnCardState,
+  cardModal: CardModalState
 }
 
 export type Marker = {

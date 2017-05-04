@@ -54,7 +54,7 @@ export default {
   },
   searchBar: {
     position: 'fixed',
-    top: '30px',
+    top: '70px',
     marginLeft: '35%',
     marginRight: '35%',
     width: '30%',

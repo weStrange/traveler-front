@@ -1,6 +1,6 @@
-'usestrict'
 /* @flow */
 // eslint-disable no-unused-vars
+'use strict'
 
 import MuiAppBar from 'material-ui/AppBar'
 import React, { Component } from 'react'

@@ -12,25 +12,32 @@ import React, { Component } from 'react'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import { Link } from 'react-router'
 import { Grid } from 'react-bootstrap'
 
-import { Map } from './components'
+import { Map, OwnCardView } from './components'
 
 import style from '../style'
 
 import * as actionCreators from './action-creators'
 
-import type { Marker } from './types'
+import type {
+  OwnCardState,
+  CardModalState
+} from './types'
 import type { AppState } from '../types'
-import type { GooglePlace, GoogleLocation } from '../core/types'
+import type {
+  GooglePlace,
+  GoogleLocation
+} from '../core/types'
 
 type MapViewProps = {
-  markers: List<Marker>,
   places: List<GooglePlace>,
   location: GoogleLocation,
   zoom: number,
   search: string,
+  ownCard: OwnCardState,
+  cardModal: CardModalState,
   actions: any
 }
 
@@ -46,11 +53,15 @@ export class MapView extends Component {
     super(props)
 
     this.state = { mapRef: null }
+
+    props.actions.ownCard.fetchPersonal()
+    props.actions.ownCard.fetchGroup()
   }
 
   render () {
     const {
-      markers,
+      ownCard,
+      cardModal,
       places,
       zoom,
       location,
@@ -100,11 +111,38 @@ export class MapView extends Component {
           zoom={zoom}
           center={location}
           onMapLoad={(map) => { this.state.mapRef = map }}
-          markers={markers} />
+          onMarkerClick={(index: number) => {
+            let card = ownCard.personalCards
+              .concat(ownCard.groupCards)
+              .get(index)
 
-        <FloatingActionButton style={style.actionButton}>
-          <ContentAdd />
-        </FloatingActionButton>
+            actions.cardModal.show(card)
+            actions.cardModal.loadName({
+              lat: card.lat,
+              lng: card.lon
+            })
+          }}
+          markers={
+            ownCard.personalCards
+              .concat(ownCard.groupCards)
+              .map((p) => ({
+                position: {
+                  lat: p.lat,
+                  lng: p.lon
+                }
+              }))
+          } />
+
+        <OwnCardView
+          card={cardModal.card}
+          locationName={cardModal.locationName}
+          onRequestClose={() => actions.cardModal.hide()} />
+
+        <Link to='/create-card'>
+          <FloatingActionButton style={style.actionButton}>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>
       </Grid>
     )
   }
@@ -112,21 +150,15 @@ export class MapView extends Component {
 
 function mapStateToProps (state: AppState) {
   return {
-    markers: state.cardQueue.personalCards.ownCards
-      .concat(state.cardQueue.groupCards.ownCards)
-      .map((p) => ({
-        position: {
-          lat: p.lat,
-          lng: p.lon
-        }
-      })),
     search: state.map.search,
     places: state.map.place.all,
     location: {
       lat: state.map.location.lat,
       lng: state.map.location.lng
     },
-    zoom: state.map.location.zoom
+    zoom: state.map.location.zoom,
+    ownCard: state.map.ownCard,
+    cardModal: state.map.cardModal
   }
 }
 
@@ -136,7 +168,9 @@ function mapDispatchToProps (dispatch) {
       cardCreate: bindActionCreators(actionCreators.cardCreateActions, dispatch),
       search: bindActionCreators(actionCreators.searchActions, dispatch),
       place: bindActionCreators(actionCreators.place, dispatch),
-      location: bindActionCreators(actionCreators.location, dispatch)
+      location: bindActionCreators(actionCreators.location, dispatch),
+      ownCard: bindActionCreators(actionCreators.ownCardsActions, dispatch),
+      cardModal: bindActionCreators(actionCreators.cardModalActions, dispatch)
     }
   }
 }
