@@ -4,11 +4,11 @@
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+import Search from 'material-ui/svg-icons/action/search'
 import AutoComplete from 'material-ui/AutoComplete'
 import Paper from 'material-ui/Paper'
-
 import React, { Component } from 'react'
-
+import MenuItem from 'material-ui/MenuItem'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -71,40 +71,41 @@ export class MapView extends Component {
 
     return (
       <Grid>
-        <Paper style={style.searchBar} zDepth={4}>
-          <AutoComplete
+        <Paper style={style.searchBar} zDepth={2}>
+          <MenuItem disabled leftIcon={<Search />}><AutoComplete
+            underlineShow={false}
             hintText='Search'
             value={search}
             dataSource={places.map((p) => p.description).toArray()}
             onUpdateInput={(value) => actions.search.edit(value)}
             onNewRequest={(value, index) => {
               actions.place
-                .select(places.get(index).place_id)
-                .then((p) => {
-                  actions.location.panTo({
-                    lat: p.place.geometry.location.lat(),
-                    lng: p.place.geometry.location.lng()
-                  })
-                  actions.location.zoom(10)
-                  if (this.state.mapRef !== null) {
-                    this.state.mapRef.fitBounds(
-                      // $FlowIgnore
-                      new google.maps.LatLngBounds(
-                        {
-                          lat: p.place.geometry.viewport.f.b,
-                          lng: p.place.geometry.viewport.b.b
-                        },
-                        {
-                          lat: p.place.geometry.viewport.f.f,
-                          lng: p.place.geometry.viewport.b.f
-                        }
+                  .select(places.get(index).place_id)
+                  .then((p) => {
+                    actions.location.panTo({
+                      lat: p.place.geometry.location.lat(),
+                      lng: p.place.geometry.location.lng()
+                    })
+                    actions.location.zoom(10)
+                    if (this.state.mapRef !== null) {
+                      this.state.mapRef.fitBounds(
+                        // $FlowIgnore
+                        new google.maps.LatLngBounds(
+                          {
+                            lat: p.place.geometry.viewport.f.b,
+                            lng: p.place.geometry.viewport.b.b
+                          },
+                          {
+                            lat: p.place.geometry.viewport.f.f,
+                            lng: p.place.geometry.viewport.b.f
+                          }
+                        )
                       )
-                    )
-                  }
-                })
+                    }
+                  })
             }}
             fullWidth
-          />
+            /></MenuItem>
         </Paper>
 
         <Map

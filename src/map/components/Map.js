@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react'
 import withScriptjs from 'react-google-maps/lib/async/withScriptjs'
-
+import LoaderFullScreen from '../../loader/Loader'
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
 import type { GoogleLocation } from '../../core/types'
@@ -132,7 +132,7 @@ export default class MapWrapper extends Component {
       ),
       googleMapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDKLbjNVBVXNyxZni7LJRA12_auYQsLrB8&libraries=places&v=3.exp',
       loadingElement = (
-        <div style={{ height: this.state.height }} />
+        <LoaderFullScreen text='Loading google map' />
       )
     } = this.props
 

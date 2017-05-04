@@ -53,11 +53,11 @@ export default {
     bottom: '50px'
   },
   searchBar: {
-    position: 'fixed',
-    top: '70px',
-    marginLeft: '35%',
-    marginRight: '35%',
-    width: '30%',
-    zIndex: 3
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    top: '15%',
+    width: '50%',
+    zIndex: 1
   }
 }
