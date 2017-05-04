@@ -16,6 +16,12 @@ import Navigation from '../src/NavigationSideBar/components/Navigation'
 import Sidebar from '../src/NavigationSideBar/components/Sidebar'
 import ProfileFrame from '../src/NavigationSideBar/components/ProfileFrame'
 import AndroidIcon from 'material-ui/svg-icons/action/android'
+import LoaderFullScreen, { Loader } from '../src/loader/Loader'
+
+storiesOf('Loader', module)
+  .addDecorator(muiTheme())
+  .add('default', () => <Loader />)
+  .add('fullScreen', () => <LoaderFullScreen />)
 
 storiesOf('Navigation', module)
   .addDecorator(muiTheme())
@@ -69,7 +75,7 @@ storiesOf('Navigation', module)
     ]
     return <Sidebar items={items} open />
   })
-  .add('Navigation side bar', () => (<Navigation />))
+  .add('Navigation side bar', () => (<Navigation><LoaderFullScreen text='Bombing you' /></Navigation>))
 
 storiesOf('PersonalCard', module) // broken due to integration with redux
   .addDecorator(muiTheme())
