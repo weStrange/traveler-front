@@ -10,8 +10,10 @@ import type { GoogleLocation } from '../../core/types'
 
 type WorldMapProps = {
   markers: any,
-  center?: GoogleLocation,
-  zoom?: number,
+  center: GoogleLocation,
+  zoom: number,
+  onZoomChange?: () => void,
+  onCenterChange?: () => void,
   onMarkerClick?: () => void,
   onMarkerRightClick?: () => void,
   onMapLoad?: () => void,
@@ -20,8 +22,10 @@ type WorldMapProps = {
 
 export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
   markers,
-  zoom = 4,
-  center = { lat: -25.363882, lng: 131.044922 },
+  zoom,
+  center,
+  onZoomChange = () => {},
+  onCenterChange = () => {},
   onMarkerClick = () => {},
   onMarkerRightClick = () => {},
   onMapLoad = () => {},
@@ -31,6 +35,8 @@ export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
     <GoogleMap
       ref={onMapLoad}
       onClick={onMapClick}
+      onZoomChange={onZoomChange}
+      onCenterChanged={onCenterChange}
       center={center}
       zoom={zoom}
     >
@@ -48,6 +54,10 @@ export const Wrapper = withScriptjs(withGoogleMap(function WorldMap ({
 
 type MapWrapperProps = {
   markers: any,
+  zoom: number,
+  center: GoogleLocation,
+  onZoomChange?: () => void,
+  onCenterChange?: () => void,
   onMarkerClick?: (index: number) => void,
   onMarkerRightClick?: () => void,
   onMapLoad?: () => void,
@@ -100,6 +110,10 @@ export default class MapWrapper extends Component {
   render () {
     const {
       markers,
+      zoom,
+      center,
+      onZoomChange = () => {},
+      onCenterChange = () => {},
       onMarkerClick = (index: number) => {},
       onMarkerRightClick = () => {},
       onMapLoad = () => {},
@@ -129,6 +143,10 @@ export default class MapWrapper extends Component {
         containerElement={containerElement}
         mapElement={mapElement}
         markers={markers}
+        zoom={zoom}
+        center={center}
+        onZoomChange={onZoomChange}
+        onCenterChange={onCenterChange}
         onMarkerClick={onMarkerClick}
         onMarkerRightClick={onMarkerRightClick}
         onMapLoad={onMapLoad}

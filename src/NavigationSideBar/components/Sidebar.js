@@ -44,6 +44,7 @@ class Sidebar extends Component {
       (item, index) => {
         if (item.subheader) subheaderIndexes.push(index)
         return (<ListItem
+          key={index}
           disabled={item.disabled}
           primaryText={item.label}
           leftIcon={this.colorize(item.leftIcon)}
@@ -54,7 +55,13 @@ class Sidebar extends Component {
       }
     )
     _each(subheaderIndexes, (index, iterationTimes) => {
-      ListItems.splice(index + iterationTimes, 0, <Subheader> {items[index].subheaderLabel} </Subheader>)
+      ListItems.splice(
+        index + iterationTimes,
+        0,
+        <Subheader key={'subheader-' + index}>
+          {items[index].subheaderLabel}
+        </Subheader>
+      )
     })
     return ListItems
   }
