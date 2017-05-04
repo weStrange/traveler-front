@@ -27,21 +27,30 @@ import type { CardType } from '../types'
 import type { AppState } from '../../types'
 import type { GooglePlace } from '../../core/types'
 
+type TripSpec = {
+  startTime: Date,
+  endTime: Date,
+  location: string
+}
+
 type InfoRepresentationProps = {
   info: [string, any],
   locationOptions: List<GooglePlace>,
+  tripSpec: TripSpec,
   actions: any
 }
 
 function InfoRepresentation ({
   info,
   locationOptions,
+  tripSpec,
   actions
 }: InfoRepresentationProps): any {
   switch (info[0]) {
     case 'title':
       return (
         <TextField
+          id='card-create-title'
           type='text'
           hintText=''
           value={info[1]}
@@ -53,6 +62,7 @@ function InfoRepresentation ({
     case 'location':
       return (
         <Autocomplete
+          id='card-create-location'
           type='text'
           hintText=''
           value={info[1]}
@@ -86,6 +96,7 @@ function InfoRepresentation ({
           mode='landscape'
           value={info[1]}
           fullWidth
+          shouldDisableDate={(date) => date < tripSpec.startTime}
           onChange={(ev, date) => actions.cardCreate.editEndTime(date)}
         />
       )
@@ -126,6 +137,7 @@ type InfoProps = {
   info: [string, any],
   color: any,
   locationOptions: List<GooglePlace>,
+  tripSpec: TripSpec,
   actions: any
 }
 
@@ -133,6 +145,7 @@ const Info = ({
   info,
   color,
   locationOptions,
+  tripSpec,
   actions
 }: InfoProps) => (
   <span
@@ -144,15 +157,10 @@ const Info = ({
     <InfoRepresentation
       info={info}
       actions={actions}
+      tripSpec={tripSpec}
       locationOptions={locationOptions} />
   </span>
 )
-
-type TripSpec = {
-  startTime: Date,
-  endTime: Date,
-  location: string
-}
 
 type TripInfoProps = {
   tripSpec: TripSpec,
@@ -192,6 +200,7 @@ class TripInfo extends React.PureComponent {
               color={this.props.color}
               info={[key, value]}
               locationOptions={this.props.locationOptions}
+              tripSpec={this.props.tripSpec}
               actions={this.props.actions} />
           </ListItem>
         </div>

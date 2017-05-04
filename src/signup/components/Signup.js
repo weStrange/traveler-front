@@ -186,7 +186,7 @@ class Signup extends React.PureComponent {
               />
 
               <RaisedButton
-                label='Log in'
+                label='Sign up'
                 labelPosition='before'
                 onClick={(ev) => actions.submit.submit()}
                 backgroundColor={orange500}

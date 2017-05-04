@@ -52,13 +52,18 @@ export default function cardCreateReducer (
     case 'map-card-create-start-time-edit':
       return {
         ...state,
-        startTime: action.startTime
+        startTime: action.startTime,
+        endTime: state.endTime >= action.startTime
+        ? state.endTime
+        : action.startTime
       }
 
     case 'map-card-create-end-time-edit':
       return {
         ...state,
-        endTime: action.endTime
+        endTime: action.endTime >= state.startTime
+        ? action.endTime
+        : state.startTime
       }
 
     case 'map-card-create-type-edit':

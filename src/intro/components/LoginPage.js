@@ -73,7 +73,7 @@ export function LoginPage ({
           underlineFocusStyle={{
             borderColor: orange500
           }}
-          errorText='Wrong username'
+          errorText=''
         />
         <br />
         <TextField
@@ -91,7 +91,7 @@ export function LoginPage ({
           underlineFocusStyle={{
             borderColor: orange500
           }}
-          errorText='Wrong password'
+          errorText=''
         />
         <div style={{
           display: 'flex',

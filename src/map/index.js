@@ -110,6 +110,31 @@ export class MapView extends Component {
         <Map
           zoom={zoom}
           center={location}
+          onZoomChange={() => actions.location.zoom(
+            this.state.mapRef
+            ? this.state.mapRef.getZoom()
+            : zoom
+          )}
+          onCenterChange={() => {
+            let newCenter = {
+              lat: location.lat,
+              lng: location.lng
+            }
+            if (this.state.mapRef) {
+              newCenter = {
+                ...newCenter,
+                lat: this.state.mapRef.getCenter().lat()
+              }
+            }
+            if (this.state.mapRef) {
+              newCenter = {
+                ...newCenter,
+                lng: this.state.mapRef.getCenter().lng()
+              }
+            }
+
+            actions.location.panTo(newCenter)
+          }}
           onMapLoad={(map) => { this.state.mapRef = map }}
           onMarkerClick={(index: number) => {
             let card = ownCard.personalCards

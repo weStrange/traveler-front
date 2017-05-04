@@ -7,7 +7,7 @@ exports[`LoginPage Component renders a snapshot 1`] = `
   <div>
     <TextField
       disabled={false}
-      errorText="Wrong username"
+      errorText=""
       floatingLabelFixed={false}
       fullWidth={true}
       hintStyle={
@@ -35,7 +35,7 @@ exports[`LoginPage Component renders a snapshot 1`] = `
     <br />
     <TextField
       disabled={false}
-      errorText="Wrong password"
+      errorText=""
       floatingLabelFixed={false}
       fullWidth={true}
       hintStyle={

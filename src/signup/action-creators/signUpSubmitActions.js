@@ -13,8 +13,14 @@ export function submit () {
   return (dispatch: any, getState: any) => {
     dispatch(submitRequest())
 
+    let {
+      username,
+      password
+    } = getState().signup.signupInput
+
     client.signUp(ProfileUtils.toProfile(getState().signup.signupInput))
       .then(() => dispatch(submitSuccess()))
+      .then(() => client.signIn(username, password))
       .then(() => hashHistory.push('/map'))
       .catch((error) => {
         console.log(error)

@@ -16,6 +16,7 @@ const customStyle = {
 
 type RadioGroupProps = {
   title: string,
+  value: string,
   onChange: () => void,
   name: string,
   options: Array<any>
@@ -66,7 +67,8 @@ class RadioGroup extends React.PureComponent {
           {this.props.title}
         </h3>
         <RadioButtonGroup
-          onChange={(e) => this.handleChange(e)} valueSelected={this.state.chosed}
+          valueSelected={this.props.value}
+          onChange={(e) => this.handleChange(e)}
           name={this.props.name}
         >
           {this.renderButtons()}
