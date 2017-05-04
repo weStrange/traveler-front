@@ -1,15 +1,12 @@
 /* @flow */
 'use strict'
 
-import React from 'react'
+import React, { Component } from 'react'
 import withScriptjs from 'react-google-maps/lib/async/withScriptjs'
 
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
 import type { GoogleLocation } from '../../core/types'
-
-const mapWidth = window.innerWidth - 30
-const mapHeight = window.innerHeight - 30
 
 type WorldMapProps = {
   markers: any,
@@ -61,35 +58,81 @@ type MapWrapperProps = {
   loadingElement?: any
 }
 
-export default function MapWrapper ({
-  markers,
-  onMarkerClick = (index: number) => {},
-  onMarkerRightClick = () => {},
-  onMapLoad = () => {},
-  onMapClick = () => {},
-  containerElement = (
-    <div style={{ height: mapHeight, width: mapWidth }} />
-  ),
-  mapElement = (
-    <div style={{ height: mapHeight, width: mapWidth }} />
-  ),
-  googleMapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDKLbjNVBVXNyxZni7LJRA12_auYQsLrB8&libraries=places&v=3.exp',
-  loadingElement = (
-    <div style={{ height: mapHeight }}>
-      WAIT!!!!!
-    </div>
-  )
-}: MapWrapperProps) {
-  return (
-    <Wrapper
-      googleMapURL={googleMapURL}
-      loadingElement={loadingElement}
-      containerElement={containerElement}
-      mapElement={mapElement}
-      markers={markers}
-      onMarkerClick={onMarkerClick}
-      onMarkerRightClick={onMarkerRightClick}
-      onMapLoad={onMapLoad}
-      onMapClick={onMapClick} />
-  )
+type MapWrapperState = {
+  width: number,
+  height: number
+}
+
+export default class MapWrapper extends Component {
+  props: MapWrapperProps;
+  state: MapWrapperState;
+  updateDimensions: () => void;
+
+  constructor (props: MapWrapperProps) {
+    super(props)
+    this.state = {
+      width: window.innerWidth - 15,
+      height: window.innerHeight - 80
+    }
+
+    this.updateDimensions = this.updateDimensions.bind(this)
+  }
+
+  updateDimensions () {
+    this.setState({
+      width: window.innerWidth - 15,
+      height: window.innerHeight - 80
+    })
+  }
+
+  componentWillMount () {
+    this.updateDimensions()
+  }
+
+  componentDidMount () {
+    window.addEventListener('resize', this.updateDimensions)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.updateDimensions)
+  }
+
+  render () {
+    const {
+      markers,
+      onMarkerClick = (index: number) => {},
+      onMarkerRightClick = () => {},
+      onMapLoad = () => {},
+      onMapClick = () => {},
+      containerElement = (
+        <div style={{
+          height: this.state.height,
+          width: this.state.width
+        }} />
+      ),
+      mapElement = (
+        <div style={{
+          height: this.state.height,
+          width: this.state.width
+        }} />
+      ),
+      googleMapURL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDKLbjNVBVXNyxZni7LJRA12_auYQsLrB8&libraries=places&v=3.exp',
+      loadingElement = (
+        <div style={{ height: this.state.height }} />
+      )
+    } = this.props
+
+    return (
+      <Wrapper
+        googleMapURL={googleMapURL}
+        loadingElement={loadingElement}
+        containerElement={containerElement}
+        mapElement={mapElement}
+        markers={markers}
+        onMarkerClick={onMarkerClick}
+        onMarkerRightClick={onMarkerRightClick}
+        onMapLoad={onMapLoad}
+        onMapClick={onMapClick} />
+    )
+  }
 }
