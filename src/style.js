@@ -59,5 +59,11 @@ export default {
     top: '15%',
     width: '50%',
     zIndex: 1
+  },
+  cardCreate: {
+    fileButton: {
+      float: 'right',
+      zIndex: 3
+    }
   }
 }

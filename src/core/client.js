@@ -1,6 +1,7 @@
 /* @flow */
 /* global File */
 /* global google */
+/* global FormData */
 'use strict'
 
 import es6Promise from 'es6-promise'
@@ -170,12 +171,13 @@ export function uploadCardPhoto (
   cardId: number,
   photo: File
 ): Promise<any> {
+  let formData = new FormData()
+
+  formData.append('file', photo)
+
   return fetch('/api/profile/card-photos/' + cardId, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    body: photo,
+    body: formData,
     credentials: credentialsType
   })
     .then(responseAny)

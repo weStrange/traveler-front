@@ -1,7 +1,9 @@
 /* @flow */
+/* global File */
 'use strict'
 
 import { List } from 'immutable'
+import { hashHistory } from 'react-router'
 
 import * as client from '../../core/client'
 import * as ownCard from './ownCardsActions'
@@ -12,7 +14,8 @@ import type { AppState } from '../../types'
 
 export function upload (
   type: CardType,
-  card: PersonalCardShort | GroupCardShort
+  card: PersonalCardShort | GroupCardShort,
+  photo: File | null
 ): any {
   return (dispatch: any, getState: () => AppState) => {
     dispatch(addCardRequest())
@@ -20,9 +23,21 @@ export function upload (
     if (type === 'personal') {
       return client.createPersonalCard(card)
         .then((card) => {
+          if (photo !== null) {
+            client.uploadCardPhoto(card.id, photo)
+          }
+
+          return card
+        })
+        .then((card) => {
           dispatch(addCardSuccess())
 
           dispatch(ownCard.fetchPersonal())
+          return card
+        })
+        .then((card) => {
+          hashHistory.push('/map')
+
           return card
         })
         .catch((error) => {

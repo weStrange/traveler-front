@@ -1,9 +1,13 @@
 /* @flow */
+/* global FileReader */
+/* global File */
 'use strict'
-import React from 'react'
+
+import React, { Component } from 'react'
 import _map from 'lodash/map'
-import { Card, CardText, CardActions } from 'material-ui/Card'
+import { Card, CardText, CardActions, CardMedia } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
@@ -17,7 +21,8 @@ import { indigo500 } from 'material-ui/styles/colors'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router'
+
+import { pickRandomImg } from '../../utils/randomCardPropGenerator'
 
 import style from '../../style'
 
@@ -229,48 +234,96 @@ type CreateCardViewProps = {
   locationName: string,
   username: string,
   userImage?: number,
+  imageUrl: string,
+  imageFile: File | null,
   actions: any
 }
 
-export function CreateCardView ({
-  title,
-  description,
-  type,
-  lat,
-  lon,
-  startTime,
-  endTime,
-  participants,
-  userImage,
-  username,
-  locationOptions,
-  locationName,
-  actions
-}: CreateCardViewProps) {
-  return (
-    <Card style={style.card} zDepth={4} >
-      <CardText>
-        <TextField
-          hintText='Description'
-          value={description}
-          multiLine
-          rows={5}
-          fullWidth
-          onChange={(e, value) => actions.cardCreate.editDescription(value)}
-        />
-      </CardText>
-      <TripInfo
-        color={indigo500}
-        tripSpec={{
-          title,
-          startTime,
-          endTime,
-          location: locationName
-        }}
-        locationOptions={locationOptions}
-        actions={actions} />
-      <CardActions>
-        <Link to='/map'>
+type CreateCardViewState = {
+  defaultImageUrl: string
+}
+
+export class CreateCardView extends Component {
+  props: CreateCardViewProps;
+  state: CreateCardViewState;
+
+  constructor (props: CreateCardViewProps) {
+    super(props)
+
+    this.state = {
+      defaultImageUrl: pickRandomImg()
+    }
+  }
+
+  render () {
+    const styles = {
+      button: {
+        margin: 12
+      },
+      exampleImageInput: {
+        cursor: 'pointer',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        width: '100%',
+        opacity: 0
+      }
+    }
+
+    const {
+      title,
+      description,
+      lat,
+      lon,
+      startTime,
+      endTime,
+      locationOptions,
+      locationName,
+      imageUrl,
+      imageFile,
+      actions
+    } = this.props
+
+    return (
+      <Card style={style.card} zDepth={4} >
+        <CardMedia
+          style={style.cardImg}>
+          <img src={imageUrl || this.state.defaultImageUrl} alt='Image' />
+        </CardMedia>
+        <CardText>
+          <RaisedButton
+            label='Choose an Image'
+            labelPosition='before'
+            style={style.cardCreate.fileButton}
+            containerElement='label'
+          >
+            <input
+              type='file'
+              style={styles.exampleImageInput}
+              onChange={(e) => handleFileUpload(e, actions)} />
+          </RaisedButton>
+          <TextField
+            hintText='Description'
+            value={description}
+            multiLine
+            rows={5}
+            fullWidth
+            onChange={(e, value) => actions.cardCreate.editDescription(value)}
+          />
+        </CardText>
+        <TripInfo
+          color={indigo500}
+          tripSpec={{
+            title,
+            startTime,
+            endTime,
+            location: locationName
+          }}
+          locationOptions={locationOptions}
+          actions={actions} />
+        <CardActions>
           <FlatButton
             label='Create'
             primary
@@ -285,12 +338,30 @@ export function CreateCardView ({
               endTime,
               lat,
               lon
-            })}
+            }, imageFile)}
            />
-        </Link>
-      </CardActions>
-    </Card>
-  )
+        </CardActions>
+      </Card>
+    )
+  }
+}
+
+function handleFileUpload (
+  event: any,
+  actions: any
+) {
+  event.preventDefault()
+
+  let reader = new FileReader()
+
+  let file = event.target.files[0]
+
+  reader.onloadend = () => {
+    actions.cardCreate.editFile(file)
+    actions.cardCreate.editImageUrl(reader.result)
+  }
+
+  reader.readAsDataURL(file)
 }
 
 function mapStateToProps (state: AppState) {

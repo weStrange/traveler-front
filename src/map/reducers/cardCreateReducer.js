@@ -16,7 +16,9 @@ function getDefaultState (): CardCreateState {
     lat: 0,
     lon: 0,
     startTime: new Date(),
-    endTime: new Date()
+    endTime: new Date(),
+    imageUrl: '',
+    imageFile: null
   }
 }
 
@@ -89,6 +91,18 @@ export default function cardCreateReducer (
       return {
         ...state,
         locationOptions: action.options
+      }
+
+    case 'map-card-create-file-edit':
+      return {
+        ...state,
+        imageFile: action.file
+      }
+
+    case 'map-card-create-image-url-edit':
+      return {
+        ...state,
+        imageUrl: action.url
       }
 
     default:
