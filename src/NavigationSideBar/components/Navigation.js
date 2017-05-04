@@ -56,7 +56,11 @@ class Navigation extends Component {
   render () {
     return (
       <div>
-        <AppBar title={this.state.title} menuIconCallback={this.handleToggle} />
+        <AppBar
+          title={this.state.title}
+          menuIconCallback={this.handleToggle}
+          signout={() => { alert('You signed out!') }}
+        />
         <Sidebar
           open={this.state.open}
           onRequestChange={this.handleToggle}
