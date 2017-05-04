@@ -14,11 +14,15 @@ import EmptyCard from '../src/card-queue/components/EmptyCard'
 import AppBar from '../src/NavigationSideBar/components/AppBar'
 import Navigation from '../src/NavigationSideBar/components/Navigation'
 import Sidebar from '../src/NavigationSideBar/components/Sidebar'
+import ProfileFrame from '../src/NavigationSideBar/components/ProfileFrame'
 import AndroidIcon from 'material-ui/svg-icons/action/android'
 
 storiesOf('Navigation', module)
   .addDecorator(muiTheme())
   .addDecorator(StorybookConsole)
+  .add('ProfileFrame', () => (<div style={{backgroundColor: `rgba(0,0,0,0)`}}>
+    <ProfileFrame />
+  </div>))
   .add('Appbar', () => (<AppBar title='App bar' menuIconCallback={(e) => alert('menuIconCallback called')} />))
   .add('Sidebar', () => {
     const items = [
