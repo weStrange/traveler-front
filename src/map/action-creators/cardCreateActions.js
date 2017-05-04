@@ -1,4 +1,5 @@
 /* @flow */
+/* global File */
 'use strict'
 
 import * as client from '../../core/client'
@@ -59,6 +60,20 @@ export function editLocationName (name: string): Action {
   return {
     type: 'map-card-create-location-name-edit',
     name: name
+  }
+}
+
+export function editFile (file: File): Action {
+  return {
+    type: 'map-card-create-file-edit',
+    file: file
+  }
+}
+
+export function editImageUrl (url: string): Action {
+  return {
+    type: 'map-card-create-image-url-edit',
+    url: url
   }
 }
 

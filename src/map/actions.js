@@ -1,4 +1,5 @@
 /* @flow */
+/* global File */
 'use strict'
 
 import { List } from 'immutable'
@@ -38,6 +39,8 @@ export type MapAction
   | { type: 'map-card-create-type-edit', cardType: CardType }
   | { type: 'map-card-create-start-time-edit', startTime: Date }
   | { type: 'map-card-create-end-time-edit', endTime: Date }
+  | { type: 'map-card-create-file-edit', file: File }
+  | { type: 'map-card-create-image-url-edit', url: string }
 
   | { type: 'map-card-create-location-options-fetch-request', input: string }
   | { type: 'map-card-create-location-options-fetch-success', options: List<GooglePlace> }

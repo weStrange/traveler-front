@@ -1,4 +1,5 @@
 /* @flow */
+/* global File */
 'use strict'
 
 import { List } from 'immutable'
@@ -30,6 +31,8 @@ export type CardCreateState = {
   lon: number,
   startTime: Date,
   endTime: Date,
+  imageUrl: string,
+  imageFile: File | null,
   participants?: List<string>
 }
 
