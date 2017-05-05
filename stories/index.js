@@ -8,6 +8,7 @@ import Signup from '../src/signup/components/Signup'
 import PersonalCard from '../src/card-queue/components/PersonalCard'
 import { FavoriteButton, DisfavoriteButton, CardButtons } from '../src/card-queue/components/CardButtons'
 import CardQueue from '../src/card-queue/components/CardQueue'
+import ItsAMatchOverlay from '../src/card-queue/components/ItsAMatchOverlay'
 import img from '../img/test.jpg'
 import { generateRandomCardData } from '../src/utils/randomCardPropGenerator'
 import EmptyCard from '../src/card-queue/components/EmptyCard'
@@ -17,6 +18,12 @@ import Sidebar from '../src/NavigationSideBar/components/Sidebar'
 import ProfileFrame from '../src/NavigationSideBar/components/ProfileFrame'
 import AndroidIcon from 'material-ui/svg-icons/action/android'
 import LoaderFullScreen, { Loader } from '../src/loader/Loader'
+
+storiesOf('Its A Match!', module)
+  .addDecorator(muiTheme())
+  .add('default', () => (
+    <ItsAMatchOverlay />
+  ))
 
 storiesOf('Loader', module)
   .addDecorator(muiTheme())
