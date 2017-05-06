@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react'
+
 import Avatar from 'material-ui/Avatar'
 import '../../animate.css'
 import stockAvatar from '../../../img/stockavatar.jpg'
@@ -9,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import MessageIcon from 'material-ui/svg-icons/communication/chat'
+
+import { oidToUrl } from '../../core/photo-utils'
 
 const style = {
   filter: {
@@ -59,23 +62,65 @@ const style = {
 
 type ItsAMatchOverlayProps = {
   open: boolean,
-  avatarImgUrl2?: string,
-  avatarImgUrl1?: string,
+  avatarImgOwn?: number,
+  avatarImgTarget?: number,
   muiTheme: any,
-  targetName?: string
+  targetUserName: string,
+  targetFirstName: string,
+  targetLastName: string,
+  onContinue?: () => void,
+  onStartMessaging?: () => void
 }
+
 class ItsAMatchOverlay extends Component {
   props: ItsAMatchOverlayProps;
   render () {
-    const {avatarImgUrl1, avatarImgUrl2, open} = this.props
+    const {
+      avatarImgOwn,
+      avatarImgTarget,
+      open,
+      onContinue = () => {},
+      onStartMessaging = () => {}
+    } = this.props
     const { palette } = this.props.muiTheme
+    const {
+      targetFirstName,
+      targetLastName
+    } = this.props
     return (
       <Dialog open={open} contentStyle={style.filter}>
-        <h3 style={{...style.primaryText, color: palette.primary2Color}}>It's a match!</h3>
-        <h4 style={style.secondaryText}>You and {this.props.targetName || 'someone'} have liked each other's trip!</h4>
+        <h3
+          style={{
+            ...style.primaryText,
+            color: palette.primary2Color
+          }}>
+          It's a match!
+        </h3>
+        <h4 style={style.secondaryText}>
+          You and {
+            targetFirstName + targetLastName ||
+            'someone'
+          } have liked each other's trip!
+        </h4>
         <div>
-          <Avatar className='animated ease slideInLeft' style={style.avatar} size={128} src={avatarImgUrl1 || stockAvatar} />
-          <Avatar className='animated ease slideInRight' style={style.avatar} size={128} src={avatarImgUrl2 || stockAvatar} />
+          <Avatar
+            className='animated ease slideInLeft'
+            style={style.avatar}
+            size={128}
+            src={
+              avatarImgOwn === undefined
+              ? stockAvatar
+              : oidToUrl(avatarImgOwn)
+            } />
+          <Avatar
+            className='animated ease slideInRight'
+            style={style.avatar}
+            size={128}
+            src={
+              avatarImgTarget === undefined
+              ? stockAvatar
+              : oidToUrl(avatarImgTarget)
+            } />
         </div>
         <div style={style.buttonGroup}>
           <RaisedButton
@@ -86,10 +131,17 @@ class ItsAMatchOverlay extends Component {
             backgroundColor={palette.primary1Color}
             buttonStyle={style.innerButton}
             label={<span style={style.buttonText}>Send a message</span>}
+            onClick={onStartMessaging}
           />
           <FlatButton
-            style={{...style.button, ...style.flatButton, ...style.innerButton, color: palette.primary1Color}}
+            style={{
+              ...style.button,
+              ...style.flatButton,
+              ...style.innerButton,
+              color: palette.primary1Color
+            }}
             label={<span style={style.buttonText}>Continue browsing</span>}
+            onClick={onContinue}
           />
         </div>
       </Dialog>

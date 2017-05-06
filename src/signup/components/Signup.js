@@ -54,6 +54,10 @@ class Signup extends React.PureComponent {
     props.actions.country.load()
   }
 
+  componentWillUnmount () {
+    this.props.actions.common.stop()
+  }
+
   passwordChecker () {
     const updater = (prev, props) => {
       return {passwordMismatch: prev.confirmpassword !== prev.password}
@@ -228,6 +232,9 @@ function mapDispatchToProps (dispatch) {
       }, dispatch),
       country: bindActionCreators({
         ...actionCreators.country
+      }, dispatch),
+      common: bindActionCreators({
+        ...actionCreators.common
       }, dispatch)
     }
   }

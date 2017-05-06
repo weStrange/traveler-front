@@ -28,6 +28,11 @@ export default function signupReducer (
   action: Action
 ): SignUpState {
   switch (action.type) {
+    case 'signup-stop':
+      return {
+        ...getDefaultState()
+      }
+
     case 'signup-username-edit':
       return {
         ...state,

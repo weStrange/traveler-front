@@ -29,3 +29,5 @@ export type SignupAction
   | { type: 'signup-cities-load-request' }
   | { type: 'signup-cities-load-success', cities: List<string> }
   | { type: 'signup-cities-load-failure' }
+
+  | { type: 'signup-stop' }

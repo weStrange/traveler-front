@@ -255,6 +255,10 @@ export class CreateCardView extends Component {
     }
   }
 
+  componentWillUnmount () {
+    this.props.actions.cardCreate.end()
+  }
+
   render () {
     const styles = {
       button: {
@@ -381,6 +385,9 @@ function mapDispatchToProps (dispatch) {
       }, dispatch),
       locationOptions: bindActionCreators({
         ...actionCreators.locationOptions
+      }, dispatch),
+      common: bindActionCreators({
+        ...actionCreators.commonActions
       }, dispatch)
     }
   }

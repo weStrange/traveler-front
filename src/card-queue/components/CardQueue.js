@@ -8,9 +8,11 @@ import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { Grid } from 'react-bootstrap'
+
 import PersonalCard from './PersonalCard'
 import EmptyCard from './EmptyCard'
-
+import ItsAMatchOverlay from './ItsAMatchOverlay'
 import { CardButtons } from './CardButtons'
 
 import * as actionCreators from '../action-creators'
@@ -42,6 +44,9 @@ type CardWrapper = {
 }
 
 type CardQueueProps = {
+  profilePhoto: number,
+  current: number,
+  match: boolean,
   queue: List<CardWrapper>,
   ownCards: List<PersonalCardType | GroupCardType>,
   ownCard: PersonalCardType | GroupCardType,
@@ -51,7 +56,6 @@ type CardQueueProps = {
 }
 
 type CardQueueState = {
-  current: number
 }
 
 export class CardQueue extends React.PureComponent {
@@ -70,38 +74,69 @@ export class CardQueue extends React.PureComponent {
     // This needs to be removed
       .then((cs) => actions.currentCard.selectOwn(cs.first()))
   }
+
+  componentWillUnmount () {
+    this.props.actions.common.stop()
+  }
+
   onButtonTap = (e: any, button: string) => {
-    const { current } = this.state
     const {
       actions,
+      current,
       queue
     } = this.props
 
-    actions.like.evaluate(button === 'fav', queue.get(current).card)
-      .then(() => this.setState((state, props) => { return state.current++ }))
+    actions.like.evaluate(
+      button === 'fav',
+      queue.get(current).card
+    )
   }
-  makeCard () {
-    let currCard = this.props.queue.get(this.state.current).card
-    let currType = this.props.queue.get(this.state.current).type
 
-    const { locationName } = this.props
+  makeCard () {
+    let currCard = this.props
+      .queue
+      .get(this.props.current)
+      .card
+    let currType = this.props
+      .queue
+      .get(this.props.current)
+      .type
+
+    const {
+      locationName,
+      queue,
+      current,
+      match,
+      profilePhoto,
+      actions
+    } = this.props
 
     if (currType === 'PERSONAL_CARD') { // @Fixme: should replace with variable constants for easier debugging
       // code to produce personal card
       return (
-        <div style={style.root}>
-          <PersonalCard
-            username={currCard.owner.username}
-            cardTitle={currCard.title}
-            tripStart={currCard.startTime}
-            tripEnd={currCard.endTime}
-            location={{ lat: currCard.lat, lon: currCard.lon }}
-            images={currCard.photos}
-            cardText={currCard.description}
-            locationName={locationName}
-          />
-          <CardButtons style={style.buttons} onTouchTap={this.onButtonTap} />
-        </div>
+        <Grid>
+          <div style={style.root}>
+            <PersonalCard
+              username={currCard.owner.username}
+              cardTitle={currCard.title}
+              tripStart={currCard.startTime}
+              tripEnd={currCard.endTime}
+              location={{ lat: currCard.lat, lon: currCard.lon }}
+              images={currCard.photos}
+              cardText={currCard.description}
+              locationName={locationName}
+            />
+            <CardButtons style={style.buttons} onTouchTap={this.onButtonTap} />
+            <ItsAMatchOverlay
+              open={match}
+              onContinue={() => actions.currentCard.nextTarget()}
+              targetUserName={currCard.owner.username}
+              targetFirstName={currCard.owner.firstName}
+              targetLastName={currCard.owner.lastName}
+              avatarImgOwn={profilePhoto}
+              avatarImgTarget={currCard.owner.photos.first()} />
+          </div>
+        </Grid>
       )
     }
     if (currType === 'GROUP_CARD') { // @Fixme: also fix me pls
@@ -114,18 +149,25 @@ export class CardQueue extends React.PureComponent {
     return <h1>There is no one around</h1>
   }
   render () {
-    const { current } = this.state
-    const { queue } = this.props
+    const {
+      queue,
+      current
+    } = this.props
     return (
       current < queue.size
       ? this.makeCard()
-      : (<EmptyCard callback={e => this.props.emptyCallback(e)} />)
+      : (
+        <EmptyCard callback={e => this.props.emptyCallback(e)} />
+      )
     )
   }
 }
 
 function mapStateToProps (state: AppState) {
   return {
+    profilePhoto: state.profile.profile.photos.first(),
+    current: state.cardQueue.currentCard.targetIndex,
+    match: state.cardQueue.currentCard.match,
     queue: combineQueues(
       state.map.location.lat,
       state.map.location.lat,

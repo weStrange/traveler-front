@@ -13,6 +13,9 @@ export default function countryReducer (
   action: Action
 ): CountryState {
   switch (action.type) {
+    case 'signup-stop':
+      return getDefaultState()
+
     case 'signup-countries-load-success':
       return action.countries.toArray()
 

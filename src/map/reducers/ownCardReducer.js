@@ -18,6 +18,11 @@ export default function placeReducer (
   action: MapAction
 ): OwnCardState {
   switch (action.type) {
+    case 'map-stop':
+      return {
+        ...getDefaultState()
+      }
+
     case 'map-own-personal-cards-fetch-success':
       return {
         ...state,

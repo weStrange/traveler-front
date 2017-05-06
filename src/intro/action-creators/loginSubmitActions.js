@@ -4,6 +4,7 @@
 import { hashHistory } from 'react-router'
 
 import * as client from '../../core/client'
+import * as profileActions from '../../profile/action-creators'
 
 import type { Action } from '../../actions'
 
@@ -19,6 +20,9 @@ export function submit (): any {
       password
     )
     .then(() => dispatch(submitSuccess()))
+    .then(() => dispatch(profileActions
+      .profileLoad
+      .loadProfileInfo()))
     .then(() => hashHistory.push('/map'))
     .catch((error) => {
       console.error(error)

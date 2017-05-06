@@ -16,6 +16,11 @@ export default function loginReducer (
   action: Action
 ): LoginState {
   switch (action.type) {
+    case 'login-stop':
+      return {
+        ...getDefaultState()
+      }
+
     case 'login-username-edit':
       return {
         ...state,

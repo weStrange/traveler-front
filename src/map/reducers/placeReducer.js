@@ -17,6 +17,11 @@ export default function placeReducer (
   action: MapAction
 ): PlaceState {
   switch (action.type) {
+    case 'map-stop':
+      return {
+        ...getDefaultState()
+      }
+
     case 'map-search-success':
       return {
         ...state,

@@ -9,6 +9,7 @@ import * as location from './locationActions'
 import * as locationOptions from './locationOptionsActions'
 import * as ownCardsActions from './ownCardsActions'
 import * as cardModalActions from './cardModalActions'
+import * as commonActions from './commonActions'
 
 export {
   cardCreateActions,
@@ -18,5 +19,6 @@ export {
   location,
   locationOptions,
   ownCardsActions,
-  cardModalActions
+  cardModalActions,
+  commonActions
 }

@@ -16,6 +16,8 @@ import Calendar from 'material-ui/svg-icons/action/date-range'
 import Vehicle from 'material-ui/svg-icons/maps/directions-car'
 import People from 'material-ui/svg-icons/social/people'
 
+import { oidToUrl } from '../../core/photo-utils'
+
 import style from '../../style'
 
 import type { Location } from '../../core/types'
@@ -144,14 +146,14 @@ const PersonalCard = ({
       avatar={generateAvatar(
         username,
         userImage !== undefined
-        ? '/api/images/' + (userImage)
+        ? oidToUrl(userImage)
         : ''
       )}
       title={cardTitle}
       subtitle={username}
     />
     <CardMedia style={style.cardImg}>
-      <img src={'/api/images/' + (images.first())} alt='Image' />
+      <img src={oidToUrl(images.first())} alt='Image' />
     </CardMedia>
     <CardText>
       <div style={style.cardText}>

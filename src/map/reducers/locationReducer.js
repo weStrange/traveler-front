@@ -17,6 +17,11 @@ export default function mapReducer (
   action: MapAction
 ): LocationState {
   switch (action.type) {
+    case 'map-stop':
+      return {
+        ...getDefaultState()
+      }
+
     case 'map-map-nav':
       return {
         ...state,

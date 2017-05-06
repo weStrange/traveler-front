@@ -58,6 +58,10 @@ export class MapView extends Component {
     props.actions.ownCard.fetchGroup()
   }
 
+  componentWillUnmount () {
+    this.props.actions.common.stop()
+  }
+
   render () {
     const {
       ownCard,
@@ -196,7 +200,8 @@ function mapDispatchToProps (dispatch) {
       place: bindActionCreators(actionCreators.place, dispatch),
       location: bindActionCreators(actionCreators.location, dispatch),
       ownCard: bindActionCreators(actionCreators.ownCardsActions, dispatch),
-      cardModal: bindActionCreators(actionCreators.cardModalActions, dispatch)
+      cardModal: bindActionCreators(actionCreators.cardModalActions, dispatch),
+      common: bindActionCreators(actionCreators.commonActions, dispatch)
     }
   }
 }
