@@ -52,6 +52,7 @@ export default function OwnCardView ({
         onRequestClose={onRequestClose}
       >
         <PersonalCard
+          style={{ margin: 0, padding: 0 }}
           username={card.owner.username}
           cardTitle={card.title}
           tripStart={card.startTime}

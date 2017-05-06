@@ -38,7 +38,6 @@ const Root = (
           <Route path='/signup' component={Signup} />
           <Route path='/' component={Navigation}>
             <Route path='card-queue' component={CardQueue} />
-            <Route path='create-card' component={CreateCardView} />
             <Route path='map' component={WorldMap} />
           </Route>
           <Route path='*' component={() => (<div><h1>Page not found</h1><p><Link to='/'>Back</Link></p></div>)} />

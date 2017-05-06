@@ -125,6 +125,7 @@ type PersonalCardProps = {
   cardText: string,
   primary1Color: any,
   muiTheme: any,
+  styles?: any,
   locationName: string
 }
 
@@ -139,9 +140,10 @@ const PersonalCard = ({
   cardText,
   primary1Color,
   muiTheme,
-  locationName
+  locationName,
+  styles = {}
 }: PersonalCardProps) => (
-  <Card style={style.card} zDepth={4} >
+  <Card style={{...style.card, ...styles}} zDepth={4} >
     <CardHeader
       avatar={generateAvatar(
         username,
