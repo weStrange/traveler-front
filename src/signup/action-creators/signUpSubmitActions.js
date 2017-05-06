@@ -19,8 +19,13 @@ export function submit () {
     } = getState().signup.signupInput
 
     client.signUp(ProfileUtils.toProfile(getState().signup.signupInput))
-      .then(() => dispatch(submitSuccess()))
       .then(() => client.signIn(username, password))
+      .then(() => client.uploadProfilePhoto(
+        getState().signup
+          .signupInput
+          .imageFile
+      ))
+      .then(() => dispatch(submitSuccess()))
       .then(() => hashHistory.push('/map'))
       .catch((error) => {
         console.log(error)

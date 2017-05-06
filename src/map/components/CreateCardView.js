@@ -312,7 +312,11 @@ export class CreateCardView extends Component {
               <input
                 type='file'
                 style={styles.exampleImageInput}
-                onChange={(e) => handleFileUpload(e, actions)} />
+                onChange={(e) => handleFileUpload(
+                  e,
+                  actions.cardCreate.editFile,
+                  actions.cardCreate.editImageUrl
+                )} />
             </RaisedButton>
             <TextField
               hintText='Description'
@@ -357,9 +361,10 @@ export class CreateCardView extends Component {
   }
 }
 
-function handleFileUpload (
+export function handleFileUpload (
   event: any,
-  actions: any
+  editFileAction: () => void,
+  editUrlAction: () => void
 ) {
   event.preventDefault()
 
@@ -368,8 +373,8 @@ function handleFileUpload (
   let file = event.target.files[0]
 
   reader.onloadend = () => {
-    actions.cardCreate.editFile(file)
-    actions.cardCreate.editImageUrl(reader.result)
+    editFileAction(file)
+    editUrlAction(reader.result)
   }
 
   reader.readAsDataURL(file)

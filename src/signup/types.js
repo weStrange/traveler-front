@@ -1,4 +1,5 @@
 /* @flow */
+/* global File */
 'use strict'
 
 export type Gender = 'male' | 'female' | 'other'
@@ -15,7 +16,9 @@ export type SignUpState = {
   phone: string,
   address: string,
   city: string,
-  country: string
+  country: string,
+  imageFile: File | null,
+  imageUrl: string
 }
 
 export type CountryState = Array<string>

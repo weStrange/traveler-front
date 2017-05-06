@@ -154,12 +154,13 @@ export function updatePassword (
 export function uploadProfilePhoto (
   photo: File
 ): Promise<Profile> {
+  let formData = new FormData()
+
+  formData.append('file', photo)
+
   return fetch('/api/profile/photos', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    body: photo,
+    body: formData,
     credentials: credentialsType
   })
     .then(responseJson)

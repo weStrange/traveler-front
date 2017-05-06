@@ -49,11 +49,41 @@ const style = {
     backgroundColor: `rgba(255,255,255,0.2)`
   }
 }
+
+type ProfileFrameProps = {
+  rootStyle: any,
+  avatarStyle: any,
+  listStyle: any,
+  secondaryTextStyle: any,
+  primaryTextStyle: any,
+  backgroundImgUrl: string,
+  avatarImgUrl: string,
+  primaryText: string,
+  secondaryText: string
+}
+
 export default class ProfileFrame extends Component {
+  props: ProfileFrameProps;
+
   render () {
-    const { rootStyle, avatarStyle, listStyle, secondaryTextStyle, primaryTextStyle, backgroundImgUrl, avatarImgUrl, primaryText, secondaryText } = this.props
+    const {
+      rootStyle,
+      avatarStyle,
+      listStyle,
+      secondaryTextStyle,
+      primaryTextStyle,
+      backgroundImgUrl,
+      avatarImgUrl,
+      primaryText,
+      secondaryText
+    } = this.props
     return (
-      <div style={{...style.profileFrame, ...rootStyle, backgroundImage: `url('${backgroundImgUrl || img}')`}}>
+      <div
+        style={{
+          ...style.profileFrame,
+          ...rootStyle,
+          backgroundImage: `url('${backgroundImgUrl || img}')`
+        }}>
         <div style={style.overlay}>
           <IconButton
             style={style.iconbutton}
@@ -64,11 +94,25 @@ export default class ProfileFrame extends Component {
           >
             <SettingIcon className='rotating' color={darkWhite} />
           </IconButton>
-          <Avatar style={{...style.avatar, ...avatarStyle}} size={72} src={avatarImgUrl || stockAvatar} />
+          <Avatar
+            style={{
+              ...style.avatar,
+              ...avatarStyle
+            }}
+            size={72}
+            src={avatarImgUrl || stockAvatar} />
           <ListItem
             style={{...style.usercard, ...listStyle}}
             primaryText={<span style={primaryTextStyle}>{primaryText || 'Username'}</span>}
-            secondaryText={<p style={{...style.secondaryText, ...secondaryTextStyle}}>{secondaryText || 'Useremail@mockEmail.domainn'}</p>}
+            secondaryText={
+              <p
+                style={{
+                  ...style.secondaryText,
+                  ...secondaryTextStyle
+                }}>
+                {secondaryText || 'Useremail@mockEmail.domainn'}
+              </p>
+            }
             disabled
         />
         </div>

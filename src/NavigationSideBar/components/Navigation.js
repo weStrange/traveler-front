@@ -3,6 +3,10 @@
 'use strict'
 
 import React, { Component } from 'react'
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import Maps from 'material-ui/svg-icons/maps/map'
 import Person from 'material-ui/svg-icons/social/person'
 import Group from 'material-ui/svg-icons/social/group'
@@ -15,12 +19,20 @@ import MatchIcon from 'material-ui/svg-icons/action/favorite'
 import AddLocation from 'material-ui/svg-icons/maps/add-location'
 import TextMessage from 'material-ui/svg-icons/communication/message'
 
+import * as actionCreators from '../../profile/action-creators'
+
+import type { AppState } from '../../types'
+
 type NavigationState = {
   open: boolean,
   title: string
 }
 type NavigationProps = {
-  children: any
+  username: string,
+  useremail: string,
+  avatarImg: number,
+  children: any,
+  actions: any
 }
 const optionGenerator = (
   label,
@@ -45,15 +57,24 @@ const optionGenerator = (
 class Navigation extends Component {
   props: NavigationProps
   state: NavigationState
+
   constructor (props: any) {
     super(props)
     this.state = { open: false, title: 'Travel Mate Finder' }
+
+    props.actions.loadProfile.loadProfileInfo()
   }
 
   handleToggle = () => this.setState((prev, props) => { return {open: !(prev.open)} })
   handleClose = () => this.setState({open: false})
 
   render () {
+    const {
+      username,
+      useremail,
+      avatarImg
+    } = this.props
+
     return (
       <div>
         <AppBar
@@ -64,6 +85,9 @@ class Navigation extends Component {
         <Sidebar
           open={this.state.open}
           onRequestChange={this.handleToggle}
+          username={username}
+          useremail={useremail}
+          avatarImg={avatarImg}
           items={[ // static links, using hardcoded value
             optionGenerator(
               'Browse Trip',
@@ -90,4 +114,24 @@ class Navigation extends Component {
     )
   }
 }
-export default Navigation
+
+function mapStateToProps (state: AppState) {
+  return {
+    username: state.profile.profile.username,
+    useremail: state.profile.profile.email,
+    avatarImg: state.profile.profile.photos.first()
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: {
+      loadProfile: bindActionCreators(actionCreators.profileLoad, dispatch)
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navigation)

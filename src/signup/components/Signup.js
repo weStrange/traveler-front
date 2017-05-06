@@ -18,6 +18,7 @@ import {
 } from 'react-bootstrap'
 
 import { RadioGroup } from '../../core/components'
+import { handleFileUpload } from '../../map/components/CreateCardView'
 
 import * as actionCreators from '../action-creators'
 
@@ -89,10 +90,26 @@ class Signup extends React.PureComponent {
       // phone,
       // address,
       city,
-      country
+      country,
+      imageUrl
     } = signupInput
 
     let isError = !doPasswordsMatch(password, passwordRepeat)
+    const styles = {
+      button: {
+        margin: 12
+      },
+      exampleImageInput: {
+        cursor: 'pointer',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        width: '100%',
+        opacity: 0
+      }
+    }
 
     return (
       <Grid>
@@ -188,6 +205,21 @@ class Signup extends React.PureComponent {
                   this.passwordChecker()
                 }}
               />
+              <img src={imageUrl} />
+              <RaisedButton
+                label='Choose an Image'
+                labelPosition='before'
+                containerElement='label'
+              >
+                <input
+                  type='file'
+                  style={styles.exampleImageInput}
+                  onChange={(e) => handleFileUpload(
+                    e,
+                    actions.signupInput.editImageFile,
+                    actions.signupInput.editImageUrl
+                  )} />
+              </RaisedButton>
 
               <RaisedButton
                 label='Sign up'

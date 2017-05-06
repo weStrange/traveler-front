@@ -1,4 +1,5 @@
 /* @flow */
+/* global File */
 'use strict'
 
 import { List } from 'immutable'
@@ -17,6 +18,8 @@ export type SignupAction
   | { type: 'signup-phone-edit', phone: string }
   | { type: 'signup-city-edit', city: string }
   | { type: 'signup-country-edit', country: string }
+  | { type: 'signup-image-url-edit', url: string }
+  | { type: 'signup-image-file-edit', file: File }
 
   | { type: 'signup-submit-request' }
   | { type: 'signup-submit-success' }
