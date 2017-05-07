@@ -18,10 +18,12 @@ import {
 } from 'react-bootstrap'
 
 import { RadioGroup } from '../../core/components'
+import { handleFileUpload } from '../../map/components/CreateCardView'
 
 import * as actionCreators from '../action-creators'
 
 import type { SignUpState } from '../types'
+import type { GooglePlace } from '../../core/types'
 
 const _getErrorStyle = (
   isError: boolean
@@ -39,7 +41,7 @@ const _getErrorMessage = (
 
 type SignupProps = {
   autocompleteCountry: List<string>,
-  autocompleteCity: List<string>,
+  autocompleteCity: List<GooglePlace>,
   signupInput: SignUpState,
   actions: any
 }
@@ -50,8 +52,11 @@ class Signup extends React.PureComponent {
   constructor (props) {
     super(props)
 
-    props.actions.city.load()
     props.actions.country.load()
+  }
+
+  componentWillUnmount () {
+    this.props.actions.common.stop()
   }
 
   passwordChecker () {
@@ -68,7 +73,7 @@ class Signup extends React.PureComponent {
   }
   render () {
     const {
-      autocompleteCountry,
+      // autocompleteCountry,
       autocompleteCity,
       signupInput,
       actions
@@ -85,10 +90,26 @@ class Signup extends React.PureComponent {
       // phone,
       // address,
       city,
-      country
+      // country,
+      imageUrl
     } = signupInput
 
     let isError = !doPasswordsMatch(password, passwordRepeat)
+    const styles = {
+      button: {
+        margin: 12
+      },
+      exampleImageInput: {
+        cursor: 'pointer',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        width: '100%',
+        opacity: 0
+      }
+    }
 
     return (
       <Grid>
@@ -142,18 +163,21 @@ class Signup extends React.PureComponent {
                 title='Gender'
                 name='gender'
               /> <br />
-              <AutoComplete
+              {/*      <AutoComplete
                 disableFocusRipple
                 value={country}
                 onUpdateInput={(seachText) => actions.signupInput.editCountry(seachText)}
                 hintText='Home country'
                 dataSource={autocompleteCountry}
-              /> <br />
+              /> <br />   */}
               <AutoComplete
                 hintText='Home city'
                 value={city}
-                onUpdateInput={(seachText) => actions.signupInput.editCity(seachText)}
-                dataSource={autocompleteCity}
+                onUpdateInput={(seachText) => {
+                  actions.signupInput.editCity(seachText)
+                  actions.city.load(seachText)
+                }}
+                dataSource={autocompleteCity.map((p) => p.description).toArray()}
               /> <br />
               <TextField
                 value={password}
@@ -184,6 +208,21 @@ class Signup extends React.PureComponent {
                   this.passwordChecker()
                 }}
               />
+              <img src={imageUrl} />
+              <RaisedButton
+                label='Choose an Image'
+                labelPosition='before'
+                containerElement='label'
+              >
+                <input
+                  type='file'
+                  style={styles.exampleImageInput}
+                  onChange={(e) => handleFileUpload(
+                    e,
+                    actions.signupInput.editImageFile,
+                    actions.signupInput.editImageUrl
+                  )} />
+              </RaisedButton>
 
               <RaisedButton
                 label='Sign up'
@@ -228,6 +267,9 @@ function mapDispatchToProps (dispatch) {
       }, dispatch),
       country: bindActionCreators({
         ...actionCreators.country
+      }, dispatch),
+      common: bindActionCreators({
+        ...actionCreators.common
       }, dispatch)
     }
   }

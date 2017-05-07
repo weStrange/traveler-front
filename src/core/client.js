@@ -154,12 +154,13 @@ export function updatePassword (
 export function uploadProfilePhoto (
   photo: File
 ): Promise<Profile> {
+  let formData = new FormData()
+
+  formData.append('file', photo)
+
   return fetch('/api/profile/photos', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    body: photo,
+    body: formData,
     credentials: credentialsType
   })
     .then(responseJson)
@@ -409,17 +410,23 @@ export function getGooglePlacesPlain (
   search: string,
   lat: number,
   lon: number,
-  zoom: number
+  zoom: number,
+  type?: string
 ): Promise<Array<GooglePlacePlain>> {
   // $FlowIgnore
   let GoogleAutocomplete = new google.maps.places.AutocompleteService()
 
+  let queryObject = {
+    input: search,
+    location: new google.maps.LatLng(lat, lon),
+    radius: zoomToRadius(zoom)
+  }
+  if (type) {
+    queryObject[type] = type
+  }
+
   return new Promise((resolve, reject) => {
-    GoogleAutocomplete.getPlacePredictions({
-      input: search,
-      location: new google.maps.LatLng(lat, lon),
-      radius: zoomToRadius(zoom)
-    }, resolve)
+    GoogleAutocomplete.getPlacePredictions(queryObject, resolve)
   })
 }
 
@@ -427,10 +434,17 @@ export function getGooglePlaces (
   search: string,
   lat: number,
   lon: number,
-  zoom: number
+  zoom: number,
+  type?: string
 ): Promise<List<GooglePlace>> {
-  return getGooglePlacesPlain(search, lat, lon, zoom)
+  return getGooglePlacesPlain(search, lat, lon, zoom, type)
     .then((p) => List(p).map(GoogleUtils.placeFromPlain))
+}
+
+export function getGoogleCities (
+  search: string
+): Promise<List<GooglePlace>> {
+  return getGooglePlaces(search, 0, 0, 0, 'cities')
 }
 
 export function getGooglePlaceDetails (

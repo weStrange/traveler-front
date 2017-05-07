@@ -15,16 +15,19 @@ import _isUndefined from 'lodash/isUndefined'
 import img from '../../../img/profilebackground.jpg'
 import { darkWhite } from 'material-ui/styles/colors'
 
+import { oidToUrl } from '../../core/photo-utils'
+
 type SidebarProps = {
   items: Array<any>, // substitute this with your accurate type
   open: boolean,
   muiTheme: any, // no need to care for this
   onRequestChange: () => void,
   imageUrl: string,
-  avatarImgUrl: string,
+  avatarImg: number,
   username: string,
   useremail: string
 }
+
 class Sidebar extends Component {
   props: SidebarProps;
   colorize (element) {
@@ -76,7 +79,11 @@ class Sidebar extends Component {
         >
           <ProfileFrame
             imgUrl={this.props.imageUrl}
-            avatarImgUrl={this.props.avatarImgUrl}
+            avatarImgUrl={
+              this.props.avatarImg === undefined
+              ? this.props.avatarImg
+              : oidToUrl(this.props.avatarImg)
+            }
             primaryText={this.props.username}
             secondaryText={this.props.useremail}
             primaryTextStyle={{color: this.props.muiTheme.palette.primary1Color}}

@@ -19,7 +19,9 @@ function getDefaultState (): SignUpState {
     city: '',
     country: '',
     birth: new Date(),
-    phone: ''
+    phone: '',
+    imageUrl: '',
+    imageFile: null
   }
 }
 
@@ -28,6 +30,11 @@ export default function signupReducer (
   action: Action
 ): SignUpState {
   switch (action.type) {
+    case 'signup-stop':
+      return {
+        ...getDefaultState()
+      }
+
     case 'signup-username-edit':
       return {
         ...state,
@@ -92,6 +99,18 @@ export default function signupReducer (
       return {
         ...state,
         country: action.country
+      }
+
+    case 'signup-image-file-edit':
+      return {
+        ...state,
+        imageFile: action.file
+      }
+
+    case 'signup-image-url-edit':
+      return {
+        ...state,
+        imageUrl: action.url
       }
 
     default:

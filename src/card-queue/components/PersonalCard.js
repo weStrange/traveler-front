@@ -16,6 +16,8 @@ import Calendar from 'material-ui/svg-icons/action/date-range'
 import Vehicle from 'material-ui/svg-icons/maps/directions-car'
 import People from 'material-ui/svg-icons/social/people'
 
+import { oidToUrl } from '../../core/photo-utils'
+
 import style from '../../style'
 
 import type { Location } from '../../core/types'
@@ -123,6 +125,7 @@ type PersonalCardProps = {
   cardText: string,
   primary1Color: any,
   muiTheme: any,
+  styles?: any,
   locationName: string
 }
 
@@ -137,34 +140,40 @@ const PersonalCard = ({
   cardText,
   primary1Color,
   muiTheme,
-  locationName
-}: PersonalCardProps) => (
-  <Card style={style.card} zDepth={4} >
-    <CardHeader
-      avatar={generateAvatar(
-        username,
-        userImage !== undefined
-        ? '/api/images/' + (userImage)
-        : ''
-      )}
-      title={cardTitle}
-      subtitle={username}
-    />
-    <CardMedia style={style.cardImg}>
-      <img src={'/api/images/' + (images.first())} alt='Image' />
-    </CardMedia>
-    <CardText>
-      <div style={style.cardText}>
-        <div style={style.summary}>{cardText}</div>
-        <TripInfo
-          color={muiTheme.palette.primary1Color}
-          tripSpec={{
-            tripStart,
-            tripEnd,
-            location: locationName
-          }} />
-      </div>
-    </CardText>
-  </Card>
+  locationName,
+  styles = {}
+}: PersonalCardProps) => {
+  return (
+    <Card
+      style={{...style.card, ...styles}}
+      containerStyle={{ margin: 0 }}
+      zDepth={4} >
+      <CardHeader
+        avatar={generateAvatar(
+          username,
+          userImage !== undefined
+          ? oidToUrl(userImage)
+          : ''
+        )}
+        title={cardTitle}
+        subtitle={username}
+      />
+      <CardMedia style={style.cardImg}>
+        <img src={oidToUrl(images.first())} alt='Image' />
+      </CardMedia>
+      <CardText>
+        <div style={style.cardText}>
+          <div style={style.summary}>{cardText}</div>
+          <TripInfo
+            color={muiTheme.palette.primary1Color}
+            tripSpec={{
+              tripStart,
+              tripEnd,
+              location: locationName
+            }} />
+        </div>
+      </CardText>
+    </Card>
   )
+}
 export default muiThemeable()(PersonalCard)

@@ -14,7 +14,5 @@ export const generateAvatar = (
   </Avatar>)
   : (<Avatar
     size={40}
-    src={url} >
-    {name[0]}
-  </Avatar>)
+    src={url} />)
 }

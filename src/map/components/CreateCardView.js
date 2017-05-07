@@ -7,6 +7,7 @@ import React, { Component } from 'react'
 import _map from 'lodash/map'
 import { Card, CardText, CardActions, CardMedia } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
+import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
@@ -222,6 +223,7 @@ class TripInfo extends React.PureComponent {
 }
 
 type CreateCardViewProps = {
+  open: boolean,
   title: string,
   description: string,
   type: CardType,
@@ -255,6 +257,10 @@ export class CreateCardView extends Component {
     }
   }
 
+  componentWillUnmount () {
+    this.props.actions.cardCreate.end()
+  }
+
   render () {
     const styles = {
       button: {
@@ -273,6 +279,7 @@ export class CreateCardView extends Component {
     }
 
     const {
+      open,
       title,
       description,
       lat,
@@ -287,68 +294,89 @@ export class CreateCardView extends Component {
     } = this.props
 
     return (
-      <Card style={style.card} zDepth={4} >
-        <CardMedia
-          style={style.cardImg}>
-          <img src={imageUrl || this.state.defaultImageUrl} alt='Image' />
-        </CardMedia>
-        <CardText>
-          <RaisedButton
-            label='Choose an Image'
-            labelPosition='before'
-            style={style.cardCreate.fileButton}
-            containerElement='label'
-          >
-            <input
-              type='file'
-              style={styles.exampleImageInput}
-              onChange={(e) => handleFileUpload(e, actions)} />
-          </RaisedButton>
-          <TextField
-            hintText='Description'
-            value={description}
-            multiLine
-            rows={5}
-            fullWidth
-            onChange={(e, value) => actions.cardCreate.editDescription(value)}
-          />
-        </CardText>
-        <TripInfo
-          color={indigo500}
-          tripSpec={{
-            title,
-            startTime,
-            endTime,
-            location: locationName
+      <Dialog
+        open={open}
+        autoScrollBodyContent
+        bodyStyle={{
+          padding: 0
+        }}
+        onRequestClose={() => actions.cardCreate.end()}>
+        <Card
+          style={{
+            width: '100%',
+            margin: 0
           }}
-          locationOptions={locationOptions}
-          actions={actions} />
-        <CardActions>
-          <FlatButton
-            label='Create'
-            primary
-            disabled={title === '' || (
-              lat === 0 &&
-              lon === 0
-            )}
-            onClick={(ev) => actions.cardUpload.upload('personal', {
+          zDepth={4} >
+          <CardMedia
+            style={style.cardImg}>
+            <img src={imageUrl || this.state.defaultImageUrl} alt='Image' />
+          </CardMedia>
+          <CardText>
+            <RaisedButton
+              label='Choose an Image'
+              labelPosition='before'
+              style={style.cardCreate.fileButton}
+              containerElement='label'
+            >
+              <input
+                type='file'
+                style={styles.exampleImageInput}
+                onChange={(e) => handleFileUpload(
+                  e,
+                  actions.cardCreate.editFile,
+                  actions.cardCreate.editImageUrl
+                )} />
+            </RaisedButton>
+            <TextField
+              hintText='Description'
+              value={description}
+              multiLine
+              rows={5}
+              fullWidth
+              onChange={(e, value) => actions.cardCreate.editDescription(value)}
+            />
+          </CardText>
+          <TripInfo
+            color={indigo500}
+            tripSpec={{
               title,
-              description,
               startTime,
               endTime,
-              lat,
-              lon
-            }, imageFile)}
-           />
-        </CardActions>
-      </Card>
+              location: locationName
+            }}
+            locationOptions={locationOptions}
+            actions={actions} />
+          <CardActions>
+            <FlatButton
+              label='Create'
+              primary
+              disabled={title === '' || (
+                lat === 0 &&
+                lon === 0
+              )}
+              onClick={(ev) => {
+                actions.cardUpload.upload('personal', {
+                  title,
+                  description,
+                  startTime,
+                  endTime,
+                  lat,
+                  lon
+                }, imageFile)
+                actions.cardCreate.end()
+              }}
+             />
+          </CardActions>
+        </Card>
+      </Dialog>
     )
   }
 }
 
-function handleFileUpload (
+export function handleFileUpload (
   event: any,
-  actions: any
+  editFileAction: () => void,
+  editUrlAction: () => void
 ) {
   event.preventDefault()
 
@@ -357,8 +385,8 @@ function handleFileUpload (
   let file = event.target.files[0]
 
   reader.onloadend = () => {
-    actions.cardCreate.editFile(file)
-    actions.cardCreate.editImageUrl(reader.result)
+    editFileAction(file)
+    editUrlAction(reader.result)
   }
 
   reader.readAsDataURL(file)
@@ -381,6 +409,9 @@ function mapDispatchToProps (dispatch) {
       }, dispatch),
       locationOptions: bindActionCreators({
         ...actionCreators.locationOptions
+      }, dispatch),
+      common: bindActionCreators({
+        ...actionCreators.commonActions
       }, dispatch)
     }
   }

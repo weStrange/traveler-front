@@ -1,4 +1,5 @@
 /* @flow */
+/* global File */
 'use strict'
 
 import type { Action } from '../../actions'
@@ -78,5 +79,19 @@ export function editCountry (country: string): Action {
   return {
     type: 'signup-country-edit',
     country: country
+  }
+}
+
+export function editImageFile (file: File): Action {
+  return {
+    type: 'signup-image-file-edit',
+    file: file
+  }
+}
+
+export function editImageUrl (url: string): Action {
+  return {
+    type: 'signup-image-url-edit',
+    url: url
   }
 }

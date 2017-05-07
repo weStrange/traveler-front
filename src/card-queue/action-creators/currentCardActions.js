@@ -11,9 +11,8 @@ export function selectOwn (card: PersonalCard | GroupCard): Action {
   }
 }
 
-export function selectTarget (card: PersonalCard | GroupCard): Action {
+export function nextTarget (): Action {
   return {
-    type: 'card-queue-target-card-select',
-    card: card
+    type: 'card-queue-target-card-next'
   }
 }

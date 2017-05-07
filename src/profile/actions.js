@@ -17,3 +17,5 @@ export type ProfileAction
   | { type: 'profile-email-edit', email: string }
   | { type: 'profile-gender-edit', gender: string }
   | { type: 'profile-age-edit', age: number }
+
+  | { type: 'profile-edit-stop' }

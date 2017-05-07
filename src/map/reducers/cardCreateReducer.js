@@ -8,6 +8,7 @@ import type { MapAction } from '../actions'
 
 function getDefaultState (): CardCreateState {
   return {
+    open: false,
     title: '',
     description: '',
     type: 'none',
@@ -30,6 +31,7 @@ export default function cardCreateReducer (
     case 'map-card-create-start':
       return {
         ...state,
+        open: true,
         type: 'personal'
       }
 

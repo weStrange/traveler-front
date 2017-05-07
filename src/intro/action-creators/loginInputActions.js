@@ -16,3 +16,9 @@ export function editPassword (password: string): Action {
     password: password
   }
 }
+
+export function stop () {
+  return {
+    type: 'login-stop'
+  }
+}

@@ -3,6 +3,8 @@
 
 import * as client from '../../core/client'
 
+import * as currCardActions from './currentCardActions'
+
 import type { Action } from '../../actions'
 import type { PersonalCard, GroupCard } from '../../core/types'
 
@@ -22,7 +24,13 @@ export function evaluate (
       targetCard.id,
       like
     )
-      .then(() => dispatch(evaluateSuccess()))
+      .then((match) => {
+        dispatch(evaluateSuccess(match))
+
+        if (!match) {
+          dispatch(currCardActions.nextTarget())
+        }
+      })
       .catch((error) => {
         console.error(error)
         dispatch(evaluateFailure())
@@ -38,9 +46,10 @@ export function evaluateRequest (like: boolean, target: PersonalCard | GroupCard
   }
 }
 
-export function evaluateSuccess (): Action {
+export function evaluateSuccess (match: boolean): Action {
   return {
-    type: 'card-queue-evaluate-success'
+    type: 'card-queue-evaluate-success',
+    match: match
   }
 }
 

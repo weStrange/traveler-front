@@ -22,6 +22,7 @@ export type LocationState = {
 }
 
 export type CardCreateState = {
+  open: boolean,
   title: string,
   description: string,
   type: CardType,

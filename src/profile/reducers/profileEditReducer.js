@@ -23,6 +23,11 @@ export default function profileEditReducer (
   action: Action
 ): ProfileEditState {
   switch (action.type) {
+    case 'profile-edit-stop':
+      return {
+        ...getDefaultState()
+      }
+
     case 'profile-first-name-edit':
       return {
         ...state,

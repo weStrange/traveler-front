@@ -9,13 +9,17 @@ import AutoComplete from 'material-ui/AutoComplete'
 import Paper from 'material-ui/Paper'
 import React, { Component } from 'react'
 import MenuItem from 'material-ui/MenuItem'
+
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router'
 import { Grid } from 'react-bootstrap'
 
-import { Map, OwnCardView } from './components'
+import {
+  Map,
+  OwnCardView,
+  CreateCardView
+} from './components'
 
 import style from '../style'
 
@@ -56,6 +60,15 @@ export class MapView extends Component {
 
     props.actions.ownCard.fetchPersonal()
     props.actions.ownCard.fetchGroup()
+    props.actions.location.zoom(8)
+    props.actions.location.panTo({
+      lat: 60,
+      lng: 25
+    })
+  }
+
+  componentWillUnmount () {
+    this.props.actions.common.stop()
   }
 
   render () {
@@ -164,11 +177,13 @@ export class MapView extends Component {
           locationName={cardModal.locationName}
           onRequestClose={() => actions.cardModal.hide()} />
 
-        <Link to='/create-card'>
-          <FloatingActionButton style={style.actionButton}>
-            <ContentAdd />
-          </FloatingActionButton>
-        </Link>
+        <FloatingActionButton
+          style={style.actionButton}
+          onClick={() => actions.cardCreate.start()}>
+          <ContentAdd />
+        </FloatingActionButton>
+
+        <CreateCardView />
       </Grid>
     )
   }
@@ -196,7 +211,8 @@ function mapDispatchToProps (dispatch) {
       place: bindActionCreators(actionCreators.place, dispatch),
       location: bindActionCreators(actionCreators.location, dispatch),
       ownCard: bindActionCreators(actionCreators.ownCardsActions, dispatch),
-      cardModal: bindActionCreators(actionCreators.cardModalActions, dispatch)
+      cardModal: bindActionCreators(actionCreators.cardModalActions, dispatch),
+      common: bindActionCreators(actionCreators.commonActions, dispatch)
     }
   }
 }

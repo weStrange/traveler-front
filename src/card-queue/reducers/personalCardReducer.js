@@ -21,9 +21,7 @@ export default function personalCardReducer (
   switch (action.type) {
     case 'card-queue-stop':
       return {
-        ...state,
-        cards: List(),
-        nextOffset: 0
+        ...getDefaultState()
       }
 
     case 'card-queue-personal-load-success':
