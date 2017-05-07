@@ -142,33 +142,38 @@ const PersonalCard = ({
   muiTheme,
   locationName,
   styles = {}
-}: PersonalCardProps) => (
-  <Card style={{...style.card, ...styles}} zDepth={4} >
-    <CardHeader
-      avatar={generateAvatar(
-        username,
-        userImage !== undefined
-        ? oidToUrl(userImage)
-        : ''
-      )}
-      title={cardTitle}
-      subtitle={username}
-    />
-    <CardMedia style={style.cardImg}>
-      <img src={oidToUrl(images.first())} alt='Image' />
-    </CardMedia>
-    <CardText>
-      <div style={style.cardText}>
-        <div style={style.summary}>{cardText}</div>
-        <TripInfo
-          color={muiTheme.palette.primary1Color}
-          tripSpec={{
-            tripStart,
-            tripEnd,
-            location: locationName
-          }} />
-      </div>
-    </CardText>
-  </Card>
+}: PersonalCardProps) => {
+  return (
+    <Card
+      style={{...style.card, ...styles}}
+      containerStyle={{ margin: 0 }}
+      zDepth={4} >
+      <CardHeader
+        avatar={generateAvatar(
+          username,
+          userImage !== undefined
+          ? oidToUrl(userImage)
+          : ''
+        )}
+        title={cardTitle}
+        subtitle={username}
+      />
+      <CardMedia style={style.cardImg}>
+        <img src={oidToUrl(images.first())} alt='Image' />
+      </CardMedia>
+      <CardText>
+        <div style={style.cardText}>
+          <div style={style.summary}>{cardText}</div>
+          <TripInfo
+            color={muiTheme.palette.primary1Color}
+            tripSpec={{
+              tripStart,
+              tripEnd,
+              location: locationName
+            }} />
+        </div>
+      </CardText>
+    </Card>
   )
+}
 export default muiThemeable()(PersonalCard)

@@ -296,8 +296,17 @@ export class CreateCardView extends Component {
     return (
       <Dialog
         open={open}
+        autoScrollBodyContent
+        bodyStyle={{
+          padding: 0
+        }}
         onRequestClose={() => actions.cardCreate.end()}>
-        <Card style={style.card} zDepth={4} >
+        <Card
+          style={{
+            width: '100%',
+            margin: 0
+          }}
+          zDepth={4} >
           <CardMedia
             style={style.cardImg}>
             <img src={imageUrl || this.state.defaultImageUrl} alt='Image' />
@@ -345,14 +354,17 @@ export class CreateCardView extends Component {
                 lat === 0 &&
                 lon === 0
               )}
-              onClick={(ev) => actions.cardUpload.upload('personal', {
-                title,
-                description,
-                startTime,
-                endTime,
-                lat,
-                lon
-              }, imageFile)}
+              onClick={(ev) => {
+                actions.cardUpload.upload('personal', {
+                  title,
+                  description,
+                  startTime,
+                  endTime,
+                  lat,
+                  lon
+                }, imageFile)
+                actions.cardCreate.end()
+              }}
              />
           </CardActions>
         </Card>

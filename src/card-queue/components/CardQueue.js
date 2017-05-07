@@ -118,6 +118,7 @@ export class CardQueue extends React.PureComponent {
           <div style={style.root}>
             <PersonalCard
               username={currCard.owner.username}
+              userImage={currCard.owner.photos.first()}
               cardTitle={currCard.title}
               tripStart={currCard.startTime}
               tripEnd={currCard.endTime}

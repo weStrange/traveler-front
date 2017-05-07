@@ -49,11 +49,21 @@ export default function OwnCardView ({
         actions={buttons}
         modal={false}
         open
+        autoScrollBodyContent
+        bodyStyle={{
+          padding: 0
+        }}
         onRequestClose={onRequestClose}
       >
         <PersonalCard
-          style={{ margin: 0, padding: 0 }}
+          styles={{
+            margin: 0,
+            padding: 0,
+            width: '100%',
+            maxWidth: '100%'
+          }}
           username={card.owner.username}
+          userImage={card.owner.photos.first()}
           cardTitle={card.title}
           tripStart={card.startTime}
           tripEnd={card.endTime}
