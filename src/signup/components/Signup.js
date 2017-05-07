@@ -181,7 +181,7 @@ class Signup extends React.PureComponent {
               onChange={(ev, date) => actions.signupInput.editBirth(date)}
                   />
           </FormField>
-          <FormField header='GENDER' subheader='Let people know who you are' backgroundColor='#8bc34a' icon={<Human />}>
+          <FormField decorateChildren={false} header='GENDER' subheader='Let people know who you are' backgroundColor='#8bc34a' icon={<Human />}>
             <RadioGroup
               onChange={(value) => actions.signupInput.editGender(value)}
               value={gender}

@@ -20,7 +20,7 @@ const styles = {
   handler: {
     cursor: 'pointer',
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 0,
     top: 0,
     width: `100%`,
     height: '50px',
@@ -30,7 +30,7 @@ const styles = {
     position: 'absolute',
     left: '20%',
     top: '0%',
-    transition: 'all 1s ease'
+    transition: 'all 0.5s ease'
   },
   headerFieldOpen: {
     top: '20%',
@@ -98,18 +98,9 @@ class FormField extends Component {
     // this.handleExpand = this.handleExpand.bind(this)
     // this.handleShrink = this.handleShrink.bind(this)
   }
-  handleExpand () {
-    this.setState((state, props) => { return { isFullWidth: true } })
-  }
-  handleShrink () {
-    this.setState((state, props) => { return { isFullWidth: false } })
-  }
-  toggleOpen () {
-    this.setState((state, props) => { return {open: !state.open} })
-  }
-  render () {
+  decorateChildren () {
     const {isFullWidth, open} = this.state
-    const { header, children, backgroundColor, primaryColor, subheader, icon } = this.props
+    const { children, primaryColor } = this.props
     const offspringOnChange = children.props.onChange
     const offspringOnUpdateInput = children.props.onUpdateInput
     const callbacks = (offspringOnUpdateInput)
@@ -143,6 +134,20 @@ class FormField extends Component {
         fullWidth: this.state.isFullWidth,
         ...callbacks
       })
+    return offspring
+  }
+  handleExpand () {
+    this.setState((state, props) => { return { isFullWidth: true } })
+  }
+  handleShrink () {
+    this.setState((state, props) => { return { isFullWidth: false } })
+  }
+  toggleOpen () {
+    this.setState((state, props) => { return {open: !state.open} })
+  }
+  render () {
+    const {isFullWidth, open} = this.state
+    const { header, children, backgroundColor, primaryColor, subheader, icon, decorateChildren } = this.props
     return (
       <div style={[styles.container, backgroundColor && {backgroundColor: backgroundColor}, open && styles.containerOpen]}>
         <FancyBox icon={icon} playAnimation={open}>
@@ -152,12 +157,14 @@ class FormField extends Component {
               <h1 style={[styles.headerClosed, open && styles.header, primaryColor && {color: primaryColor}]}>{ header }</h1>
               { open && <h3 style={styles.subheader}>{ subheader }</h3>}
             </div>
-            { open && <div style={styles.formInput}>{ offspring }</div>}
+            { open && <div style={styles.formInput}>{ decorateChildren ? this.decorateChildren() : children }</div>}
           </div>
         </FancyBox>
       </div>
     )
   }
 }
-
+FormField.defaultProps = {
+  decorateChildren: true
+}
 export default Radium(FormField)
