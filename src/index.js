@@ -20,7 +20,7 @@ import CardQueue from './card-queue'
 import WorldMap from './map'
 import Navigation from './NavigationSideBar'
 import { CreateCardView } from './map/components'
-
+import {StyleRoot} from 'radium'
 import { bindActors } from './actors'
 
 injectTapEventPlugin()
@@ -30,20 +30,22 @@ store.subscribe(bindActors(
 const history = syncHistoryWithStore(hashHistory, store)
 
 const Root = (
-    <Provider store={store}>
-      <MuiThemeProvider>
-        <Router history={history}>
-          <Redirect from='/' to='/login' />
-          <Route path='/login' component={LoginPage} />
-          <Route path='/signup' component={Signup} />
-          <Route path='/' component={Navigation}>
-            <Route path='card-queue' component={CardQueue} />
-            <Route path='map' component={WorldMap} />
-          </Route>
-          <Route path='*' component={() => (<div><h1>Page not found</h1><p><Link to='/'>Back</Link></p></div>)} />
-        </Router>
-      </MuiThemeProvider>
-    </Provider>
+    <StyleRoot>
+      <Provider store={store}>
+        <MuiThemeProvider>
+          <Router history={history}>
+            <Redirect from='/' to='/login' />
+            <Route path='/login' component={LoginPage} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/' component={Navigation}>
+              <Route path='card-queue' component={CardQueue} />
+              <Route path='map' component={WorldMap} />
+            </Route>
+            <Route path='*' component={() => (<div><h1>Page not found</h1><p><Link to='/'>Back</Link></p></div>)} />
+          </Router>
+        </MuiThemeProvider>
+      </Provider>
+    </StyleRoot>
   )
 
 ReactDOM.render(Root, document.getElementById('root'))
