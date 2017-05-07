@@ -23,6 +23,7 @@ import { handleFileUpload } from '../../map/components/CreateCardView'
 import * as actionCreators from '../action-creators'
 
 import type { SignUpState } from '../types'
+import type { GooglePlace } from '../../core/types'
 
 const _getErrorStyle = (
   isError: boolean
@@ -40,7 +41,7 @@ const _getErrorMessage = (
 
 type SignupProps = {
   autocompleteCountry: List<string>,
-  autocompleteCity: List<string>,
+  autocompleteCity: List<GooglePlace>,
   signupInput: SignUpState,
   actions: any
 }
@@ -51,7 +52,6 @@ class Signup extends React.PureComponent {
   constructor (props) {
     super(props)
 
-    props.actions.city.load()
     props.actions.country.load()
   }
 
@@ -73,7 +73,7 @@ class Signup extends React.PureComponent {
   }
   render () {
     const {
-      autocompleteCountry,
+      // autocompleteCountry,
       autocompleteCity,
       signupInput,
       actions
@@ -90,7 +90,7 @@ class Signup extends React.PureComponent {
       // phone,
       // address,
       city,
-      country,
+      // country,
       imageUrl
     } = signupInput
 
@@ -163,18 +163,21 @@ class Signup extends React.PureComponent {
                 title='Gender'
                 name='gender'
               /> <br />
-              <AutoComplete
+              {/*      <AutoComplete
                 disableFocusRipple
                 value={country}
                 onUpdateInput={(seachText) => actions.signupInput.editCountry(seachText)}
                 hintText='Home country'
                 dataSource={autocompleteCountry}
-              /> <br />
+              /> <br />   */}
               <AutoComplete
                 hintText='Home city'
                 value={city}
-                onUpdateInput={(seachText) => actions.signupInput.editCity(seachText)}
-                dataSource={autocompleteCity}
+                onUpdateInput={(seachText) => {
+                  actions.signupInput.editCity(seachText)
+                  actions.city.load(seachText)
+                }}
+                dataSource={autocompleteCity.map((p) => p.description).toArray()}
               /> <br />
               <TextField
                 value={password}

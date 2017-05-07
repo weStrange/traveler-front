@@ -1,11 +1,13 @@
 /* @flow */
 'use strict'
 
+import { List } from 'immutable'
+
 import type { Action } from '../../actions'
 import type { CityState } from '../types'
 
 function getDefaultState (): CityState {
-  return []
+  return List()
 }
 
 export default function countryReducer (
@@ -17,7 +19,7 @@ export default function countryReducer (
       return getDefaultState()
 
     case 'signup-cities-load-success':
-      return action.cities.toArray()
+      return action.cities
 
     default:
       return state

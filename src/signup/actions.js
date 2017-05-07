@@ -5,6 +5,7 @@
 import { List } from 'immutable'
 
 import type { Gender } from './types'
+import type { GooglePlace } from '../core/types'
 
 export type SignupAction
   = { type: 'signup-username-edit', username: string }
@@ -30,7 +31,7 @@ export type SignupAction
   | { type: 'signup-countries-load-failure' }
 
   | { type: 'signup-cities-load-request' }
-  | { type: 'signup-cities-load-success', cities: List<string> }
+  | { type: 'signup-cities-load-success', cities: List<GooglePlace> }
   | { type: 'signup-cities-load-failure' }
 
   | { type: 'signup-stop' }

@@ -2,6 +2,10 @@
 /* global File */
 'use strict'
 
+import { List } from 'immutable'
+
+import type { GooglePlace } from '../core/types'
+
 export type Gender = 'male' | 'female' | 'other'
 
 export type SignUpState = {
@@ -23,4 +27,4 @@ export type SignUpState = {
 
 export type CountryState = Array<string>
 
-export type CityState = Array<string>
+export type CityState = List<GooglePlace>
