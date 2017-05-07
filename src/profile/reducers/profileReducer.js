@@ -27,6 +27,11 @@ export default function profileEditReducer (
   action: Action
 ): Profile {
   switch (action.type) {
+    case 'core-signout-success':
+      return {
+        ...getDefaultState()
+      }
+
     case 'profile-load-success':
       return {
         ...action.profile

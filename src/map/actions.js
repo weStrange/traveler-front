@@ -63,3 +63,5 @@ export type MapAction
   | { type: 'map-card-modal-location-name-request', location: GoogleLocation }
   | { type: 'map-card-modal-location-name-success', name: string }
   | { type: 'map-card-modal-location-name-failure' }
+
+  | { type: 'map-stop' }

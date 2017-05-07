@@ -158,7 +158,6 @@ class Signup extends React.PureComponent {
               onChange={(e, value) => actions.signupInput.editLastName(value)}
             />
           </FormField>
-
           <FormField icon={<Person />} header='USER NAME' backgroundColor='#ff5722' subheader='Pick a cool nickname! It is your unique identity among other travellers'>
             <TextField
               hintText='Username'

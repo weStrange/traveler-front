@@ -1,7 +1,8 @@
 /* @flow */
 'use strict'
 
-import React from 'react'
+import React, { Component } from 'react'
+
 import TextField from 'material-ui/TextField'
 import img from '../../../img/bg2.jpg'
 import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward'
@@ -50,74 +51,84 @@ type LoginPageProps = {
   actions: any
 }
 
-export function LoginPage ({
-  username,
-  password,
-  actions
-}: LoginPageProps) {
-  return (
-    <BackGround image={img}>
-      <div>
-        <TextField
-          hintText='Username'
-          onChange={(ev) => actions.input.editUsername(ev.target.value)}
-          value={username}
-          fullWidth
-          hintStyle={{
-            color: darkWhite
-          }}
-          inputStyle={{
-            color: fullWhite
-          }}
-          type='text'
-          underlineFocusStyle={{
-            borderColor: orange500
-          }}
-          errorText=''
-        />
-        <br />
-        <TextField
-          hintText='Password'
-          onChange={(ev) => actions.input.editPassword(ev.target.value)}
-          value={password}
-          fullWidth
-          hintStyle={{
-            color: darkWhite
-          }}
-          inputStyle={{
-            color: fullWhite
-          }}
-          type='password'
-          underlineFocusStyle={{
-            borderColor: orange500
-          }}
-          errorText=''
-        />
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: '26px'
-        }}>
-          <Link to='/signup'>
-            <FlatButton
-              style={{ color: darkWhite, fontWeight: '200' }}
-            >
-              <span>Sign up</span>
-            </FlatButton>
-          </Link>
+export class LoginPage extends Component {
+  props: LoginPageProps;
 
-          <RaisedButton
-            label='Log in'
-            labelPosition='before'
-            onClick={(ev) => actions.submit.submit()}
-            icon={<ArrowForward />}
-            backgroundColor={orange500}
+  componentWillUnmount () {
+    this.props.actions.input.stop()
+  }
+
+  render () {
+    const {
+      username,
+      password,
+      actions
+    } = this.props
+
+    return (
+      <BackGround image={img}>
+        <div>
+          <TextField
+            hintText='Username'
+            onChange={(ev) => actions.input.editUsername(ev.target.value)}
+            value={username}
+            fullWidth
+            hintStyle={{
+              color: darkWhite
+            }}
+            inputStyle={{
+              color: fullWhite
+            }}
+            type='text'
+            underlineFocusStyle={{
+              borderColor: orange500
+            }}
+            errorText=''
           />
+          <br />
+          <TextField
+            hintText='Password'
+            onChange={(ev) => actions.input.editPassword(ev.target.value)}
+            value={password}
+            fullWidth
+            hintStyle={{
+              color: darkWhite
+            }}
+            inputStyle={{
+              color: fullWhite
+            }}
+            type='password'
+            underlineFocusStyle={{
+              borderColor: orange500
+            }}
+            errorText=''
+          />
+          <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: '26px'
+          }}>
+            <Link to='/signup'>
+              <FlatButton
+                style={{ color: darkWhite, fontWeight: '200' }}
+              >
+                <span>Sign up</span>
+              </FlatButton>
+            </Link>
+
+            <RaisedButton
+              label='Log in'
+              labelPosition='before'
+              onClick={(ev) => actions.submit.submit()}
+              icon={<ArrowForward />}
+              backgroundColor={orange500}
+            />
+          </div>
         </div>
-      </div>
-    </BackGround>
-  )
+      </BackGround>
+    )
+  }
 }
 
 function mapStateToProps (state: AppState) {

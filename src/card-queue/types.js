@@ -27,8 +27,9 @@ export type GroupQueueState = {
 
 export type CurrentCardState = {
   ownCard: PersonalCard | GroupCard | null,
-  targetCard: PersonalCard | GroupCard | null,
-  locationName: string
+  targetIndex: number,
+  locationName: string,
+  match: boolean
 }
 
 export type CardQueueState = {

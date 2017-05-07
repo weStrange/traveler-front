@@ -1,9 +1,11 @@
 /* @flow */
+/* global File */
 'use strict'
 
 import { List } from 'immutable'
 
 import type { Gender } from './types'
+import type { GooglePlace } from '../core/types'
 
 export type SignupAction
   = { type: 'signup-username-edit', username: string }
@@ -17,6 +19,8 @@ export type SignupAction
   | { type: 'signup-phone-edit', phone: string }
   | { type: 'signup-city-edit', city: string }
   | { type: 'signup-country-edit', country: string }
+  | { type: 'signup-image-url-edit', url: string }
+  | { type: 'signup-image-file-edit', file: File }
 
   | { type: 'signup-submit-request' }
   | { type: 'signup-submit-success' }
@@ -27,5 +31,7 @@ export type SignupAction
   | { type: 'signup-countries-load-failure' }
 
   | { type: 'signup-cities-load-request' }
-  | { type: 'signup-cities-load-success', cities: List<string> }
+  | { type: 'signup-cities-load-success', cities: List<GooglePlace> }
   | { type: 'signup-cities-load-failure' }
+
+  | { type: 'signup-stop' }

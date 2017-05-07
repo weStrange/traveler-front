@@ -6,12 +6,13 @@ import { List } from 'immutable'
 import * as client from '../../core/client'
 
 import type { Action } from '../../actions'
+import type { GooglePlace } from '../../core/types'
 
-export function load () {
+export function load (input: string) {
   return (dispatch: any, getState: any) => {
     dispatch(loadRequest())
 
-    client.getCities()
+    client.getGoogleCities(input)
       .then((cs) => dispatch(loadSuccess(cs)))
       .catch((error) => {
         console.log(error)
@@ -26,7 +27,7 @@ export function loadRequest (): Action {
   }
 }
 
-export function loadSuccess (cities: List<string>): Action {
+export function loadSuccess (cities: List<GooglePlace>): Action {
   return {
     type: 'signup-cities-load-success',
     cities: cities

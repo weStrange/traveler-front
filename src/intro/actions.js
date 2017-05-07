@@ -8,3 +8,5 @@ export type LoginAction
   | { type: 'login-submit-request' }
   | { type: 'login-submit-success' }
   | { type: 'login-submit-failure' }
+
+  | { type: 'login-stop' }

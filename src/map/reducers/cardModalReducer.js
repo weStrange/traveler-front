@@ -24,9 +24,7 @@ export default function placeReducer (
 
     case 'map-card-modal-hide':
       return {
-        ...state,
-        locationName: '',
-        card: null
+        ...getDefaultState()
       }
 
     case 'map-card-modal-location-name-success':

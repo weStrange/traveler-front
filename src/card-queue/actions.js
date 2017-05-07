@@ -28,10 +28,10 @@ export type CardQueueAction
   | { type: 'card-queue-own-group-load-failure' }
 
   | { type: 'card-queue-evaluate-request', like: boolean, target: PersonalCard | GroupCard }
-  | { type: 'card-queue-evaluate-success' }
+  | { type: 'card-queue-evaluate-success', match: boolean }
   | { type: 'card-queue-evaluate-failure' }
 
   | { type: 'card-queue-own-card-select', card: PersonalCard | GroupCard }
-  | { type: 'card-queue-target-card-select', card: PersonalCard | GroupCard }
+  | { type: 'card-queue-target-card-next' }
 
   | { type: 'card-queue-stop' }
