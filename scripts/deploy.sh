@@ -2,7 +2,7 @@
 
 IMAGE_VERSION="v_"${TRAVIS_BUILD_NUMBER}
 
-if [ "$TRAVIS_BRANCH" == "development" ]; then
+if [ "$TRAVIS_BRANCH" == "dev" ]; then
 #    SERVICE_NAME="flask-signup-service"
 #    TASK_FAMILY="flask-signup"
 #    TASK_DEF_TEMPLATE="flask-signup.json"
