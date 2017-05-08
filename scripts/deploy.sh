@@ -1,10 +1,19 @@
 #!/bin/bash
-SERVICE_NAME="flask-signup-client-service"
+
 IMAGE_VERSION="v_"${TRAVIS_BUILD_NUMBER}
-TASK_FAMILY="flask-signup-client"
+
+if [ "$TRAVIS_BRANCH" == "dev" ]; then
+    SERVICE_NAME="flask-signup-client-service"
+    TASK_FAMILY="flask-signup-client"
+    TASK_DEF_TEMPLATE="flask-signup-client.json"
+elif [ "$TRAVIS_BRANCH" == "master" ]; then
+    SERVICE_NAME="traveler-front"
+    TASK_FAMILY="flask-signup-client"
+    TASK_DEF_TEMPLATE="traveler-front-task-def.json"
+fi
 
 # Create a new task definition for this build
-sed -e "s;%BUILD_NUMBER%;${TRAVIS_BUILD_NUMBER};g" flask-signup-client.json > flask-signup-client-v_${TRAVIS_BUILD_NUMBER}.json
+sed -e "s;%BUILD_NUMBER%;${TRAVIS_BUILD_NUMBER};g" ${TASK_DEF_TEMPLATE} > flask-signup-client-v_${TRAVIS_BUILD_NUMBER}.json
 ls
 aws ecs --version
 aws ecs register-task-definition --family flask-signup-client --cli-input-json file://flask-signup-client-v_${TRAVIS_BUILD_NUMBER}.json

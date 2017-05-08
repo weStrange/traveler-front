@@ -2,7 +2,7 @@
     "family": "flask-signup-client",
     "containerDefinitions": [
         {
-            "image": "alekster/traveler-client:v_%BUILD_NUMBER%",
+            "image": "kujiraoo/traveler-front:v_%BUILD_NUMBER%",
             "name": "flask-signup-client",
             "cpu": 10,
             "memory": 256,
@@ -14,7 +14,7 @@
                 }
             ],
             "environment" : [
-                { "name" : "HTTP_PROXY", "value" : "http://52.29.61.239:8070/" }
+                { "name" : "HTTP_PROXY", "value" : "http://54.93.243.242:8070/" }
             ]
         }
     ]
