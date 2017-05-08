@@ -17,7 +17,7 @@ elif [ "$TRAVIS_BRANCH" == "master" ]; then
 fi
 
 # Create a new task definition for this build
-sed -e "s;%BUILD_NUMBER%;${TRAVIS_BUILD_NUMBER};g" flask-signup-client.json > flask-signup-client-v_${TRAVIS_BUILD_NUMBER}.json
+sed -e "s;%BUILD_NUMBER%;${TRAVIS_BUILD_NUMBER};g" ${TASK_DEF_TEMPLATE} > flask-signup-client-v_${TRAVIS_BUILD_NUMBER}.json
 ls
 aws ecs --version
 aws ecs register-task-definition --family flask-signup-client --cli-input-json file://flask-signup-client-v_${TRAVIS_BUILD_NUMBER}.json
