@@ -2,7 +2,7 @@
 // eslint-disable-next-line
 var requireContext = require.context('../../img', true, /^\.\/.*\.jpg$/)
 const imgs = requireContext.keys().map(requireContext)
-function randomEl (list) {
+export function randomEl (list) {
   var i = Math.floor(Math.random() * list.length)
   return list[i]
 }
