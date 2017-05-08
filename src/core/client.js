@@ -15,7 +15,8 @@ import {
   PersonalCardUtils,
   ProfileUtils,
   MatchResponseUtils,
-  GoogleUtils
+  GoogleUtils,
+  ChatRoomUtils
 } from './type-methods'
 
 import type {
@@ -29,7 +30,9 @@ import type {
   MatchResponse,
   GooglePlace,
   GooglePlacePlain,
-  GooglePlaceDetails
+  GooglePlaceDetails,
+  ChatRoom,
+  Message
 } from './types'
 
 es6Promise.polyfill()
@@ -478,27 +481,46 @@ export function getGooglePlaceByLocation (
   .then((p) => p.length > 0 ? p[0] : null)
 }
 
-export function getCountries (): Promise<List<string>> {
-  // TODO: add interaction with Google API here
-  return Promise.resolve(List.of(
-    'Finland',
-    'Sweden',
-    'USA',
-    'Russia',
-    'Vietnam'
-  ))
+export function getChatRooms (): Promise<List<ChatRoom>> {
+  return fetch('/api/profile/chat-rooms', {
+    credentials: credentialsType
+  })
+    .then(responseJson)
+    .then((rs) => List(rs).map(ChatRoomUtils.fromPlain))
 }
 
-export function getCities (): Promise<List<string>> {
-  // TODO: add interaction with Google API here
-  return Promise.resolve(List.of(
-    'Helsinki',
-    'Stockholm',
-    'NYC',
-    'Moscow',
-    'Hanoi',
-    'Vaasa'
-  ))
+export function leaveChatRoom (id: number): Promise<any> {
+  return fetch('/api/profile/chat-rooms/' + id, {
+    method: 'DELETE',
+    credentials: credentialsType
+  })
+    .then(responseAny)
+}
+
+export function getMessages (
+  chatRoomId: number,
+  offset?: number = 0,
+  limit?: number = 70
+): Promise<List<Message>> {
+  return fetch('/api/profile/chat-rooms/' + chatRoomId +
+    '?offset=' + offset +
+    '&limit=' + limit, {
+      credentials: credentialsType
+    })
+    .then(responseJson)
+    .then((rs) => List(rs))
+}
+
+export function sendMessage (
+  chatRoomId: number,
+  text: string
+): Promise<any> {
+  return fetch('/api/profile/chat-rooms/' + chatRoomId, {
+    method: 'POST',
+    body: text,
+    credentials: credentialsType
+  })
+    .then(responseAny)
 }
 
 function zoomToRadius (zoom: number): number {

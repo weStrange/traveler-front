@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { darkWhite } from 'material-ui/styles/colors'
 import Radium from 'radium'
 import Time from 'material-ui/svg-icons/device/access-time'
-import _debounce from 'lodash/debounce'
+
 const randomizeMotion = () => {
   const floatingIconAnimation = Radium.keyframes({
     '0%': {
@@ -58,7 +58,11 @@ class FancyBox extends Component {
     return icons
   }
   render () {
-    const { backgroundColor, icon, style, children, ...rest } = this.props
+    const {
+      backgroundColor,
+      style,
+      children
+    } = this.props
     return (
       <div
         style={[styles.base, { backgroundColor: backgroundColor }, style]} >

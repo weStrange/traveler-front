@@ -7,8 +7,6 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import _map from 'lodash/map'
 import * as colors from 'material-ui/styles/colors'
 import Radium from 'radium'
-import FancyBox from '../../signup/components/FancyBox'
-import Triangle from 'material-ui/svg-icons/action/change-history'
 const styles = {
   container: {
     width: '100%',

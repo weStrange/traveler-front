@@ -82,16 +82,26 @@ const styles = {
     color: lightWhite
   }
 }
+
 type FormFieldProps = {
   backgroundColor: string,
   primaryColor: string,
   header: string,
+  subheader: any,
+  icon: any,
+  decorateChildren: any,
   children: any
-};
+}
+
+type FormFieldState = {
+  isFullWidth: boolean,
+  open: boolean
+}
 
 class FormField extends Component {
   props: FormFieldProps;
-  state: {isFullWidth: boolean};
+  state: FormFieldState;
+
   constructor (props) {
     super(props)
     this.state = { isFullWidth: false, open: false }
@@ -99,7 +109,7 @@ class FormField extends Component {
     // this.handleShrink = this.handleShrink.bind(this)
   }
   decorateChildren () {
-    const {isFullWidth, open} = this.state
+    const { isFullWidth } = this.state
     const { children, primaryColor } = this.props
     const offspringOnChange = children.props.onChange
     const offspringOnUpdateInput = children.props.onUpdateInput
@@ -146,8 +156,16 @@ class FormField extends Component {
     this.setState((state, props) => { return {open: !state.open} })
   }
   render () {
-    const {isFullWidth, open} = this.state
-    const { header, children, backgroundColor, primaryColor, subheader, icon, decorateChildren } = this.props
+    const { open } = this.state
+    const {
+      header,
+      children,
+      backgroundColor,
+      primaryColor,
+      subheader,
+      icon,
+      decorateChildren
+    } = this.props
     return (
       <div style={[styles.container, backgroundColor && {backgroundColor: backgroundColor}, open && styles.containerOpen]}>
         <FancyBox icon={icon} playAnimation={open}>
@@ -164,6 +182,7 @@ class FormField extends Component {
     )
   }
 }
+// $FlowIgnore
 FormField.defaultProps = {
   decorateChildren: true
 }

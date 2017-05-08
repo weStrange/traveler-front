@@ -1,4 +1,5 @@
 /* @flow */
+/* global KeyboardEvent */
 'use strict'
 
 import React, { Component } from 'react'
@@ -53,9 +54,28 @@ type LoginPageProps = {
 
 export class LoginPage extends Component {
   props: LoginPageProps;
+  _keyboardHandler: (ev: KeyboardEvent) => void
+
+  _keyboardHandler (ev: KeyboardEvent) {
+    if (ev.keyCode === 13) {
+      this.props.actions.submit.submit()
+    }
+  }
+
+  constructor (props: LoginPageProps) {
+    super(props)
+
+    this._keyboardHandler = this._keyboardHandler.bind(this)
+  }
+
+  componentDidMount () {
+    window.addEventListener('keydown', this._keyboardHandler)
+  }
 
   componentWillUnmount () {
     this.props.actions.input.stop()
+
+    window.removeEventListener('keydown', this._keyboardHandler)
   }
 
   render () {
