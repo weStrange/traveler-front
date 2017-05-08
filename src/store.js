@@ -1,5 +1,7 @@
 /* @flow */
 'use strict'
+import thunkMiddleware from 'redux-thunk'
+
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { hashHistory } from 'react-router'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
@@ -7,7 +9,8 @@ import { routerReducer, routerMiddleware } from 'react-router-redux'
 import * as reducers from './reducer'
 import { lastAction } from './actors'
 
-const middleware = routerMiddleware(hashHistory)
+let middleware = [thunkMiddleware]
+middleware.push(routerMiddleware(hashHistory))
 
 const hasDevTools = process.env.NODE_ENV !== 'production' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -20,10 +23,11 @@ const store = createStore(
     }),
     hasDevTools
       ? compose(
-        applyMiddleware(middleware),
+        applyMiddleware(...middleware),
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
       )
-      : applyMiddleware(middleware)
+      : applyMiddleware(...middleware)
 )
+// console.log(store.dispatch)
 
 export default store

@@ -12,6 +12,9 @@
                     "containerPort": 5000,
                     "hostPort": 8075
                 }
+            ],
+            "environment" : [
+                { "name" : "HTTP_PROXY", "value" : "http://52.29.61.239:8070/" }
             ]
         }
     ]

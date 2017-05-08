@@ -1,0 +1,21 @@
+{
+    "family": "flask-signup-client",
+    "containerDefinitions": [
+        {
+            "image": "kujiraoo/traveler-front:v_%BUILD_NUMBER%",
+            "name": "flask-signup-client",
+            "cpu": 10,
+            "memory": 256,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 8075
+                }
+            ],
+            "environment" : [
+                { "name" : "HTTP_PROXY", "value" : "http://54.93.243.242:8070/" }
+            ]
+        }
+    ]
+}

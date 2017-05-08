@@ -9,3 +9,7 @@
 .env
 npm-debug.log*
 *.iml
+
+.idea
+
+flask-signup-client-v*
