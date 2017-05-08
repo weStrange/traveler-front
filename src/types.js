@@ -7,6 +7,7 @@ import type { LoginState } from './intro/types'
 import type { SignUpState } from './signup/types'
 import type { CardQueueState } from './card-queue/types'
 import type { MapState } from './map/types'
+import type { MessagingState } from './messaging/types'
 
 export type AppState = {
   profile: ProfileState,
@@ -14,6 +15,7 @@ export type AppState = {
   signup: SignUpState,
   cardQueue: CardQueueState,
   map: MapState,
+  messaging: MessagingState,
   lastAction: Action
 }
 
