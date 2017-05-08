@@ -7,6 +7,8 @@ import { List } from 'immutable'
 import * as client from '../../core/client'
 
 import { receiveMessage } from './messageActions'
+import { load as loadMessages } from './messageLoadActions'
+import { selectChatRoom } from './chatRoomActions'
 
 import type { Action } from '../../actions'
 import type { WrappedChatRoom } from '../types'
@@ -47,6 +49,14 @@ export function load (): any {
         })
 
         dispatch(loadSuccess(wrappedRs))
+
+        return wrappedRs
+      })
+      .then((rs) => {
+        if (!rs.isEmpty()) {
+          dispatch(loadMessages(rs.first().room.id, 0))
+          dispatch(selectChatRoom(rs.first().room.id))
+        }
       })
       .catch((error) => {
         console.error(error)

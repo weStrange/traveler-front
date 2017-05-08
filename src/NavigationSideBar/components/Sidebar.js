@@ -4,6 +4,9 @@
 'use strict'
 
 import React, { Component } from 'react'
+
+import { Link } from 'react-router'
+
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import Drawer from 'material-ui/Drawer'
 import ProfileFrame from './ProfileFrame'
@@ -42,15 +45,19 @@ class Sidebar extends Component {
       items,
       (item, index) => {
         if (item.subheader) subheaderIndexes.push(index)
-        return (<ListItem
-          key={index}
-          disabled={item.disabled}
-          primaryText={item.label}
-          leftIcon={this.colorize(item.leftIcon)}
-          onTouchTap={(e) => item.onTouchTap(e)}
-          primaryTogglesNestedList
-          nestedItems={!_isUndefined(item.subItems) && this.renderItems(item.subItems)} // recursive call for sub items
-        />)
+        return (
+          <Link to={item.link}>
+            <ListItem
+              key={index}
+              disabled={item.disabled}
+              primaryText={item.label}
+              leftIcon={this.colorize(item.leftIcon)}
+              onTouchTap={(e) => item.onTouchTap(e)}
+              primaryTogglesNestedList
+              nestedItems={!_isUndefined(item.subItems) && this.renderItems(item.subItems)} // recursive call for sub items
+            />
+          </Link>
+        )
       }
     )
     _each(subheaderIndexes, (index, iterationTimes) => {

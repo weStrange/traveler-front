@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { hashHistory } from 'react-router'
 
 import Maps from 'material-ui/svg-icons/maps/map'
 import Person from 'material-ui/svg-icons/social/person'
@@ -36,6 +37,7 @@ type NavigationProps = {
 }
 const optionGenerator = (
   label,
+  link,
   leftIcon,
   callback,
   disabled,
@@ -48,6 +50,7 @@ const optionGenerator = (
     leftIcon,
     onTouchTap: callback,
     disabled,
+    link,
     subheader: useSubheader,
     subheaderLabel,
     subItems: args
@@ -90,21 +93,22 @@ class Navigation extends Component {
           avatarImg={avatarImg}
           items={[ // static links, using hardcoded value
             optionGenerator(
-              'Browse Trip',
+              'Map',
+              '/map',
               <Maps />,
               () => { console.log('write your navigation function here!') },
               false,
               true,
               'Explore',
-              optionGenerator('Solo trips', <Person />, () => { console.log('write your navigation function here') }, false),
-              optionGenerator('Group trips', <Group />, () => console.log('write your navigation function here'), true)
+              optionGenerator('Solo trips', null, <Person />, () => { console.log('write your navigation function here') }, false),
+              optionGenerator('Group trips', null, <Group />, () => console.log('write your navigation function here'), true)
             ),
-            optionGenerator(`What's hot`, <Whatshot />, () => {}, true),
-            optionGenerator('My destinations', <MyDestinationIcon />, () => {}, false, true, 'My travel'),
-            optionGenerator('Plan a trip', <AddLocation />, () => {}, false),
-            optionGenerator('My subscription', <SubscriptionIcon />, () => {}, false),
-            optionGenerator('Matches', <MatchIcon />, () => {}, false),
-            optionGenerator('Messages', <TextMessage />, () => {}, false, true, 'Contacts')
+            optionGenerator(`What's hot`, null, <Whatshot />, () => {}, true),
+            optionGenerator('My destinations', null, <MyDestinationIcon />, () => {}, false, true, 'My travel'),
+            optionGenerator('Plan a trip', null, <AddLocation />, () => {}, false),
+            optionGenerator('My subscription', null, <SubscriptionIcon />, () => {}, false),
+            optionGenerator('Matches', null, <MatchIcon />, () => {}, false),
+            optionGenerator('Messages', '/messaging', <TextMessage />, () => hashHistory.push('/messaging'), false, true, 'Contacts')
           ]}
         />
         <div>
