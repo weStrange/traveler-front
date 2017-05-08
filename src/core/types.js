@@ -146,6 +146,11 @@ export type MatchResponsePlain = {
   matchedGroupCard: Array<GroupCardPlain>
 }
 
+export type EvaluationResponse = {
+  cardId: number,
+  liked: boolean
+}
+
 export type Location = {
   lat: number,
   lon: number

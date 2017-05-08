@@ -46,9 +46,8 @@ class Sidebar extends Component {
       (item, index) => {
         if (item.subheader) subheaderIndexes.push(index)
         return (
-          <Link to={item.link}>
+          <Link key={index} to={item.link}>
             <ListItem
-              key={index}
               disabled={item.disabled}
               primaryText={item.label}
               leftIcon={this.colorize(item.leftIcon)}

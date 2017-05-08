@@ -49,7 +49,7 @@ type CardQueueProps = {
   match: boolean,
   queue: List<CardWrapper>,
   ownCards: List<PersonalCardType | GroupCardType>,
-  ownCard: PersonalCardType | GroupCardType,
+  ownCard: PersonalCardType | GroupCardType | null,
   locationName: string,
   emptyCallback: any,
   actions: any
@@ -66,13 +66,15 @@ export class CardQueue extends React.PureComponent {
     super(props)
     this.state = { current: 0 }
 
-    const { actions, ownCard } = props
+    const {
+      actions,
+      ownCard
+    } = props
 
-    actions.personalCard.load(ownCard.lat, ownCard.lon)
-    actions.groupCard.load(ownCard.lat, ownCard.lon)
-    actions.personalCard.loadOwn() // TODO: own card is unnecessary and wrongly fetched here
-    // This needs to be removed
-      .then((cs) => actions.currentCard.selectOwn(cs.first()))
+    if (ownCard !== null) {
+      actions.personalCard.load(ownCard.lat, ownCard.lon)
+      actions.groupCard.load(ownCard.lat, ownCard.lon)
+    }
   }
 
   componentWillUnmount () {
@@ -177,7 +179,7 @@ function mapStateToProps (state: AppState) {
     ),
     ownCards: state.cardQueue.personalCards.ownCards
       .concat(state.cardQueue.groupCards.ownCards),
-    ownCard: state.map.cardModal.card,
+    ownCard: state.cardQueue.currentCard.ownCard,
     locationName: state.cardQueue.currentCard.locationName
   }
 }

@@ -6,7 +6,7 @@ import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
-import { Link } from 'react-router'
+import { hashHistory } from 'react-router'
 
 import { PersonalCard } from '../../card-queue/components'
 
@@ -18,13 +18,15 @@ import type {
 type OwnCardViewProps = {
   card: PersonalCardType | GroupCard | null,
   locationName: string,
-  onRequestClose?: () => void
+  onRequestClose?: () => void,
+  onMatchStart?: () => void
 }
 
 export default function OwnCardView ({
   card,
   locationName,
-  onRequestClose = () => {}
+  onRequestClose = () => {},
+  onMatchStart = () => {}
 }: OwnCardViewProps) {
   const buttons = [
     <FlatButton
@@ -32,12 +34,15 @@ export default function OwnCardView ({
       primary
       onTouchTap={onRequestClose}
     />,
-    <Link to='/card-queue'>
-      <FlatButton
-        label='Match'
-        primary
-      />
-    </Link>
+    <FlatButton
+      label='Match'
+      primary
+      onTouchTap={() => {
+        onMatchStart()
+        onRequestClose()
+        hashHistory.push('/card-queue')
+      }}
+    />
   ]
 
   return card === null
