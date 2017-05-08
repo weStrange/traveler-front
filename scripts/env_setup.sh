@@ -2,7 +2,7 @@
 
 # Push only if it's not a pull request
 
-if [ "$TRAVIS_BRANCH" == "development" ]; then
+if [ "$TRAVIS_BRANCH" == "dev" ]; then
     echo "Setting up staging env vars"
     echo $STAGING_DOCKER_USERNAME
     export AWS_ACCESS_KEY_ID=$STAGING_AWS_ACCESS_KEY_ID
