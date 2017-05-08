@@ -3,20 +3,22 @@
 
 import { List } from 'immutable'
 
-import * as client from '../../core/client'
+// import * as client from '../../core/client'
 
 import type { Action } from '../../actions'
 
 export function load () {
   return (dispatch: any, getState: any) => {
     dispatch(loadRequest())
-
+    // TODO: remove this file completely
+/*
     client.getCountries()
-      .then((cs) => dispatch(loadSuccess(cs)))
+      .then((cs) => dispatch(loadSuccess()))
       .catch((error) => {
         console.log(error)
         dispatch(loadFailure())
       })
+      */
   }
 }
 

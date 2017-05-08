@@ -218,3 +218,25 @@ export type GooglePlaceResponsePlain = {
   predictions : Array<GooglePlacePlain>,
   status : GoogleAPIStatus
 }
+
+export type ChatRoom = {
+  id: number,
+  active: boolean,
+  timestamp: Date,
+  participants: List<Profile>
+}
+
+export type ChatRoomPlain = {
+  id: number,
+  active: boolean,
+  timestamp: Date,
+  participants: Array<ProfilePlain>
+}
+
+export type Message = {
+  id: number,
+  messageText: string,
+  creationTime: Date,
+  username: string,
+  chatRoomId: number
+}
