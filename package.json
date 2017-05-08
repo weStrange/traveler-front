@@ -8,7 +8,7 @@
     "clean": "rm -rf build/*",
     "start": "cubx-http-server ./build -c-1 --proxy=http://localhost:5000 & webpack --config webpack.config.js --progress --profile --watch",
     "build": "npm run clean && webpack",
-    "start-server": "cubx-http-server ./build -p 5000 --proxy=http://52.29.61.239:8070/",
+    "start-server": "cubx-http-server ./build -p 5000 --proxy=http://localhost:8070/",
     "flow": "flow check",
     "test": "standard && npm run flow && jest",
     "test-start": "jest --watch",

@@ -9,16 +9,23 @@ services:
   - docker
 
 before_install:
+  - . ./scripts/env_setup.sh
   - pip install --user awscli
 
 after_success:
-  - scripts/staging/docker_push.sh
+  - scripts/docker_push.sh
 
 
 deploy:
-  # deploy develop to the staging environment
+  # deploy dev to the staging environment
   - provider: script
     skip_cleanup: true
-    script: scripts/staging/deploy.sh
+    script: scripts/deploy.sh
     on:
       branch: dev
+  # deploy master to the production environment
+  - provider: script
+    skip_cleanup: true
+    script: scripts/deploy.sh
+    on:
+      branch: master
