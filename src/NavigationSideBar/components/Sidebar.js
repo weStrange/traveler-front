@@ -75,7 +75,7 @@ class Sidebar extends Component {
           docked={false}
           onRequestChange={this.props.onRequestChange}
           zDepth={3}
-          width={'80%'}
+          width={'30%'}
         >
           <ProfileFrame
             imgUrl={this.props.imageUrl}
