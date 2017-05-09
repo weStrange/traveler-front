@@ -21,6 +21,8 @@ export type MessagingAction
   | { type: 'messaging-messages-offset-set', offset: number }
 
   | { type: 'messaging-current-message-edit', message: string }
-  | { type: 'messaging-current-message-send' }
+  | { type: 'messaging-current-message-send-request' }
+  | { type: 'messaging-current-message-send-success' }
+  | { type: 'messaging-current-message-send-failure' }
 
   | { type: 'messaging-stop' }

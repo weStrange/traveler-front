@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Link } from 'react-router'
+import { StyleRoot } from 'radium'
 
 import store from './store'
 
@@ -19,8 +20,9 @@ import Signup from './signup'
 import CardQueue from './card-queue'
 import WorldMap from './map'
 import Navigation from './NavigationSideBar'
+import Messaging from './messaging'
+
 import { CreateCardView } from './map/components'
-import {StyleRoot} from 'radium'
 import { bindActors } from './actors'
 
 injectTapEventPlugin()
@@ -40,6 +42,7 @@ const Root = (
             <Route path='/' component={Navigation}>
               <Route path='card-queue' component={CardQueue} />
               <Route path='map' component={WorldMap} />
+              <Route path='messaging' component={Messaging} />
             </Route>
             <Route path='*' component={() => (<div><h1>Page not found</h1><p><Link to='/'>Back</Link></p></div>)} />
           </Router>
