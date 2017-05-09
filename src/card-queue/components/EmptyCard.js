@@ -40,7 +40,7 @@ const style = {
     height: '100%',
     width: '100%',
     color: darkWhite,
-    paddingTop: '70%',
+    paddingTop: '40%',
     backgroundColor: 'rgba(0,0,0, 0.6)'
   }
 }

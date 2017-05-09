@@ -36,8 +36,8 @@ export default function ChatRoomList ({
       style={{
         width: '25%',
         float: 'left',
-        height: height,
-        overflow: 'scroll',
+        height: height + 30,
+        overflow: 'auto',
         margin: 0
       }}>
       {

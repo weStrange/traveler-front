@@ -23,7 +23,8 @@ export default function MessageInput ({
       style={{
         position: 'fixed',
         bottom: 0,
-        width: '100%',
+        right: 0,
+        width: '75%',
         zIndex: 3
       }}>
       <TextField

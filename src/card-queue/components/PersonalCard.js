@@ -159,7 +159,7 @@ const PersonalCard = ({
         subtitle={username}
       />
       <CardMedia style={style.cardImg}>
-        <img src={oidToUrl(images.first())} alt='Image' />
+        <img src={oidToUrl(images.first())} alt='' />
       </CardMedia>
       <CardText>
         <div style={style.cardText}>

@@ -40,8 +40,8 @@ export default {
     marginRight: '12px',
     textAlign: 'left',
     fontSize: '14px',
-    maxHeight: '80px',
-    overflow: 'scroll'
+    // maxHeight: '80px',
+    overflow: 'auto'
   },
   icon: {
     width: '24px',

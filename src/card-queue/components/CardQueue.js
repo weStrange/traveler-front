@@ -7,6 +7,7 @@ import React from 'react'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { hashHistory } from 'react-router'
 
 import { Grid } from 'react-bootstrap'
 
@@ -28,13 +29,17 @@ const style = {
     position: 'fixed',
     height: '100%',
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    marginTop: '5%',
+    // display: 'flex',
+    // flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
   buttons: {
     alignSelf: 'flex-end'
+  },
+  card: {
+    overflow: 'scroll'
   }
 }
 
@@ -129,16 +134,17 @@ export class CardQueue extends React.PureComponent {
               cardText={currCard.description}
               locationName={locationName}
             />
-            <CardButtons style={style.buttons} onTouchTap={this.onButtonTap} />
             <ItsAMatchOverlay
               open={match}
               onContinue={() => actions.currentCard.nextTarget()}
+              onStartMessaging={() => hashHistory.push('/messaging')}
               targetUserName={currCard.owner.username}
               targetFirstName={currCard.owner.firstName}
               targetLastName={currCard.owner.lastName}
               avatarImgOwn={profilePhoto}
               avatarImgTarget={currCard.owner.photos.first()} />
           </div>
+          <CardButtons style={style.buttons} onTouchTap={this.onButtonTap} />
         </Grid>
       )
     }

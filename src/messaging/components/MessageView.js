@@ -78,7 +78,12 @@ export default class MessageView extends Component {
 
     const styles = {
       chip: {
-        margin: 4
+        margin: 4,
+        maxWidth: '45%',
+        height: '70px'
+      },
+      label: {
+        whiteSpace: 'pre-line'
       },
       wrapper: {
         display: 'flex',
@@ -92,22 +97,26 @@ export default class MessageView extends Component {
         float: 'right',
         marginBottom: '100px',
         height: height,
-        overflow: 'scroll',
+        overflow: 'auto',
         margin: 0
       }}>
         {
           messages.map((p, i) => p.username === username
           ? (
             <ListItem
+              disabled
               style={{ height: '50px' }}
               key={i}>
-              <Chip style={{...styles.chip, float: 'right'}}>
+              <Chip
+                labelStyle={styles.label}
+                style={{...styles.chip, float: 'right'}}>
                 {p.messageText}
               </Chip>
             </ListItem>
           )
           : (
             <ListItem
+              labelStyle={styles.label}
               style={{ height: '50px' }}
               key={i}>
               <Chip style={{...styles.chip, float: 'left'}}>

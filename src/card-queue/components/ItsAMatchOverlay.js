@@ -1,8 +1,7 @@
 /* @flow */
+'use strict'
 
 import React, { Component } from 'react'
-
-import { Link } from 'react-router'
 
 import Avatar from 'material-ui/Avatar'
 import '../../animate.css'
@@ -125,20 +124,16 @@ class ItsAMatchOverlay extends Component {
             } />
         </div>
         <div style={style.buttonGroup}>
-          <Link
-            to='/messaging'
-            style={style.button}>
-            <RaisedButton
-              icon={<MessageIcon />}
-              overlayStyle={style.transparentOverlay}
-              className='animated infinite pulse'
-              style={style.button}
-              backgroundColor={palette.primary1Color}
-              buttonStyle={style.innerButton}
-              label={<span style={style.buttonText}>Send a message</span>}
-              onClick={onStartMessaging}
-            />
-          </Link>
+          <RaisedButton
+            icon={<MessageIcon />}
+            overlayStyle={style.transparentOverlay}
+            className='animated infinite pulse'
+            style={style.button}
+            backgroundColor={palette.primary1Color}
+            buttonStyle={style.innerButton}
+            label={<span style={style.buttonText}>Send a message</span>}
+            onClick={onStartMessaging}
+          />
           <FlatButton
             style={{
               ...style.button,
