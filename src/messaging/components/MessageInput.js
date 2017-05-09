@@ -19,7 +19,7 @@ export default function MessageInput ({
 }: MessageInputProps) {
   return (
     <Paper
-      zDepth={2}
+      zDepth={5}
       style={{
         position: 'fixed',
         bottom: 0,
