@@ -4,9 +4,6 @@ import React, { Component, cloneElement } from 'react'
 import Radium from 'radium'
 import { darkWhite, lightWhite } from 'material-ui/styles/colors'
 import FancyBox from './FancyBox'
-import FormDone from 'material-ui/svg-icons/action/assignment-turned-in'
-import FormProblem from 'material-ui/svg-icons/action/assignment-late'
-import _ from 'lodash'
 
 const styles = {
   container: {
@@ -105,13 +102,13 @@ type FormFieldProps = {
   decorateChildren: any,
   children: any,
   formOk: boolean,
-  open: boolean
+  open: boolean,
+  onHandlerClick: () => void
 }
 
 type FormFieldState = {
   isFullWidth: boolean,
-  open: boolean,
-  formOk: boolean
+  formOk: boolean | null
 }
 
 class FormField extends Component {
@@ -120,7 +117,7 @@ class FormField extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { isFullWidth: false, formOk: undefined }
+    this.state = { isFullWidth: false, formOk: null }
     // this.handleExpand = this.handleExpand.bind(this)
     // this.handleShrink = this.handleShrink.bind(this)
   }
