@@ -96,19 +96,19 @@ class Navigation extends Component {
               'Map',
               '/map',
               <Maps />,
-              () => { console.log('write your navigation function here!') },
+              () => this.setState((state) => ({ ...state, open: false })),
               false,
               true,
-              'Explore',
-              optionGenerator('Solo trips', null, <Person />, () => { console.log('write your navigation function here') }, false),
-              optionGenerator('Group trips', null, <Group />, () => console.log('write your navigation function here'), true)
+              'Explore'
+              // optionGenerator('Group trips', null, <Group />, () => console.log('write your navigation function here'), true)
+              // optionGenerator('Solo trips', null, <Person />, () => { console.log('write your navigation function here') }, false),
             ),
             optionGenerator(`What's hot`, null, <Whatshot />, () => {}, true),
             optionGenerator('My destinations', null, <MyDestinationIcon />, () => {}, false, true, 'My travel'),
             optionGenerator('Plan a trip', null, <AddLocation />, () => {}, false),
             optionGenerator('My subscription', null, <SubscriptionIcon />, () => {}, false),
             optionGenerator('Matches', null, <MatchIcon />, () => {}, false),
-            optionGenerator('Messages', '/messaging', <TextMessage />, () => hashHistory.push('/messaging'), false, true, 'Contacts')
+            optionGenerator('Messages', '/messaging', <TextMessage />, () => this.setState((state) => ({ ...state, open: false })), false, true, 'Contacts')
           ]}
         />
         <div>

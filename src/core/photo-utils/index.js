@@ -3,6 +3,8 @@
 
 export function oidToUrl (
   oid: number
-): string {
-  return '/api/images/' + oid
+): string | null {
+  return oid === undefined
+  ? null
+  : '/api/images/' + oid
 }

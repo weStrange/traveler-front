@@ -4,25 +4,21 @@
 
 import React, { Component } from 'react'
 
-import Avatar from 'material-ui/Avatar'
-import { List, ListItem, makeSelectable } from 'material-ui/List'
-import TextField from 'material-ui/TextField'
-import Paper from 'material-ui/Paper'
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble'
-
 import { List as ImmutList } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as actionCreators from '../action-creators'
 
-import { MessageView } from '.'
+import {
+  MessageView,
+  ChatRoomList,
+  MessageInput
+} from '.'
 
 import type { WrappedChatRoom } from '../types'
 import type { Message } from '../../core/types'
 import type { AppState } from '../../types'
-
-const SelectableList = makeSelectable(List)
 
 type ChatProps = {
   chatRooms: ImmutList<WrappedChatRoom>,
@@ -32,9 +28,15 @@ type ChatProps = {
   actions: any
 }
 
+type ChatState = {
+  height: number
+}
+
 export class Chat extends Component {
   props: ChatProps;
+  state: ChatState;
   _keyboardHandler: (ev: KeyboardEvent) => void;
+  updateDimensions: () => void;
 
   _keyboardHandler (ev: KeyboardEvent) {
     if (ev.keyCode === 13 && ev.srcElement.nodeName === 'INPUT') {
@@ -45,17 +47,34 @@ export class Chat extends Component {
   constructor (props: ChatProps) {
     super(props)
 
+    this.state = {
+      height: window.innerHeight - 110
+    }
+
     props.actions.chatRoomLoad.load()
     this._keyboardHandler = this._keyboardHandler.bind(this)
+    this.updateDimensions = this.updateDimensions.bind(this)
+  }
+
+  updateDimensions () {
+    this.setState({
+      height: window.innerHeight - 110
+    })
+  }
+
+  componentWillMount () {
+    this.updateDimensions()
   }
 
   componentDidMount () {
     window.addEventListener('keydown', this._keyboardHandler)
+    window.addEventListener('resize', this.updateDimensions)
   }
 
   componentWillUnmount () {
     this.props.actions.common.stop()
     window.removeEventListener('keydown', this._keyboardHandler)
+    window.removeEventListener('resize', this.updateDimensions)
   }
 
   render () {
@@ -72,50 +91,24 @@ export class Chat extends Component {
 
     return (
       <div>
-        <SelectableList
-          value={currRoomId}
-          style={{ width: '25%', float: 'left' }}>
-          {
-            chatRooms.map((p, i) => (
-              <ListItem
-                key={i}
-                value={p.room.id}
-                primaryText={(<div>
-                  {p.room
-                  .participants
-                  .filterNot((t) => t.username === username)
-                  .first().username}
-                </div>)}
-                leftAvatar={<Avatar />}
-                rightIcon={<CommunicationChatBubble />}
-              />
-            ))
-          }
-        </SelectableList>
+        <ChatRoomList
+          chatRooms={chatRooms}
+          currRoomId={currRoomId}
+          username={username}
+          height={this.state.height}
+          onItemClick={(roomId) => {
+            actions.chatRoom.selectChatRoom(roomId)
+            actions.messageLoad.load(roomId, 0)
+          }} />
 
         <MessageView
+          height={this.state.height}
           messages={messages}
           username={username} />
 
-        <Paper
-          zDepth={2}
-          style={{
-            position: 'fixed',
-            bottom: 0,
-            width: '100%',
-            zIndex: 3
-          }}>
-          <TextField
-            hintText='Full width'
-            fullWidth
-            value={
-              currChatRoom
-              ? currChatRoom.message
-              : ''
-            }
-            onChange={(ev, text) => actions.currentMessage.editText(text)}
-          />
-        </Paper>
+        <MessageInput
+          currChatRoom={currChatRoom}
+          onTextEdit={(ev, text) => actions.currentMessage.editText(text)} />
       </div>
     )
   }

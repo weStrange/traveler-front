@@ -51,7 +51,7 @@ class Sidebar extends Component {
               disabled={item.disabled}
               primaryText={item.label}
               leftIcon={this.colorize(item.leftIcon)}
-              onTouchTap={(e) => item.onTouchTap(e)}
+              onClick={(e) => item.onTouchTap(e)}
               primaryTogglesNestedList
               nestedItems={!_isUndefined(item.subItems) && this.renderItems(item.subItems)} // recursive call for sub items
             />
