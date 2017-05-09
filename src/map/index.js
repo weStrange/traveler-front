@@ -86,7 +86,7 @@ export class MapView extends Component {
     return (
       <Grid>
         <Paper style={style.searchBar} zDepth={2}>
-          <MenuItem disabled leftIcon={<Search />}><AutoComplete
+          <MenuItem style={{cursor: 'pointer'}} disabled leftIcon={<Search />}><AutoComplete
             underlineShow={false}
             hintText='Search'
             value={search}
@@ -184,7 +184,6 @@ export class MapView extends Component {
           onClick={() => actions.cardCreate.start()}>
           <ContentAdd />
         </FloatingActionButton>
-
         <CreateCardView />
       </Grid>
     )
