@@ -138,7 +138,9 @@ export class CardQueue extends React.PureComponent {
             />
             <ItsAMatchOverlay
               open={match}
-              onContinue={() => actions.currentCard.nextTarget()}
+              onContinue={() => {
+                actions.currentCard.nextTarget()
+              }}
               onStartMessaging={() => hashHistory.push('/messaging')}
               targetUserName={currCard.owner.username}
               targetFirstName={currCard.owner.firstName}
@@ -209,6 +211,9 @@ function mapDispatchToProps (dispatch) {
       }, dispatch),
       groupCard: bindActionCreators({
         ...actionCreators.groupCardLoadActions
+      }, dispatch),
+      location: bindActionCreators({
+        ...actionCreators.locationActions
       }, dispatch)
     }
   }
