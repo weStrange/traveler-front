@@ -6,6 +6,8 @@ import React from 'react'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 
+import { orange500 } from 'material-ui/styles/colors'
+
 import type { WrappedChatRoom } from '../types'
 
 type MessageInputProps = {
@@ -19,7 +21,7 @@ export default function MessageInput ({
 }: MessageInputProps) {
   return (
     <Paper
-      zDepth={5}
+      zDepth={2}
       style={{
         position: 'fixed',
         bottom: 0,
@@ -28,7 +30,9 @@ export default function MessageInput ({
         zIndex: 3
       }}>
       <TextField
-        hintText='Full width'
+        hintText='Write your message here'
+        hintStyle={{ color: orange500 }}
+        style={{ border: 'solid 1px ' + orange500 }}
         fullWidth
         value={
           currChatRoom

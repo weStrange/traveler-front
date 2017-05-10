@@ -29,7 +29,7 @@ const style = {
     position: 'fixed',
     height: '100%',
     width: '100%',
-    marginTop: '5%',
+    marginTop: '0%',
     // display: 'flex',
     // flexDirection: 'column',
     justifyContent: 'space-between',

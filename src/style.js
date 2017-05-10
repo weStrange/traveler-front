@@ -9,7 +9,7 @@ export default {
     minWidth: '500px'
   },
   cardImg: {
-    maxHeight: '250px',
+    // maxHeight: '250px',
     overflow: 'hidden',
     margin: 'auto'
   },
@@ -17,7 +17,8 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    textAlign: 'right'
+    textAlign: 'right',
+    fontWeight: 'bold'
   },
   listHeader: {
     fontWeight: '500',

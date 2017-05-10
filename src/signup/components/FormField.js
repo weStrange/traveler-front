@@ -83,7 +83,7 @@ const styles = {
   inputField: {
     fontSize: '1.3em',
     color: darkWhite,
-    textTransform: `capitalize`,
+    // textTransform: `capitalize`,
     fontWeight: 300
   },
   hintStyle: {

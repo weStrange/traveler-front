@@ -32,7 +32,7 @@ export default function ChatRoomList ({
   onItemClick = () => {}
 }: ChatRoomListProps) {
   return (
-    <Paper zDepth={2} style={{
+    <Paper zDepth={4} style={{
       width: '25%',
       float: 'left',
       height: height + 45,
