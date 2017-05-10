@@ -4,6 +4,7 @@
 import React from 'react'
 
 import Avatar from 'material-ui/Avatar'
+import Paper from 'material-ui/Paper'
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble'
 
 import { List as ImmutList } from 'immutable'
@@ -31,42 +32,44 @@ export default function ChatRoomList ({
   onItemClick = () => {}
 }: ChatRoomListProps) {
   return (
-    <SelectableList
-      value={currRoomId}
-      style={{
-        width: '25%',
-        float: 'left',
-        height: height,
-        overflow: 'scroll',
-        margin: 0
-      }}>
-      {
-        chatRooms.map((p, i) => {
-          let participant = p.room
-            .participants
-            .filterNot((p) => p.username === username)
-            .first()
-          let avatarPhoto = participant.photos.first()
+    <Paper zDepth={4} style={{
+      width: '25%',
+      float: 'left',
+      height: height + 45,
+      overflow: 'auto',
+      margin: 0
+    }}>
+      <SelectableList
+        value={currRoomId}
+        >
+        {
+          chatRooms.map((p, i) => {
+            let participant = p.room
+              .participants
+              .filterNot((p) => p.username === username)
+              .first()
+            let avatarPhoto = participant.photos.first()
 
-          return (
-            <ListItem
-              key={i}
-              value={p.room.id}
-              onTouchTap={() => onItemClick(p.room.id)}
-              primaryText={(<div>
-                {
-                  p.room
-                   .participants
-                   .filterNot((t) => t.username === username)
-                   .first().username
-              }
-              </div>)}
-              leftAvatar={<Avatar src={avatarPhoto ? oidToUrl(avatarPhoto) : null} />}
-              rightIcon={<CommunicationChatBubble />}
-            />
-          )
-        })
-      }
-    </SelectableList>
+            return (
+              <ListItem
+                key={i}
+                value={p.room.id}
+                onTouchTap={() => onItemClick(p.room.id)}
+                primaryText={(<div>
+                  {
+                    p.room
+                     .participants
+                     .filterNot((t) => t.username === username)
+                     .first().username
+                }
+                </div>)}
+                leftAvatar={<Avatar src={avatarPhoto ? oidToUrl(avatarPhoto) : null} />}
+                rightIcon={<CommunicationChatBubble />}
+              />
+            )
+          })
+        }
+      </SelectableList>
+    </Paper>
   )
 }

@@ -81,15 +81,21 @@ const styles = {
     marginBottom: '24px'
   }
 }
+
 type SignupProps = {
   autocompleteCountry: List<string>,
   autocompleteCity: List<GooglePlace>,
   signupInput: SignUpState,
   actions: any
-};
+}
+
+type SignupState = {
+  open: number
+}
 
 class Signup extends React.PureComponent {
-  props: SignupProps
+  props: SignupProps;
+  state: SignupState;
 
   constructor (props) {
     super(props)
@@ -278,7 +284,7 @@ class Signup extends React.PureComponent {
             onHandlerClick={() => this.setState({ open: 8 })}
             open={this.state.open === 8}
             icon={<Face />} decorateChildren={false} backgroundColor='#607d8b' header='AVATAR' subheader='Choose your avatar. A clear picture will definately help!'>
-            <div style={[styles.avatarPreview, {backgroundImage: `url('${imageUrl || stockAvatar}')`} ]} />
+            <div style={[styles.avatarPreview, {backgroundImage: `url('${imageUrl || stockAvatar}')`}]} />
             <RaisedButton
               label='Choose an Image'
               labelPosition='before'

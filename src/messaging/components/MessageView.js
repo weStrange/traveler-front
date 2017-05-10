@@ -8,6 +8,8 @@ import { List as ImmutList } from 'immutable'
 import { List, ListItem } from 'material-ui/List'
 import Chip from 'material-ui/Chip'
 
+import { orange500 } from 'material-ui/styles/colors'
+
 import type { Message } from '../../core/types'
 
 type MessageViewProps = {
@@ -78,7 +80,21 @@ export default class MessageView extends Component {
 
     const styles = {
       chip: {
-        margin: 4
+        margin: 4,
+        maxWidth: '45%',
+        backgroundColor: orange500
+        // maxHeight: '70px'
+      },
+      label: {
+        whiteSpace: 'pre-line',
+        color: 'white'
+      },
+      listItem: {
+        overflow: 'overlay',
+        paddingTop: '1px',
+        paddingBottom: '1px'
+         // maxHeight: '70px',
+         // height: '30px'
       },
       wrapper: {
         display: 'flex',
@@ -91,26 +107,32 @@ export default class MessageView extends Component {
         width: '70%',
         float: 'right',
         marginBottom: '100px',
-        height: height,
-        overflow: 'scroll',
+        height: height - 20,
+        overflow: 'auto',
         margin: 0
       }}>
         {
           messages.map((p, i) => p.username === username
           ? (
             <ListItem
-              style={{ height: '50px' }}
+              disabled
+              style={styles.listItem}
               key={i}>
-              <Chip style={{...styles.chip, float: 'right'}}>
+              <Chip
+                labelStyle={styles.label}
+                style={{...styles.chip, float: 'right'}}>
                 {p.messageText}
               </Chip>
             </ListItem>
           )
           : (
             <ListItem
-              style={{ height: '50px' }}
+              disabled
+              style={styles.listItem}
               key={i}>
-              <Chip style={{...styles.chip, float: 'left'}}>
+              <Chip
+                labelStyle={styles.label}
+                style={{...styles.chip, float: 'left'}}>
                 {p.messageText}
               </Chip>
             </ListItem>

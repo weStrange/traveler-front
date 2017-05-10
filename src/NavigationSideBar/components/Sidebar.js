@@ -46,7 +46,10 @@ class Sidebar extends Component {
       (item, index) => {
         if (item.subheader) subheaderIndexes.push(index)
         return (
-          <Link key={index} to={item.link}>
+          <Link
+            style={{ textDecoration: 'none' }}
+            key={index}
+            to={item.link}>
             <ListItem
               disabled={item.disabled}
               primaryText={item.label}
@@ -81,7 +84,7 @@ class Sidebar extends Component {
           docked={false}
           onRequestChange={this.props.onRequestChange}
           zDepth={3}
-          width={'30%'}
+          width={'25%'}
         >
           <ProfileFrame
             imgUrl={this.props.imageUrl}

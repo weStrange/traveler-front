@@ -38,6 +38,8 @@ export function load (
       .then(() => client.getEvaluations(currOwnCard.id))
       .then((evals) => groupCards.filterNot((p) => evals.map((t) => t.cardId)
         .includes(p.id)))
+      .then((cards) => cards.filter((p) => p.startTime <= currOwnCard.endTime &&
+        p.endTime >= currOwnCard.startTime))
       .then((cards) => dispatch(loadSuccess(cards)))
       .catch((error) => {
         console.error(error)
