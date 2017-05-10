@@ -39,7 +39,9 @@ export class Chat extends Component {
   updateDimensions: () => void;
 
   _keyboardHandler (ev: KeyboardEvent) {
-    if (ev.keyCode === 13 && ev.srcElement.nodeName === 'INPUT') {
+    let target: any = ev.target || ev.srcElement
+
+    if (ev.keyCode === 13 && target.nodeName === 'INPUT') {
       this.props.actions.currentMessage.send()
     }
   }

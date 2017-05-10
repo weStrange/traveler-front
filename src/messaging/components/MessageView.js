@@ -90,7 +90,7 @@ export default class MessageView extends Component {
         color: 'white'
       },
       listItem: {
-        overflow: 'overlay',
+        overflow: 'auto',
         paddingTop: '1px',
         paddingBottom: '1px'
          // maxHeight: '70px',
