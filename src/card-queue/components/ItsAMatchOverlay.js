@@ -1,4 +1,5 @@
 /* @flow */
+'use strict'
 
 import React, { Component } from 'react'
 
@@ -98,7 +99,7 @@ class ItsAMatchOverlay extends Component {
         </h3>
         <h4 style={style.secondaryText}>
           You and {
-            targetFirstName + targetLastName ||
+            targetFirstName + ' ' + targetLastName ||
             'someone'
           } have liked each other's trip!
         </h4>

@@ -1,5 +1,6 @@
 /* @flow */
 /* eslint-disable no-unused-vars */
+'use strict'
 
 import React from 'react'
 import Paper from 'material-ui/Paper'
@@ -7,6 +8,8 @@ import Cardbg from '../../../img/cardbgempty.jpg'
 import RaisedButton from 'material-ui/RaisedButton'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import { lightWhite, darkWhite, green300 } from 'material-ui/styles/colors'
+
+import { Link } from 'react-router'
 
 const style = {
   root: {
@@ -37,7 +40,7 @@ const style = {
     height: '100%',
     width: '100%',
     color: darkWhite,
-    paddingTop: '70%',
+    paddingTop: '40%',
     backgroundColor: 'rgba(0,0,0, 0.6)'
   }
 }
@@ -48,12 +51,14 @@ class EmptyCard extends React.PureComponent {
         <div style={style.overlay}>
           <h1 style={style.h1}>Oops!</h1>
           <h4 style={style.h4}>Looks like there are no one around at the moment</h4>
-          <RaisedButton
-            style={style.button}
-            backgroundColor={green300}
-          >
-              Check back later
-          </RaisedButton>
+          <Link to='/map'>
+            <RaisedButton
+              style={style.button}
+              backgroundColor={green300}
+            >
+                Back to Map
+            </RaisedButton>
+          </Link>
         </div>
       </Paper>
     )

@@ -3,7 +3,6 @@
 'use strict'
 
 import { List } from 'immutable'
-import { hashHistory } from 'react-router'
 
 import * as client from '../../core/client'
 import * as ownCard from './ownCardsActions'
@@ -25,6 +24,15 @@ export function upload (
         .then((card) => {
           if (photo !== null) {
             client.uploadCardPhoto(card.id, photo)
+              .then(() => {
+                dispatch(addCardSuccess())
+
+                dispatch(ownCard.fetchPersonal())
+              })
+              .catch((error) => {
+                console.error(error)
+                dispatch(addCardFailure())
+              })
           }
 
           return card
@@ -33,11 +41,6 @@ export function upload (
           dispatch(addCardSuccess())
 
           dispatch(ownCard.fetchPersonal())
-          return card
-        })
-        .then((card) => {
-          hashHistory.push('/map')
-
           return card
         })
         .catch((error) => {

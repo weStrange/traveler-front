@@ -15,36 +15,11 @@ import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
 import { darkWhite, fullWhite, orange500 } from 'material-ui/styles/colors'
 
+import { BackGround } from '../../core/components'
+
 import * as actionCreators from '../action-creators'
 
 import type { AppState } from '../../types'
-
-const BackGround = ({ children, image }) => {
-  const childStyle = children.props.style
-  const newStyle = {
-    ...childStyle,
-    position: 'absolute',
-    bottom: '13%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '30%',
-    paddingLeft: 'auto',
-    paddingRight: 'auto'
-  }
-  const newChild = { ...children, props: { ...children.props, style: newStyle } }
-  return (
-    <div
-      style={{
-        backgroundImage: `url(${image})`,
-        backgroundPosition: 'center',
-        height: '100vh',
-        width: '100vw'
-      }}
-    >
-      { newChild }
-    </div>
-  )
-}
 
 type LoginPageProps = {
   username: string,

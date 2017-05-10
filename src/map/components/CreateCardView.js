@@ -9,7 +9,6 @@ import { Card, CardText, CardActions, CardMedia } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
-import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import Autocomplete from 'material-ui/AutoComplete'
@@ -194,7 +193,6 @@ class TripInfo extends React.PureComponent {
     return _map(this.props.tripSpec, (value, key) => {
       return (
         <div key={key}>
-          {(key !== 'location') && <Divider inset />}
           <ListItem
             leftIcon={this.getIcon(key)}
             disabled

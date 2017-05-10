@@ -24,6 +24,7 @@ import {
 import style from '../style'
 
 import * as actionCreators from './action-creators'
+import { currentCardActions } from '../card-queue/action-creators'
 
 import type {
   OwnCardState,
@@ -85,7 +86,7 @@ export class MapView extends Component {
     return (
       <Grid>
         <Paper style={style.searchBar} zDepth={2}>
-          <MenuItem disabled leftIcon={<Search />}><AutoComplete
+          <MenuItem style={{cursor: 'pointer'}} disabled leftIcon={<Search />}><AutoComplete
             underlineShow={false}
             hintText='Search'
             value={search}
@@ -175,14 +176,14 @@ export class MapView extends Component {
         <OwnCardView
           card={cardModal.card}
           locationName={cardModal.locationName}
-          onRequestClose={() => actions.cardModal.hide()} />
+          onRequestClose={() => actions.cardModal.hide()}
+          onMatchStart={() => actions.cardQueue.selectOwn(cardModal.card)} />
 
         <FloatingActionButton
           style={style.actionButton}
           onClick={() => actions.cardCreate.start()}>
           <ContentAdd />
         </FloatingActionButton>
-
         <CreateCardView />
       </Grid>
     )
@@ -212,7 +213,8 @@ function mapDispatchToProps (dispatch) {
       location: bindActionCreators(actionCreators.location, dispatch),
       ownCard: bindActionCreators(actionCreators.ownCardsActions, dispatch),
       cardModal: bindActionCreators(actionCreators.cardModalActions, dispatch),
-      common: bindActionCreators(actionCreators.commonActions, dispatch)
+      common: bindActionCreators(actionCreators.commonActions, dispatch),
+      cardQueue: bindActionCreators(currentCardActions, dispatch)
     }
   }
 }

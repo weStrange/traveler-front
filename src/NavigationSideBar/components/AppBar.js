@@ -11,6 +11,8 @@ import { bindActionCreators } from 'redux'
 
 import * as actionCreators from '../../core/action-creators'
 
+import type { AppState } from '../../types'
+
 type AppBarProps = {
   title: string,
   menuIconCallback: (e: any) => void,
@@ -41,7 +43,7 @@ export class AppBar extends Component {
 }
 
 export default connect(
-  () => {},
+  (state: AppState) => ({}),
   (dispatch) => ({
     actions: {
       singout: bindActionCreators(actionCreators.signoutActions, dispatch)

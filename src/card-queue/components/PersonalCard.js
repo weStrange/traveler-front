@@ -30,9 +30,21 @@ function InfoRepresentation ({
   info
 }: InfoRepresentationProps): any {
   switch (info[0]) {
-    case 'location': return (<label>{info[1]}</label>) // TODO: logic to get a place name goes here
-    case 'tripStart': return (<label>{moment(info[1]).format('DD.MM.YYYY')}</label>)
-    case 'tripEnd': return (<label>{moment(info[1]).format('DD.MM.YYYY')}</label>)
+    case 'location': return (
+      <label style={style.cardText}>
+        {info[1]}
+      </label>
+    ) // TODO: logic to get a place name goes here
+    case 'tripStart': return (
+      <label style={style.cardText}>
+        {moment(info[1]).format('DD.MM.YYYY')}
+      </label>
+    )
+    case 'tripEnd': return (
+      <label style={style.cardText}>
+        {moment(info[1]).format('DD.MM.YYYY')}
+      </label>
+    )
     default: return null
   }
 }
@@ -159,7 +171,7 @@ const PersonalCard = ({
         subtitle={username}
       />
       <CardMedia style={style.cardImg}>
-        <img src={oidToUrl(images.first())} alt='Image' />
+        <img src={oidToUrl(images.first())} alt='' />
       </CardMedia>
       <CardText>
         <div style={style.cardText}>

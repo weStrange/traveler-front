@@ -32,7 +32,8 @@ import type {
   GooglePlacePlain,
   GooglePlaceDetails,
   ChatRoom,
-  Message
+  Message,
+  EvaluationResponse
 } from './types'
 
 es6Promise.polyfill()
@@ -407,6 +408,16 @@ export function getMatches (
     .then(responseJson)
     .then(MatchResponseUtils.fromPlain)
     // .catch(error)
+}
+
+export function getEvaluations (
+  ownId: number
+): Promise<List<EvaluationResponse>> {
+  return fetch('/api/profile/cards/' + ownId, {
+    credentials: credentialsType
+  })
+    .then(responseJson)
+    .then((rs) => List(rs))
 }
 
 export function getGooglePlacesPlain (

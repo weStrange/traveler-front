@@ -7,6 +7,7 @@ import React from 'react'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { hashHistory } from 'react-router'
 
 import { Grid } from 'react-bootstrap'
 
@@ -25,16 +26,22 @@ import type {
 
 const style = {
   root: {
-    position: 'fixed',
+    // position: 'fixed',
     height: '100%',
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    marginTop: '0%',
+    // display: 'flex',
+    // flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
   buttons: {
+    position: 'fixed',
+    top: '15%',
     alignSelf: 'flex-end'
+  },
+  card: {
+    overflow: 'scroll'
   }
 }
 
@@ -49,7 +56,7 @@ type CardQueueProps = {
   match: boolean,
   queue: List<CardWrapper>,
   ownCards: List<PersonalCardType | GroupCardType>,
-  ownCard: PersonalCardType | GroupCardType,
+  ownCard: PersonalCardType | GroupCardType | null,
   locationName: string,
   emptyCallback: any,
   actions: any
@@ -66,13 +73,15 @@ export class CardQueue extends React.PureComponent {
     super(props)
     this.state = { current: 0 }
 
-    const { actions, ownCard } = props
+    const {
+      actions,
+      ownCard
+    } = props
 
-    actions.personalCard.load(ownCard.lat, ownCard.lon)
-    actions.groupCard.load(ownCard.lat, ownCard.lon)
-    actions.personalCard.loadOwn() // TODO: own card is unnecessary and wrongly fetched here
-    // This needs to be removed
-      .then((cs) => actions.currentCard.selectOwn(cs.first()))
+    if (ownCard !== null) {
+      actions.personalCard.load(ownCard.lat, ownCard.lon)
+      actions.groupCard.load(ownCard.lat, ownCard.lon)
+    }
   }
 
   componentWillUnmount () {
@@ -127,16 +136,17 @@ export class CardQueue extends React.PureComponent {
               cardText={currCard.description}
               locationName={locationName}
             />
-            <CardButtons style={style.buttons} onTouchTap={this.onButtonTap} />
             <ItsAMatchOverlay
               open={match}
               onContinue={() => actions.currentCard.nextTarget()}
+              onStartMessaging={() => hashHistory.push('/messaging')}
               targetUserName={currCard.owner.username}
               targetFirstName={currCard.owner.firstName}
               targetLastName={currCard.owner.lastName}
               avatarImgOwn={profilePhoto}
               avatarImgTarget={currCard.owner.photos.first()} />
           </div>
+          <CardButtons style={style.buttons} onTouchTap={this.onButtonTap} />
         </Grid>
       )
     }
@@ -177,7 +187,7 @@ function mapStateToProps (state: AppState) {
     ),
     ownCards: state.cardQueue.personalCards.ownCards
       .concat(state.cardQueue.groupCards.ownCards),
-    ownCard: state.map.cardModal.card,
+    ownCard: state.cardQueue.currentCard.ownCard,
     locationName: state.cardQueue.currentCard.locationName
   }
 }

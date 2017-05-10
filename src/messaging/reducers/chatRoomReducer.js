@@ -19,6 +19,7 @@ export default function cardCreateReducer (
 ): ChatRoomState {
   switch (action.type) {
     case 'messaging-stop':
+      console.log('messaging was stop')
       state.all.forEach((p) => {
         p.source.close()
       })
@@ -49,7 +50,7 @@ export default function cardCreateReducer (
           : p)
       }
 
-    case 'messaging-current-message-send':
+    case 'messaging-current-message-send-request':
       return {
         ...state,
         all: state.all

@@ -12,10 +12,15 @@ const styles = {
     width: '100%',
     position: 'relative',
     overflow: 'hidden',
-    transition: `height 0.5s ease`
+    transition: `all 0.5s ease`
   },
   containerOpen: {
     height: '500px'
+  },
+  formIndicator: {
+    position: 'absolute',
+    top: '50%',
+    left: '10%'
   },
   handler: {
     cursor: 'pointer',
@@ -58,22 +63,27 @@ const styles = {
   },
   formInput: {
     position: 'absolute',
-    width: '40%',
+    width: '30%',
     bottom: '15%',
     right: '20%',
     display: 'flex',
-    justifyContent: 'flex-end'
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    height: '70%',
+    overflow: 'hidden'
   },
   underlineFocusStyle: {
     border: `1.5px ${darkWhite} solid`
   },
   inputRoot: {
-    transition: 'width 0.75s ease'
+    transition: 'width 0.75s ease',
+    marginLeft: '24px'
   },
   inputField: {
     fontSize: '1.3em',
     color: darkWhite,
-    textTransform: `capitalize`,
+    // textTransform: `capitalize`,
     fontWeight: 300
   },
   hintStyle: {
@@ -90,12 +100,15 @@ type FormFieldProps = {
   subheader: any,
   icon: any,
   decorateChildren: any,
-  children: any
+  children: any,
+  formOk: boolean,
+  open: boolean,
+  onHandlerClick: () => void
 }
 
 type FormFieldState = {
   isFullWidth: boolean,
-  open: boolean
+  formOk: boolean | null
 }
 
 class FormField extends Component {
@@ -104,46 +117,36 @@ class FormField extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { isFullWidth: false, open: false }
+    this.state = { isFullWidth: false, formOk: null }
     // this.handleExpand = this.handleExpand.bind(this)
     // this.handleShrink = this.handleShrink.bind(this)
   }
+  // componentWillReceiveProps (nextProp) {
+  //   if (!_.isUndefined(nextProp.open)) { this.setState({ open: this.props.open }) }
+  // }
   decorateChildren () {
     const { isFullWidth } = this.state
     const { children, primaryColor } = this.props
-    const offspringOnChange = children.props.onChange
-    const offspringOnUpdateInput = children.props.onUpdateInput
-    const callbacks = (offspringOnUpdateInput)
-    ? {
-      onUpdateInput: (value) => {
-        if (value.length === 0 && isFullWidth) this.handleShrink()
-        if (value.length > 22 && !isFullWidth) this.handleExpand()
-        offspringOnUpdateInput(value)
-      },
-      onFocus: () => {
-        this.handleExpand()
-      },
-      onBlur: () => {
-        this.handleShrink()
-      }
+    const offspring = React.Children.map(children, (child) => {
+      return cloneElement(child,
+        {
+          underlineFocusStyle: primaryColor ? {border: `1.5px ${primaryColor} solid`} : styles.underlineFocusStyle,
+          inputStyle: styles.inputField,
+          hintStyle: styles.hintStyle,
+          style: styles.inputRoot,
+          fullWidth: isFullWidth,
+          onFocus: () => {
+            this.handleExpand()
+          },
+          onBlur: () => {
+            if (children.value > 0) this.setState({ formOk: true })
+            else this.setState({ formOk: false })
+            this.handleShrink()
+          }
+        }
+        )
     }
-    : {
-      onChange: (e, value) => {
-        if (value.length === 0 && isFullWidth) this.handleShrink()
-        if (value.length > 22 && !isFullWidth) this.handleExpand()
-        offspringOnChange(e, value)
-      }
-    }
-    const offspring = cloneElement(
-      children,
-      {
-        underlineFocusStyle: primaryColor ? {border: `1.5px ${primaryColor} solid`} : styles.underlineFocusStyle,
-        inputStyle: styles.inputField,
-        hintStyle: styles.hintStyle,
-        style: styles.inputRoot,
-        fullWidth: this.state.isFullWidth,
-        ...callbacks
-      })
+    )
     return offspring
   }
   handleExpand () {
@@ -152,11 +155,18 @@ class FormField extends Component {
   handleShrink () {
     this.setState((state, props) => { return { isFullWidth: false } })
   }
-  toggleOpen () {
-    this.setState((state, props) => { return {open: !state.open} })
+  // toggleOpen () {
+  //   this.setState((state, props) => { return {open: !state.open} })
+  // }
+  getIndicator () {
+    // if input is not completed, show unset icon
+    // if input is completed, show completed icon
+    // can take props to overide the process (parent handle validation)
+    // if (_.isUndefined(this.state.formOk)) return
+    // if (this.state.formOk) return <FormDone />
+    // if (!this.state.formOk) return <FormProblem />
   }
   render () {
-    const { open } = this.state
     const {
       header,
       children,
@@ -164,12 +174,14 @@ class FormField extends Component {
       primaryColor,
       subheader,
       icon,
-      decorateChildren
+      decorateChildren,
+      open
     } = this.props
     return (
       <div style={[styles.container, backgroundColor && {backgroundColor: backgroundColor}, open && styles.containerOpen]}>
+        {!open && <div style={styles.formIndicator}>{this.getIndicator()}</div>}
         <FancyBox icon={icon} playAnimation={open}>
-          <div style={styles.handler} onClick={() => this.toggleOpen()} />
+          <div style={styles.handler} onClick={() => this.props.onHandlerClick()} />
           <div>
             <div style={[styles.headerField, open && styles.headerFieldOpen]}>
               <h1 style={[styles.headerClosed, open && styles.header, primaryColor && {color: primaryColor}]}>{ header }</h1>

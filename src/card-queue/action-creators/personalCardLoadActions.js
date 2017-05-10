@@ -19,6 +19,10 @@ export function load (
     let offset = getState().cardQueue
       .personalCards
       .nextOffset
+    let currOwnCard = getState().cardQueue
+      .currentCard
+      .ownCard
+    let personalCards = List()
 
     return client.getPersonalCards(
       lat,
@@ -26,6 +30,16 @@ export function load (
       offset,
       includeArchived
     )
+      .then((cards) => {
+        personalCards = cards
+
+        return cards
+      })
+      .then(() => client.getEvaluations(currOwnCard.id))
+      .then((evals) => personalCards.filterNot((p) => evals.map((t) => t.cardId)
+        .includes(p.id)))
+      .then((cards) => cards.filter((p) => p.startTime <= currOwnCard.endTime &&
+        p.endTime >= currOwnCard.startTime))
       .then((cards) => dispatch(loadSuccess(cards)))
       .catch((error) => {
         console.error(error)
