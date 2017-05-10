@@ -46,7 +46,10 @@ class Sidebar extends Component {
       (item, index) => {
         if (item.subheader) subheaderIndexes.push(index)
         return (
-          <Link key={index} to={item.link}>
+          <Link
+            style={{ textDecoration: 'none' }}
+            key={index}
+            to={item.link}>
             <ListItem
               disabled={item.disabled}
               primaryText={item.label}
