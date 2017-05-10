@@ -24,6 +24,15 @@ export function upload (
         .then((card) => {
           if (photo !== null) {
             client.uploadCardPhoto(card.id, photo)
+              .then(() => {
+                dispatch(addCardSuccess())
+
+                dispatch(ownCard.fetchPersonal())
+              })
+              .catch((error) => {
+                console.error(error)
+                dispatch(addCardFailure())
+              })
           }
 
           return card

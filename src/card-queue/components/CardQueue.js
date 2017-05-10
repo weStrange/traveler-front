@@ -26,7 +26,7 @@ import type {
 
 const style = {
   root: {
-    position: 'fixed',
+    // position: 'fixed',
     height: '100%',
     width: '100%',
     marginTop: '0%',
@@ -36,6 +36,8 @@ const style = {
     alignItems: 'center'
   },
   buttons: {
+    position: 'fixed',
+    top: '15%',
     alignSelf: 'flex-end'
   },
   card: {
