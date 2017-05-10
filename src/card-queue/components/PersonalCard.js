@@ -104,7 +104,9 @@ class TripInfo extends React.PureComponent {
   }
   renderItem () { // lmao what am i doing with my life?
     return _map(this.props.tripSpec, (value, key) => {
-      return (
+      return key === 'location' && value === ''
+      ? null
+      : (
         <div key={key}>
           {(key !== 'location') && <Divider inset />}
           <ListItem leftIcon={this.getIcon(key)} disabled style={style.listItem}>
